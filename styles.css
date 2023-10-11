@@ -7,3 +7,13 @@ h1 {
     color: midnightblue;
     text-align: center;
 }
+.assign {
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+    background:hsl(from color h s l);
+}
+.assign img {
+    width: 200px;
+    padding: 10px;
+}
