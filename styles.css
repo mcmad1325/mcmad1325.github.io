@@ -7,3 +7,11 @@ h1 {
     color: midnightblue;
     text-align: center;
 }
+a {
+ text-decoration: none; /* remove underlining on anchor tags */
+ color: midnightblue;
+}
+.assign img {
+ padding: 10px; /* change this from margin to padding */
+ border: 2px dashed midnightblue; /* try dashed, dotted */
+}
