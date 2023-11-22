@@ -1,8 +1,6 @@
 body {
     background-color: cornflowerblue;
     font-family: 'Courier New', Courier, monospace;
-    display: flex;
-    flex-wrap: wrap;
 }
 h1 {
     color: midnightblue;
