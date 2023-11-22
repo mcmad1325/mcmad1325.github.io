@@ -1,11 +1,14 @@
 body {
     background-color: cornflowerblue;
     font-family: 'Courier New', Courier, monospace;
-
+    display: flex;
+    flex-wrap: wrap;
 }
 h1 {
     color: midnightblue;
     text-align: center;
+    width: 100%;
+    display: block;
 }
 a {
  text-decoration: none; /* remove underlining on anchor tags */
@@ -14,4 +17,9 @@ a {
 .assign img {
  padding: 10px; /* change this from margin to padding */
  border: 2px dashed midnightblue; /* try dashed, dotted */
+}
+.assign img:hover {
+ width: 200px;
+ margin: 10px;
+ border: 2px dotted yellow;
 }
