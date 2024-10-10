@@ -4,10 +4,15 @@ body {
   color: #5a5a5a;
   margin: 0;
   padding: 0;
+}
+
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  width: 100%;
+  padding: 20px;
 }
 
 h1 {
