@@ -184,3 +184,24 @@ h1 {
   left: 0;
   top: 0;
 }
+
+.footer {
+  background-color: #fff5f9;
+  color: #b03060;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.95em;
+  margin-top: 60px;
+  border-top: 1px solid #ffd6e8;
+}
+
+.footer a {
+  color: #b03060;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
