@@ -1,102 +1,103 @@
-/* styles.css */
+/* Base styles */
 body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: #fff0f5;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .container {
-    padding: 20px;
-  }
-  
-  .profile-card {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 30px;
-    max-width: 600px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    text-align: center;
-  }
-  
-  .profile-pic {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid #ffb6c1;
-    margin-bottom: 20px;
-  }
-  
-  h1 {
-    color: #b03060;
-    margin-bottom: 10px;
-  }
-  
-  .summary {
-    font-size: 1.1em;
-    line-height: 1.6;
-    color: #555;
-    margin-bottom: 20px;
-  }
-  
-  .linkedin-btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background: #b03060;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    transition: background 0.3s ease;
-  }
-  
-  .linkedin-btn:hover {
-    background: #902c4c;
-  }
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #fff0f5;
+  color: #333;
+}
 
-  .section-title {
-    color: #b03060;
-    margin-top: 40px;
-    font-size: 1.8em;
-  }
-  
-  .posts iframe {
-    margin-bottom: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
+/* Layout */
+.main-layout {
+  display: flex;
+  flex-direction: row;
+  padding: 30px;
+  gap: 40px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
 
-  .posts iframe {
-    max-width: 100%;
-    width: 100%;
-    margin-bottom: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
+.main-content {
+  flex: 1 1 600px;
+  max-width: 700px;
+}
 
-  .resume-section {
-    text-align: center;
-    margin-top: 40px;
-  }
-  
-  .resume-btn {
-    display: inline-block;
-    padding: 12px 24px;
-    background-color: #b03060;
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-  }
-  
-  .resume-btn:hover {
-    background-color: #902c4c;
-  }
-  
-    
+/* Profile Card */
+.profile-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #ffb6c1;
+  margin-bottom: 20px;
+}
+
+h1 {
+  color: #b03060;
+  margin-bottom: 10px;
+}
+
+.summary {
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* LinkedIn Button */
+.linkedin-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #b03060;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.linkedin-btn:hover {
+  background: #902c4c;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 280px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.section-title {
+  color: #b03060;
+  margin-top: 10px;
+  font-size: 1.8em;
+  text-align: center;
+}
+
+/* Resume Button */
+.resume-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #b03060;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 8px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.resume-btn:hover {
+  background-color: #902c4c;
+}
