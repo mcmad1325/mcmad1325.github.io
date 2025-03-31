@@ -205,3 +205,35 @@ h1 {
   text-decoration: underline;
 }
 
+.footer {
+  background-color: #fff5f9;
+  color: #b03060;
+  text-align: center;
+  padding: 30px 20px;
+  font-size: 0.95em;
+  margin-top: 60px;
+  border-top: 1px solid #ffd6e8;
+}
+
+.footer-title {
+  margin: 0;
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #b03060;
+  margin-bottom: 10px;
+}
+
+.footer p {
+  margin: 6px 0;
+}
+
+.footer a {
+  color: #b03060;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
