@@ -57,7 +57,7 @@ body {
   .linkedin-btn:hover {
     background: #902c4c;
   }
-  
+
   .section-title {
     color: #b03060;
     margin-top: 40px;
@@ -69,4 +69,13 @@ body {
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
+
+  .posts iframe {
+    max-width: 100%;
+    width: 100%;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
     
