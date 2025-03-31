@@ -163,3 +163,24 @@ h1 {
   margin-bottom: 10px;
   line-height: 1.4;
 }
+.sidebar-honors {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+  font-size: 0.92em;
+  color: #444;
+  text-align: left;
+}
+
+.sidebar-honors li {
+  margin-bottom: 8px;
+  padding-left: 16px;
+  position: relative;
+}
+
+.sidebar-honors li::before {
+  content: "🎖️";
+  position: absolute;
+  left: 0;
+  top: 0;
+}
