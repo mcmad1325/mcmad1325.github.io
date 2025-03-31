@@ -1,1 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Context Aware Multifactor Authentication</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff0f5;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
 
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: #b03060;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+
+    .back-btn:hover {
+      background: #902c4c;
+    }
+
+    .content {
+      max-width: 800px;
+      margin: 100px auto 60px;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    .content h1 {
+      color: #b03060;
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    .section h2 {
+      color: #b03060;
+      font-size: 1.3em;
+      margin-bottom: 10px;
+    }
+
+    .section p {
+      font-size: 1em;
+      line-height: 1.6;
+    }
+
+    .tech-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .tech-list li::before {
+      content: "🛠️ ";
+    }
+  </style>
+</head>
+<body>
+  <a href="../index.html" class="back-btn">← Back</a>
+  <div class="content">
+    <h1>Context Aware Multifactor Authentication</h1>
+
+    <div class="section">
+      <h2>About the Project</h2>
+      <p>This research project explores the integration of passive contextual information — such as user location, device response times, and behavioral indicators — into multifactor authentication systems. By enriching traditional authentication with this ambient context, we aim to increase security without adding friction to the user experience.</p>
+    </div>
+
+    <div class="section">
+      <h2>My Role</h2>
+      <p>My primary responsibility is designing and maintaining a prototype database that simulates a real-world system and its user activity. This includes ingesting and modeling data like user names, salaries, and geolocation coordinates (latitude and longitude). I analyze this data to support verification logic and help identify potentially nefarious activity using ontological reasoning.</p>
+    </div>
+
+    <div class="section">
+      <h2>Technologies & Tools</h2>
+      <ul class="tech-list">
+        <li>Protégé & Ontological Reasoners (SWRL, OWL)</li>
+        <li>Visual Studio Code</li>
+        <li>Python, Java, HTML, CSS</li>
+        <li>SQL for data modeling</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
