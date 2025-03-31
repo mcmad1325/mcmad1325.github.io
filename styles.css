@@ -237,3 +237,35 @@ h1 {
   text-decoration: underline;
 }
 
+.sidebar-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  padding: 16px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.sidebar-card p {
+  font-size: 0.9em;
+  color: #555;
+  margin: 10px 0 15px;
+}
+
+.sidebar-btn {
+  display: inline-block;
+  background-color: #fff0f5;
+  color: #b03060;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid #ffcce0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-btn:hover {
+  background-color: #b03060;
+  color: white;
+}
