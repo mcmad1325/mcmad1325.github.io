@@ -77,5 +77,26 @@ body {
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
+
+  .resume-section {
+    text-align: center;
+    margin-top: 40px;
+  }
+  
+  .resume-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #b03060;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+  }
+  
+  .resume-btn:hover {
+    background-color: #902c4c;
+  }
   
     
