@@ -142,3 +142,12 @@ h1 {
 .read-article-btn:hover {
   background-color: #902c4c;
 }
+
+.featured-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  margin-top: 40px;
+  text-align: center;
+}
