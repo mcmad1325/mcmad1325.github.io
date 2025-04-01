@@ -1,1 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Networking Operations</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff0f5;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
 
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: #b03060;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+
+    .back-btn:hover {
+      background: #902c4c;
+    }
+
+    .content {
+      max-width: 800px;
+      margin: 100px auto 60px;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: #b03060;
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    .section h2 {
+      color: #b03060;
+      font-size: 1.3em;
+      margin-bottom: 10px;
+    }
+
+    .section p {
+      font-size: 1em;
+      line-height: 1.6;
+    }
+
+    ul.brand-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    ul.brand-list li::before {
+      content: "📦 ";
+    }
+
+    ul.tool-list li::before {
+      content: "🛠️ ";
+    }
+  </style>
+</head>
+<body>
+  <a href="../index.html" class="back-btn">← Back</a>
+  <div class="content">
+    <h1>Networking Operations at UofSC</h1>
+
+    <div class="section">
+      <h2>Overview</h2>
+      <p>As a student Network Operator for the University of South Carolina's Division of IT, I support the backbone of our campus connectivity. My role involves working hands-on with enterprise hardware and software to troubleshoot issues, maintain equipment, and ensure network stability across campus environments.</p>
+    </div>
+
+    <div class="section">
+      <h2>Key Responsibilities</h2>
+      <p><strong>📦 RMA Inventory Processing:</strong> I manage hardware replacements through vendor RMA processes, ensuring accurate documentation and inventory tracking for replaced networking devices.</p>
+      <p><strong>📡 Access Point Repairs & Replacements:</strong> I help diagnose malfunctioning Aruba APs, coordinate replacements, and assist with proper configurations to restore seamless wireless coverage.</p>
+      <p><strong>🔧 Switch Configuration:</strong> I configure and troubleshoot Layer 2/3 switches using command-line tools and web interfaces, handling VLAN setups, trunking, and port-level diagnostics.</p>
+    </div>
+
+    <div class="section">
+      <h2>Brands I Work With</h2>
+      <ul class="brand-list">
+        <li>Aruba Networks (APs, Switches, Central Dashboard)</li>
+        <li>Cisco Systems (Switch CLI & console tools)</li>
+        <li>Juniper Networks (RMA & limited use)</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Tools I Use</h2>
+      <ul class="tool-list">
+        <li>Aruba Central</li>
+        <li>PuTTY & Serial Console Tools</li>
+        <li>ServiceNow (ticketing & work order logs)</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
