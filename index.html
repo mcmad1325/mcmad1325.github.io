@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Madeleine McBride</title>
   <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&family=Playfair+Display:wght@500&family=DM+Sans:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
   <script defer data-domain="mcmad1325.github.io" src="https://plausible.io/js/script.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&family=Playfair+Display:wght@500&family=DM+Sans:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -32,34 +32,17 @@
     }
     .hero-banner {
       display: flex;
-      flex-direction: row;
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
       gap: 20px;
       padding: 60px 20px 40px;
-      background: url('grid.webp');
-      background-size: cover;
-      background-position: center;
+      background: url('grid.webp') center center/cover no-repeat, #fdfaf6;
       position: relative;
-    }
-    .hero-banner::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(253, 250, 246, 0.92);
-      z-index: 1;
-    }
-    .hero-text, .hero-img {
-      position: relative;
-      z-index: 2;
     }
     .hero-text {
       font-size: 3.2em;
-      font-weight: 800;
+      font-weight: 900;
       text-transform: uppercase;
       line-height: 1.3;
       letter-spacing: 2px;
@@ -79,7 +62,6 @@
       max-width: 800px;
       margin: 0 auto 60px;
       padding: 0 20px;
-      position: relative;
     }
     .section h2 {
       display: flex;
@@ -101,62 +83,52 @@
       line-height: 1.6;
       color: #444;
     }
-    .section img {
-      width: 100%;
-      max-width: 600px;
-      border-radius: 12px;
-      margin-top: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-    }
-    .signature {
+    .about-signature {
       font-family: 'Pacifico', cursive;
       font-size: 1.4em;
       color: #6b4e71;
       text-align: right;
-      margin-top: 20px;
+      margin-top: 40px;
     }
-    .highlights {
-      max-width: 1100px;
-      margin: 0 auto 60px;
-      padding: 0 20px;
-    }
-    .highlight-cards {
+    .cards {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
       justify-content: center;
+      margin: 40px auto;
+      max-width: 1100px;
+      padding: 0 20px;
     }
-    .highlight-card {
-      background: white;
+    .card {
+      background: #fff;
+      padding: 30px;
       border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      padding: 20px;
-      max-width: 300px;
-      flex: 1 1 250px;
-      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      width: 300px;
+      text-align: left;
     }
-    .highlight-card img {
+    .card img {
       max-width: 100%;
-      border-radius: 12px;
+      border-radius: 10px;
       margin-bottom: 15px;
     }
-    .highlight-card h3 {
-      font-size: 1.2em;
+    .card h3 {
+      font-size: 1.3em;
       margin-bottom: 10px;
-      color: #1d1d1d;
+      color: #333;
     }
-    .highlight-card p {
+    .card p {
       font-size: 0.95em;
       color: #555;
     }
-    .highlight-card a {
-      color: #d12c8b;
-      font-weight: bold;
+    .card a {
+      color: #d12c9f;
+      font-weight: 600;
       text-decoration: none;
       display: inline-block;
       margin-top: 10px;
     }
-    .highlight-card a:hover {
+    .card a:hover {
       text-decoration: underline;
     }
     .footer {
@@ -204,38 +176,61 @@
 
   <section class="section">
     <h2>About Me</h2>
-    <p>
-      I am a Computer Information Systems junior at the UofSC Honors College and a DoD Cyber Service Academy Scholar, passionate about healthcare IT, cybersecurity, and computer networking. With hands-on experience in network operations, IT support, and cybersecurity research, I have worked as a Network Operator for the past two years troubleshooting enterprise infrastructure and enforcing security policies. As an IT Service Technician, I resolved 300+ support tickets. I also develop context-aware multifactor authentication solutions through research.
-    </p>
-    <p>
-      My passion for healthcare combined with my expertise in IT, networking, and cybersecurity have prepared for a future in health care IT. I plan to delve into this through grad school and later professionally.
-    </p>
+    <p>I am a Computer Information Systems junior at the UofSC Honors College and a DoD Cyber Service Academy Scholar, passionate about healthcare IT, cybersecurity, and computer networking. With hands-on experience in network operations, IT support, and cybersecurity research, I have worked as a Network Operator for the past two years troubleshooting enterprise infrastructure and enforcing security policies. As an IT Service Technician, I resolved 300+ support tickets. I also develop context-aware multifactor authentication solutions through research.</p>
+    <p>My passion for healthcare combined with my expertise in IT, networking, and cybersecurity have prepared for a future in health care IT. I plan to delve into this through grad school and later professionally.</p>
     <p>You can view my full resume <a href="Madeleine_McBride_Resume.pdf" target="_blank">here</a> or connect with me on <a href="https://www.linkedin.com/in/madeleine-mcbride/" target="_blank">LinkedIn</a>.</p>
-    <div class="signature">xx Madeleine</div>
+    <p class="about-signature">xx Madeleine</p>
   </section>
 
-  <section class="highlights">
+  <section class="section">
     <h2>Highlights</h2>
-    <div class="highlight-cards">
-      <div class="highlight-card">
-        <img src="profilepic.jpg" alt="Networking">
+    <div class="cards">
+      <div class="card">
+        <img src="profilepic.jpg" alt="Networking Highlight">
         <h3>Networking Projects</h3>
-        <p>Monitoring and supporting enterprise infrastructure through hands-on network operations.</p>
-        <a href="networking/">Read More! ↗</a>
+        <p>Explore my hands-on work supporting enterprise infrastructure as a Network Operator.</p>
+        <a href="networking/">Read More! →</a>
       </div>
-      <div class="highlight-card">
-        <img src="profilepic.jpg" alt="Research">
-        <h3>MFA Research</h3>
-        <p>Context-aware authentication using mobile sensors and real-world data modeling.</p>
-        <a href="research/">Read More! ↗</a>
+      <div class="card">
+        <img src="me_giving_speech.jpg" alt="Research Highlight">
+        <h3>Cybersecurity Research</h3>
+        <p>Learn how I’m advancing MFA and mobile security as a CSA researcher.</p>
+        <a href="research/">Read More! →</a>
       </div>
-      <div class="highlight-card">
-        <img src="placeholder.jpg" alt="Coming Soon">
-        <h3>More Coming Soon</h3>
-        <p>This space will showcase an additional project in the near future.</p>
-        <a href="#">Read More! ↗</a>
+      <div class="card">
+        <img src="" alt="Future Highlight">
+        <h3>Coming Soon</h3>
+        <p>A new project or publication will appear here shortly!</p>
+        <a href="#">Check Back Later →</a>
       </div>
     </div>
+  </section>
+
+  <section class="section">
+    <h2>Honors Feature</h2>
+    <img src="me_and_emma_pic.jpg" alt="Madeleine and Emma featured">
+    <p>
+      I was recently featured in a <strong>UofSC Honors College spotlight</strong> highlighting my journey in engineering, cybersecurity, and leadership as a DoD Cyber Service Academy Scholar.
+      <br><a href="https://www.linkedin.com/posts/uofsc-south-carolina-honors-college_while-their-paths-to-the-molinaroli-college-ugcPost-7264364624458702851-RMQM" target="_blank">Read the full article</a>.
+    </p>
+  </section>
+
+  <section class="section">
+    <h2>Why Engineering?</h2>
+    <img src="cis_linkedin.jpg" alt="Why Engineering CIS Interview">
+    <p>
+      I was honored to be featured by the College of Engineering and Computing as a model student for CIS. I shared how I blended tech and healthcare, and what drives my passion for IT infrastructure.
+      <br><a href="https://www.linkedin.com/posts/uofsc-cec_why-engineering-madeleine-mcbride-27-computer-activity-7138621619245109248-5Rj5" target="_blank">Read the post</a>.
+    </p>
+  </section>
+
+  <section class="section">
+    <h2>DoD CSA Talk</h2>
+    <img src="me_giving_speech.jpg" alt="Madeleine McBride giving speech on DoD CSA">
+    <p>
+      I had the opportunity to speak to Honors College students about the DoD Cyber Scholarship Program. I shared my experience and the doors it’s opened in research and cybersecurity.
+      <br><a href="https://www.linkedin.com/posts/madeleine-mcbride_excited-to-have-had-the-opportunity-to-speak-activity-7308499272142934019-nkaF" target="_blank">View the LinkedIn post</a>.
+    </p>
   </section>
 
   <footer class="footer" id="contact">
