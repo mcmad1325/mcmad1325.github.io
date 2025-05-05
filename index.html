@@ -6,6 +6,7 @@
   <title>Madeleine McBride</title>
   <link rel="stylesheet" href="styles.css" />
   <script defer data-domain="mcmad1325.github.io" src="https://plausible.io/js/script.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&family=Playfair+Display:wght@500&family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -63,9 +64,19 @@
       padding: 0 20px;
     }
     .section h2 {
+      display: flex;
+      align-items: center;
       font-size: 1.5em;
       color: #6b4e71;
       margin-bottom: 10px;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .section h2::before {
+      content: "";
+      flex: 1;
+      height: 3px;
+      background-color: #6b4e71;
+      margin-right: 12px;
     }
     .section p {
       font-size: 1.05em;
@@ -123,7 +134,7 @@
   </div>
 
   <section class="section">
-    <h2>👋 About Me</h2>
+    <h2>About Me</h2>
     <p>
       I am a Computer Information Systems major at the UofSC Honors College and a DoD Cyber Service Academy Scholar, passionate about healthcare IT, cybersecurity, and IT infrastructure.
       With hands-on experience in network operations, IT support, and cybersecurity research, I have worked as a Network Operator for the past two years troubleshooting enterprise infrastructure and enforcing security policies. As an IT Service Technician, I resolved 300+ support tickets. I also develop context-aware multifactor authentication solutions through research.
@@ -132,7 +143,7 @@
   </section>
 
   <section class="section">
-    <h2>📣 Honors Feature</h2>
+    <h2>Honors Feature</h2>
     <img src="me_and_emma_pic.jpg" alt="Madeleine and Emma featured">
     <p>
       I was recently featured in a <strong>UofSC Honors College spotlight</strong> highlighting my journey in engineering, cybersecurity, and leadership as a DoD Cyber Service Academy Scholar.
@@ -141,7 +152,7 @@
   </section>
 
   <section class="section">
-    <h2>💡 Why Engineering?</h2>
+    <h2>Why Engineering?</h2>
     <img src="cis_linkedin.jpg" alt="Why Engineering CIS Interview">
     <p>
       I was honored to be featured by the College of Engineering and Computing as a model student for CIS. I shared how I blended tech and healthcare, and what drives my passion for IT infrastructure.
@@ -150,7 +161,7 @@
   </section>
 
   <section class="section">
-    <h2>🎤 DoD CSA Talk</h2>
+    <h2>DoD CSA Talk</h2>
     <img src="me_giving_speech.jpg" alt="Madeleine McBride giving speech on DoD CSA">
     <p>
       I had the opportunity to speak to Honors College students about the DoD Cyber Scholarship Program. I shared my experience and the doors it’s opened in research and cybersecurity.
