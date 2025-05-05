@@ -6,7 +6,7 @@
   <title>Madeleine McBride</title>
   <link rel="stylesheet" href="styles.css" />
   <script defer data-domain="mcmad1325.github.io" src="https://plausible.io/js/script.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&family=DM+Sans:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&family=Playfair+Display:wght@500&family=DM+Sans:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -31,35 +31,36 @@
       text-decoration: underline;
     }
     .hero-banner {
-      position: relative;
       display: flex;
-      flex-direction: row;
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
       gap: 20px;
       padding: 60px 20px 40px;
-      background: url('grid.webp') center/cover no-repeat;
+      background: url('grid.webp');
+      background-size: cover;
+      background-position: center;
+      position: relative;
     }
-    .hero-banner::before {
+    .hero-banner::after {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(253, 250, 246, 0.92);
-      z-index: 0;
+      inset: 0;
+      background-color: rgba(253, 250, 246, 0.9);
+      z-index: 1;
+    }
+    .hero-text, .hero-img {
+      position: relative;
+      z-index: 2;
     }
     .hero-text {
-      font-family: 'Rubik', sans-serif;
       font-size: 3.2em;
       font-weight: 900;
       text-transform: uppercase;
       line-height: 1.3;
       letter-spacing: 2px;
       color: #1d1d1d;
-      z-index: 1;
+      font-family: 'Rubik', sans-serif;
     }
     .hero-text span {
       display: block;
@@ -70,7 +71,6 @@
       border-radius: 20px;
       object-fit: cover;
       box-shadow: 0 4px 14px rgba(0,0,0,0.1);
-      z-index: 1;
     }
     .section {
       max-width: 800px;
@@ -104,48 +104,6 @@
       margin-top: 20px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
-    .highlight-cards {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 60px;
-    }
-    .highlight-card {
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
-      width: 260px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-bottom: 20px;
-    }
-    .highlight-card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-    }
-    .highlight-card p {
-      padding: 10px 16px 0;
-      font-size: 0.95em;
-      color: #555;
-      text-align: center;
-    }
-    .highlight-card a {
-      margin-top: 10px;
-      padding: 8px 14px;
-      background: #6b4e71;
-      color: #fff;
-      border-radius: 8px;
-      font-weight: bold;
-      text-decoration: none;
-      transition: background 0.3s;
-    }
-    .highlight-card a:hover {
-      background: #5a4062;
-    }
     .footer {
       background-color: #f6f2eb;
       color: #6b4e71;
@@ -168,6 +126,54 @@
     }
     .footer a:hover {
       text-decoration: underline;
+    }
+    .signature {
+      font-family: 'Pacifico', cursive;
+      color: #5b2b5b;
+      text-align: right;
+      font-size: 1.4em;
+      margin-top: 30px;
+    }
+    .cards-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin: 40px auto;
+      max-width: 1000px;
+      padding: 0 20px;
+    }
+    .highlight-card {
+      background-color: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      padding: 20px;
+      width: 300px;
+      text-align: center;
+    }
+    .highlight-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+    .highlight-card p {
+      color: #444;
+      font-size: 0.95em;
+      margin-bottom: 15px;
+    }
+    .highlight-card a {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: #6b4e71;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+    .highlight-card a:hover {
+      background-color: #58375d;
     }
   </style>
 </head>
@@ -196,28 +202,28 @@
       With hands-on experience in network operations, IT support, and cybersecurity research, I have worked as a Network Operator for the past two years troubleshooting enterprise infrastructure and enforcing security policies. As an IT Service Technician, I resolved 300+ support tickets. I also develop context-aware multifactor authentication solutions through research.
     </p>
     <p>
-      My passion for healthcare combined with my expertise in IT, networking, and cybersecurity have prepared for a future in health care IT. I plan to delve into this through grad school and later professionally.
+      My passion for healthcare combined with my expertise in IT, networking, and cybersecurity have prepared for a future in health care IT. I plan to delve into this through grad school and later professionaly.
     </p>
     <p>You can view my full resume <a href="Madeleine_McBride_Resume.pdf" target="_blank">here</a> or connect with me on <a href="https://www.linkedin.com/in/madeleine-mcbride/" target="_blank">LinkedIn</a>.</p>
-    <p style="text-align: right; font-family: 'Pacifico', cursive; font-size: 1.2em; margin-top: 30px; color: #5a4062;">xx Madeleine</p>
+    <div class="signature">xx Madeleine</div>
   </section>
 
   <section class="section">
     <h2>Highlights</h2>
-    <div class="highlight-cards">
+    <div class="cards-container">
       <div class="highlight-card">
         <img src="networking/networkingabstract.webp" alt="Networking">
-        <p>Explore my work configuring switches, repairing access points, and managing enterprise infrastructure at UofSC IT.</p>
+        <p>Explore my hands-on experience as a Network Operator managing access points, RMAs, and switch configs.</p>
         <a href="networking/">View Networking</a>
       </div>
       <div class="highlight-card">
         <img src="research/protege.png" alt="Research">
-        <p>Learn about my context-aware MFA research involving ontologies, user context, and secure identity verification.</p>
+        <p>Dive into my multifactor authentication research using context-aware data like location and behavior.</p>
         <a href="research/">View Research</a>
       </div>
       <div class="highlight-card">
         <img src="comingsoon.webp" alt="Coming Soon">
-        <p>A new project or highlight will be added here soon! Stay tuned for exciting updates.</p>
+        <p>New feature launching soon! Stay tuned for more about my upcoming projects and innovations.</p>
         <a href="#">Coming Soon</a>
       </div>
     </div>
