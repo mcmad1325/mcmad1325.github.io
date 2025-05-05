@@ -6,7 +6,7 @@
   <title>Madeleine McBride</title>
   <link rel="stylesheet" href="styles.css" />
   <script defer data-domain="mcmad1325.github.io" src="https://plausible.io/js/script.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;900&family=DM+Sans:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&family=DM+Sans:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -44,8 +44,11 @@
     .hero-banner::before {
       content: "";
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(253, 250, 246, 0.9);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(253, 250, 246, 0.85);
       z-index: 1;
     }
     .hero-text, .hero-img {
@@ -72,7 +75,7 @@
       box-shadow: 0 4px 14px rgba(0,0,0,0.1);
     }
     .section {
-      max-width: 1000px;
+      max-width: 800px;
       margin: 0 auto 60px;
       padding: 0 20px;
     }
@@ -96,41 +99,70 @@
       line-height: 1.6;
       color: #444;
     }
-    .highlight-card {
-      display: flex;
-      background-color: #fff;
-      border-radius: 16px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
-      overflow: hidden;
-      margin-bottom: 40px;
+    .section img {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 12px;
+      margin-top: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
-    .highlight-card img {
-      width: 300px;
-      height: auto;
-      object-fit: cover;
+    .highlights {
+      max-width: 1200px;
+      margin: 0 auto 60px;
+      padding: 0 20px;
     }
-    .highlight-text {
-      padding: 20px;
+    .highlights-container {
       display: flex;
-      flex-direction: column;
+      gap: 20px;
+      flex-wrap: wrap;
       justify-content: center;
     }
-    .highlight-text h3 {
-      font-size: 1.3em;
-      color: #6b4e71;
-      margin-top: 0;
+    .highlight-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+      width: 300px;
+      padding: 16px;
+      text-align: center;
     }
-    .highlight-text p {
-      color: #555;
+    .highlight-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 12px;
       margin-bottom: 10px;
     }
-    .highlight-text a {
-      color: #6b4e71;
-      font-weight: 600;
-      text-decoration: none;
+    .highlight-card p {
+      font-size: 0.95em;
+      margin-bottom: 10px;
     }
-    .highlight-text a:hover {
-      text-decoration: underline;
+    .highlight-card a {
+      text-decoration: none;
+      color: white;
+      background: #6b4e71;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      display: inline-block;
+    }
+    .highlight-card a:hover {
+      background: #5a3e5f;
+    }
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      margin: 40px auto;
+      max-width: 1000px;
+      padding: 0 20px;
+    }
+    .feature img {
+      width: 40%;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .feature div {
+      flex: 1;
     }
     .footer {
       background-color: #f6f2eb;
@@ -182,67 +214,58 @@
       With hands-on experience in network operations, IT support, and cybersecurity research, I have worked as a Network Operator for the past two years troubleshooting enterprise infrastructure and enforcing security policies. As an IT Service Technician, I resolved 300+ support tickets. I also develop context-aware multifactor authentication solutions through research.
     </p>
     <p>
-      My passion for healthcare combined with my expertise in IT, networking, and cybersecurity have prepared me for a future in health care IT. I plan to delve into this through grad school and later professionally.
+      My passion for healthcare combined with my expertise in IT, networking, and cybersecurity have prepared for a future in health care IT. I plan to delve into this through grad school and later professionaly.
     </p>
-    <p>You can view my full resume <a href="Madeleine_McBride_Resume.pdf" target="_blank">here</a> or connect with me on <a href="https://www.linkedin.com/in/madeleine-mcbride/" target="_blank">LinkedIn</a>.</p>
+    <p style="font-family: 'Pacifico', cursive; text-align: right; font-size: 1.3em; color: #6b4e71;">xx Madeleine</p>
   </section>
 
   <section class="section">
     <h2>Highlights</h2>
-    <div class="cards-container">
+    <div class="highlights-container">
       <div class="highlight-card">
-        <img src="networking/networkingabstract.webp" alt="Networking">
-        <p>Explore my hands-on experience as a Network Operator managing access points, RMAs, and switch configs.</p>
-        <a href="networking/">View Networking</a>
+        <img src="networking/networkingabstract.webp" alt="Networking Highlight">
+        <p>Explore my work configuring switches, repairing access points, and managing RMA inventory at UofSC's Division of IT.</p>
+        <a href="networking/">Visit Networking</a>
       </div>
       <div class="highlight-card">
-        <img src="research/protege.png" alt="Research">
-        <p>Dive into my multifactor authentication research using context-aware data like location and behavior.</p>
-        <a href="research/">View Research</a>
+        <img src="research/protege.png" alt="Research Highlight">
+        <p>See how I design and simulate secure multifactor authentication systems using OWL, SWRL, SQL, and more.</p>
+        <a href="research/">Visit Research</a>
       </div>
       <div class="highlight-card">
         <img src="comingsoon.webp" alt="Coming Soon">
-        <p>New feature launching soon! Stay tuned for more about my upcoming projects and innovations.</p>
+        <p>Another exciting technical or academic experience coming soon!</p>
         <a href="#">Coming Soon</a>
       </div>
     </div>
   </section>
 
-  <section class="section">
-    <h2>Honors Feature</h2>
-    <div class="highlight-card">
-      <img src="me_and_emma_pic.jpg" alt="Honors Feature">
-      <div class="highlight-text">
-        <h3>Spotlight Interview</h3>
-        <p>I was recently featured in a <strong>UofSC Honors College spotlight</strong> highlighting my journey in engineering, cybersecurity, and leadership as a DoD Cyber Service Academy Scholar.</p>
-        <a href="https://www.linkedin.com/posts/uofsc-south-carolina-honors-college_while-their-paths-to-the-molinaroli-college-ugcPost-7264364624458702851-RMQM" target="_blank">Read the full article</a>
-      </div>
+  <div class="feature">
+    <img src="me_and_emma_pic.jpg" alt="Honors Feature">
+    <div>
+      <h2>Honors Feature</h2>
+      <p>I was recently featured in a <strong>UofSC Honors College spotlight</strong> highlighting my journey in engineering, cybersecurity, and leadership as a DoD Cyber Service Academy Scholar.</p>
+      <a href="https://www.linkedin.com/posts/uofsc-south-carolina-honors-college_while-their-paths-to-the-molinaroli-college-ugcPost-7264364624458702851-RMQM" target="_blank">Read the full article ↗</a>
     </div>
-  </section>
+  </div>
 
-  <section class="section">
-    <h2>Why Engineering?</h2>
-    <div class="highlight-card">
-      <img src="cis_linkedin.jpg" alt="Why Engineering">
-      <div class="highlight-text">
-        <h3>CIS Student Feature</h3>
-        <p>I was honored to be featured by the College of Engineering and Computing as a model student for CIS. I shared how I blended tech and healthcare, and what drives my passion for IT infrastructure.</p>
-        <a href="https://www.linkedin.com/posts/uofsc-cec_why-engineering-madeleine-mcbride-27-computer-activity-7138621619245109248-5Rj5" target="_blank">Read the post</a>
-      </div>
+  <div class="feature">
+    <img src="cis_linkedin.jpg" alt="Why Engineering">
+    <div>
+      <h2>Why Engineering?</h2>
+      <p>I was honored to be featured by the College of Engineering and Computing as a model student for CIS. I shared how I blended tech and healthcare, and what drives my passion for IT infrastructure.</p>
+      <a href="https://www.linkedin.com/posts/uofsc-cec_why-engineering-madeleine-mcbride-27-computer-activity-7138621619245109248-5Rj5" target="_blank">Read the post ↗</a>
     </div>
-  </section>
+  </div>
 
-  <section class="section">
-    <h2>DoD CSA Talk</h2>
-    <div class="highlight-card">
-      <img src="me_giving_speech.jpg" alt="DoD CSA Talk">
-      <div class="highlight-text">
-        <h3>Cyber Scholarship Speaking Event</h3>
-        <p>I had the opportunity to speak to Honors College students about the DoD Cyber Scholarship Program. I shared my experience and the doors it’s opened in research and cybersecurity.</p>
-        <a href="https://www.linkedin.com/posts/madeleine-mcbride_excited-to-have-had-the-opportunity-to-speak-activity-7308499272142934019-nkaF" target="_blank">View the LinkedIn post</a>
-      </div>
+  <div class="feature">
+    <img src="me_giving_speech.jpg" alt="DoD CSA Talk">
+    <div>
+      <h2>DoD CSA Talk</h2>
+      <p>I had the opportunity to speak to Honors College students about the DoD Cyber Scholarship Program. I shared my experience and the doors it’s opened in research and cybersecurity.</p>
+      <a href="https://www.linkedin.com/posts/madeleine-mcbride_excited-to-have-had-the-opportunity-to-speak-activity-7308499272142934019-nkaF" target="_blank">View the LinkedIn post ↗</a>
     </div>
-  </section>
+  </div>
 
   <footer class="footer" id="contact">
     <h2 class="footer-title">Contact Me!</h2>
