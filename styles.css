@@ -2,7 +2,7 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: #fff0f5;
+  background: #fdfaf6;
   color: #333;
 }
 
@@ -37,12 +37,12 @@ body {
   height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #ffb6c1;
+  border: 4px solid #c8a2c8;
   margin-bottom: 20px;
 }
 
 h1 {
-  color: #b03060;
+  color: #6b4e71;
   margin-bottom: 10px;
 }
 
@@ -57,7 +57,7 @@ h1 {
 .linkedin-btn {
   display: inline-block;
   padding: 10px 20px;
-  background: #b03060;
+  background: #6b4e71;
   color: white;
   text-decoration: none;
   border-radius: 8px;
@@ -65,13 +65,13 @@ h1 {
 }
 
 .linkedin-btn:hover {
-  background: #902c4c;
+  background: #593b5d;
 }
 
 /* Sidebar */
 .sidebar {
   width: 280px;
-  background: #fff;
+  background: #ffffff;
   padding: 20px;
   border-radius: 16px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
@@ -79,7 +79,7 @@ h1 {
 }
 
 .section-title {
-  color: #b03060;
+  color: #6b4e71;
   margin-top: 10px;
   font-size: 1.8em;
   text-align: center;
@@ -89,7 +89,7 @@ h1 {
 .resume-btn {
   display: inline-block;
   padding: 12px 24px;
-  background-color: #b03060;
+  background-color: #6b4e71;
   color: #fff;
   text-decoration: none;
   font-weight: bold;
@@ -99,12 +99,12 @@ h1 {
 }
 
 .resume-btn:hover {
-  background-color: #902c4c;
+  background-color: #593b5d;
 }
 
 /* Featured Section */
 .featured-section {
-  background: #fff;
+  background: #ffffff;
   padding: 30px;
   margin-top: 40px;
   border-radius: 16px;
@@ -131,7 +131,7 @@ h1 {
 .read-article-btn {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #b03060;
+  background-color: #6b4e71;
   color: white;
   text-decoration: none;
   font-weight: bold;
@@ -140,13 +140,13 @@ h1 {
 }
 
 .read-article-btn:hover {
-  background-color: #902c4c;
+  background-color: #593b5d;
 }
 
 .skills-title {
   margin-top: 30px;
   font-size: 1.3em;
-  color: #b03060;
+  color: #6b4e71;
   text-align: center;
 }
 
@@ -163,6 +163,7 @@ h1 {
   margin-bottom: 10px;
   line-height: 1.4;
 }
+
 .sidebar-honors {
   list-style: none;
   padding: 0;
@@ -186,40 +187,20 @@ h1 {
 }
 
 .footer {
-  background-color: #fff5f9;
-  color: #b03060;
-  text-align: center;
-  padding: 20px;
-  font-size: 0.95em;
-  margin-top: 60px;
-  border-top: 1px solid #ffd6e8;
-}
-
-.footer a {
-  color: #b03060;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.footer a:hover {
-  text-decoration: underline;
-}
-
-.footer {
-  background-color: #fff5f9;
-  color: #b03060;
+  background-color: #f6f2eb;
+  color: #6b4e71;
   text-align: center;
   padding: 30px 20px;
   font-size: 0.95em;
   margin-top: 60px;
-  border-top: 1px solid #ffd6e8;
+  border-top: 1px solid #e3d9ce;
 }
 
 .footer-title {
   margin: 0;
   font-size: 1.4em;
   font-weight: bold;
-  color: #b03060;
+  color: #6b4e71;
   margin-bottom: 10px;
 }
 
@@ -228,7 +209,7 @@ h1 {
 }
 
 .footer a {
-  color: #b03060;
+  color: #6b4e71;
   text-decoration: none;
   font-weight: 500;
 }
@@ -238,7 +219,7 @@ h1 {
 }
 
 .sidebar-card {
-  background: #ffd5e3;
+  background: #f4e6f4;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   padding: 16px;
@@ -254,18 +235,18 @@ h1 {
 
 .sidebar-btn {
   display: inline-block;
-  background-color: #fff0f5;
-  color: #b03060;
+  background-color: #f7f2f9;
+  color: #6b4e71;
   font-weight: bold;
   text-align: center;
   text-decoration: none;
   padding: 10px 15px;
   border-radius: 8px;
-  border: 1px solid #ffcce0;
+  border: 1px solid #d8cde5;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .sidebar-btn:hover {
-  background-color: #b03060;
+  background-color: #6b4e71;
   color: white;
 }

@@ -2,102 +2,143 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Madeleine McBride</title>
   <link rel="stylesheet" href="styles.css" />
-
-  <!-- Plausible Analytics-->
   <script defer data-domain="mcmad1325.github.io" src="https://plausible.io/js/script.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #fdfaf6;
+      color: #333;
+    }
+    .navbar {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 20px;
+      background-color: #f4e6f4;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+    .navbar a {
+      color: #6b4e71;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .navbar a:hover {
+      text-decoration: underline;
+    }
+    .hero {
+      text-align: center;
+      padding: 60px 20px 40px;
+    }
+    .hero h1 {
+      font-size: 2.8em;
+      color: #6b4e71;
+      margin-bottom: 10px;
+    }
+    .hero p {
+      font-size: 1.2em;
+      color: #555;
+    }
+    .section {
+      max-width: 800px;
+      margin: 0 auto 60px;
+      padding: 0 20px;
+    }
+    .section h2 {
+      font-size: 1.5em;
+      color: #6b4e71;
+      margin-bottom: 10px;
+    }
+    .section p {
+      font-size: 1.05em;
+      line-height: 1.6;
+      color: #444;
+    }
+    .section img {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 12px;
+      margin-top: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+    .footer {
+      background-color: #f6f2eb;
+      color: #6b4e71;
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 0.95em;
+      margin-top: 60px;
+      border-top: 1px solid #e3d9ce;
+    }
+    .footer-title {
+      font-size: 1.4em;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .footer a {
+      color: #6b4e71;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-  <div class="main-layout">
-    
-    <!-- Main Content -->
-    <div class="main-content">
-      <div class="profile-card">
-        <img src="profilepic.jpg" alt="Profile Picture" class="profile-pic" />
-        <h1>Madeleine McBride</h1>
-        <p class="summary">
-          I am a Computer Information Systems major at the UofSC Honors College and a DoD Cyber Service Academy Scholar, passionate about healthcare IT, cybersecurity, and IT infrastructure.
-          <br><br>
-          With hands-on experience in network operations, IT support, and cybersecurity research, I have worked as a Network Operator for the past two years troubleshooting enterprise infrastructure and enforcing security policies. As an IT Service Technician, I resolved 300+ support tickets, ensuring system reliability. I also develop context-aware multifactor authentication solutions through research.
-        </p>
-        <a href="https://www.linkedin.com/in/madeleine-mcbride/" target="_blank" class="linkedin-btn">Connect on LinkedIn</a>
-      </div>
+  <nav class="navbar">
+    <a href="index.html">Home</a>
+    <a href="Madeleine_McBride_Resume.pdf" target="_blank">Resume</a>
+    <a href="research/">Research</a>
+    <a href="networking/">Networking</a>
+    <a href="#contact">Contact</a>
+  </nav>
 
-      <!-- Feature 1 -->
-      <div class="featured-section">
-        <div class="featured-card">
-          <h2 class="section-title">📣 Featured In</h2>
-          <img src="me_and_emma_pic.jpg" alt="Madeleine and Emma featured" class="featured-img" />
-          <p class="featured-text">
-            I was recently featured in a <strong>UofSC Honors College spotlight</strong> highlighting my journey in engineering, cybersecurity, and leadership as a DoD Cyber Service Academy Scholar. The article explores how my passion for tech and cybersecurity is shaping my goals—and how collaboration with peers is driving innovation.
-          </p>
-          <a href="https://www.linkedin.com/posts/uofsc-south-carolina-honors-college_while-their-paths-to-the-molinaroli-college-ugcPost-7264364624458702851-RMQM" target="_blank" class="read-article-btn">Read the Full Article</a>
-        </div>
-      </div>
+  <header class="hero">
+    <h1>Madeleine McBride</h1>
+    <p>Cybersecurity • Healthcare IT • Research</p>
+  </header>
 
-      <!-- Feature 2 -->
-      <div class="featured-section">
-        <div class="featured-card">
-          <h2 class="section-title">💡 Why Engineering?</h2>
-          <img src="cis_linkedin.jpg" alt="Why Engineering CIS Interview" class="featured-img" />
-          <p class="featured-text">
-            I was honored to be featured by the College of Engineering and Computing as a model student for Computer Information Systems. In this interview, I shared why I chose engineering, how I’ve blended my interests in technology and healthcare, and what drives my passion for cybersecurity and IT infrastructure.
-          </p>
-          <a href="https://www.linkedin.com/posts/uofsc-cec_why-engineering-madeleine-mcbride-27-computer-activity-7138621619245109248-5Rj5" target="_blank" class="read-article-btn">Read the Full Post</a>
-        </div>
-      </div>
+  <section class="section">
+    <h2>👋 About Me</h2>
+    <p>
+      I am a Computer Information Systems major at the UofSC Honors College and a DoD Cyber Service Academy Scholar, passionate about healthcare IT, cybersecurity, and IT infrastructure.
+      With hands-on experience in network operations, IT support, and cybersecurity research, I have worked as a Network Operator for the past two years troubleshooting enterprise infrastructure and enforcing security policies. As an IT Service Technician, I resolved 300+ support tickets. I also develop context-aware multifactor authentication solutions through research.
+    </p>
+    <p>You can view my full resume <a href="Madeleine_McBride_Resume.pdf" target="_blank">here</a> or connect with me on <a href="https://www.linkedin.com/in/madeleine-mcbride/" target="_blank">LinkedIn</a>.</p>
+  </section>
 
-      <!-- Feature 3 -->
-      <div class="featured-section">
-        <div class="featured-card">
-          <h2 class="section-title">🎤 DoD Cyber Scholarship Speech</h2>
-          <img src="me_giving_speech.jpg" alt="Madeleine McBride giving speech on DoD CSA" class="featured-img" />
-          <p class="featured-text">
-            I had the incredible opportunity to speak to Honors College students about the Department of Defense Cyber Scholarship Program (DoD CSA). I shared my experience as a scholar and discussed how the program has opened doors for research, technical growth, and national service through cybersecurity and IT infrastructure.
-          </p>
-          <a href="https://www.linkedin.com/posts/madeleine-mcbride_excited-to-have-had-the-opportunity-to-speak-activity-7308499272142934019-nkaF" target="_blank" class="read-article-btn">View the LinkedIn Post</a>
-        </div>
-      </div>
-    </div>
+  <section class="section">
+    <h2>📣 Honors Feature</h2>
+    <img src="me_and_emma_pic.jpg" alt="Madeleine and Emma featured">
+    <p>
+      I was recently featured in a <strong>UofSC Honors College spotlight</strong> highlighting my journey in engineering, cybersecurity, and leadership as a DoD Cyber Service Academy Scholar.
+      <br><a href="https://www.linkedin.com/posts/uofsc-south-carolina-honors-college_while-their-paths-to-the-molinaroli-college-ugcPost-7264364624458702851-RMQM" target="_blank">Read the full article</a>.
+    </p>
+  </section>
 
-    <!-- Sidebar with Resume & Skills -->
-    <div class="sidebar">
-      <h2 class="section-title">My Resume</h2>
-      <p>Want to learn more about my technical skills and experience?</p>
-      <a href="Madeleine_McBride_Resume.pdf" target="_blank" class="resume-btn">View My Resume (PDF)</a>
+  <section class="section">
+    <h2>💡 Why Engineering?</h2>
+    <img src="cis_linkedin.jpg" alt="Why Engineering CIS Interview">
+    <p>
+      I was honored to be featured by the College of Engineering and Computing as a model student for CIS. I shared how I blended tech and healthcare, and what drives my passion for IT infrastructure.
+      <br><a href="https://www.linkedin.com/posts/uofsc-cec_why-engineering-madeleine-mcbride-27-computer-activity-7138621619245109248-5Rj5" target="_blank">Read the post</a>.
+    </p>
+  </section>
 
-      <h3 class="skills-title">Technical Skills</h3>
-      <ul class="skills-list">
-        <li><strong>Programming:</strong> Java, Python, HTML, CSS, C++</li>
-        <li><strong>Networking & Security:</strong> PuTTY, Protégé, Wireshark, Linux OS</li>
-        <li><strong>IT Support & Software:</strong> Service Now, Git, Excel, Microsoft Suite</li>
-      </ul>
-      <h3 class="skills-title">🏅 Recognition</h3>
-      <ul class="sidebar-honors">
-        <li>DoD Cyber Scholar Academy</li>
-        <li>VICEROY DECREE Scholar</li>
-        <li>NIWC Redzone Hackathon</li>
-        <li>BSIDES Augusta CTF</li>
-      </ul>
+  <section class="section">
+    <h2>🎤 DoD CSA Talk</h2>
+    <img src="me_giving_speech.jpg" alt="Madeleine McBride giving speech on DoD CSA">
+    <p>
+      I had the opportunity to speak to Honors College students about the DoD Cyber Scholarship Program. I shared my experience and the doors it’s opened in research and cybersecurity.
+      <br><a href="https://www.linkedin.com/posts/madeleine-mcbride_excited-to-have-had-the-opportunity-to-speak-activity-7308499272142934019-nkaF" target="_blank">View the LinkedIn post</a>.
+    </p>
+  </section>
 
-      <!-- Explore More Section (in sidebar) -->
-      <div class="sidebar-card">
-        <h3 class="skills-title">🔌 My Work in Networking</h3>
-        <p>I help monitor and secure enterprise infrastructure as a Network Operator at UofSC’s Division of IT.</p>
-        <a href="networking/" class="sidebar-btn">View Networking Page</a>
-      </div>
-
-      <div class="sidebar-card">
-        <h3 class="skills-title">🔐 MFA Research</h3>
-        <p>Through my research, I’m developing an Android app for passive context-aware multifactor authentication.</p>
-        <a href="research/" class="sidebar-btn">View Research Page</a>
-      </div>
-    </div>
-  </div>
-  <!-- Footer Contact Info -->
-  <footer class="footer">
+  <footer class="footer" id="contact">
     <h2 class="footer-title">Contact Me!</h2>
     <p>📞 854-444-9269</p>
     <p>📧 <a href="mailto:mm249@email.sc.edu">mm249@email.sc.edu</a></p>
