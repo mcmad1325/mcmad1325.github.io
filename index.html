@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Madeleine McBride</title>
   <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&family=Playfair+Display:wght@500&family=DM+Sans:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
   <script defer data-domain="mcmad1325.github.io" src="https://plausible.io/js/script.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;900&family=Playfair+Display:wght@500&family=DM+Sans:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -32,31 +32,15 @@
     }
     .hero-banner {
       display: flex;
-      flex-direction: row;
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
       gap: 20px;
       padding: 60px 20px 40px;
-      background-image: url('grid.webp');
+      background: url('grid.webp') no-repeat center center;
       background-size: cover;
-      background-position: center;
-      position: relative;
-    }
-    .hero-banner::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(253, 250, 246, 0.93);
-      z-index: 0;
-    }
-    .hero-text,
-    .hero-img {
-      position: relative;
-      z-index: 1;
+      background-blend-mode: lighten;
+      background-color: #fdfaf6;
     }
     .hero-text {
       font-size: 3.2em;
@@ -102,19 +86,42 @@
       line-height: 1.6;
       color: #444;
     }
-    .about-signature {
-      text-align: right;
-      font-family: 'Homemade Apple', cursive;
-      font-size: 1.6em;
+    .signature {
+      font-family: 'Pacifico', cursive;
+      font-size: 1.4em;
       color: #6b4e71;
+      text-align: right;
       margin-top: 20px;
     }
-    .section img {
+    .cards-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      padding: 0 20px 60px;
+    }
+    .card {
+      width: 280px;
+      background-color: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+      overflow: hidden;
+      text-align: center;
+    }
+    .card img {
       width: 100%;
-      max-width: 600px;
-      border-radius: 12px;
-      margin-top: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      height: 180px;
+      object-fit: cover;
+    }
+    .card-title {
+      font-size: 1.2em;
+      font-weight: bold;
+      padding: 10px 15px 0;
+    }
+    .card-text {
+      padding: 0 15px 20px;
+      font-size: 0.95em;
+      color: #666;
     }
     .footer {
       background-color: #f6f2eb;
@@ -161,32 +168,34 @@
 
   <section class="section">
     <h2>About Me</h2>
-    <p>I am a Computer Information Systems junior at the UofSC Honors College and a DoD Cyber Service Academy Scholar, passionate about healthcare IT, cybersecurity, and computer networking. With hands-on experience in network operations, IT support, and cybersecurity research, I have worked as a Network Operator for the past two years troubleshooting enterprise infrastructure and enforcing security policies. As an IT Service Technician, I resolved 300+ support tickets. I also develop context-aware multifactor authentication solutions through research.</p>
-    <p>My passion for healthcare combined with my expertise in IT, networking, and cybersecurity have prepared for a future in health care IT. I plan to delve into this through grad school and later professionally.</p>
+    <p>
+      I am a Computer Information Systems junior at the UofSC Honors College and a DoD Cyber Service Academy Scholar, passionate about healthcare IT, cybersecurity, and computer networking.
+      With hands-on experience in network operations, IT support, and cybersecurity research, I have worked as a Network Operator for the past two years troubleshooting enterprise infrastructure and enforcing security policies. As an IT Service Technician, I resolved 300+ support tickets. I also develop context-aware multifactor authentication solutions through research.
+    </p>
+    <p>
+      My passion for healthcare combined with my expertise in IT, networking, and cybersecurity have prepared for a future in health care IT. I plan to delve into this through grad school and later professionaly.
+    </p>
     <p>You can view my full resume <a href="Madeleine_McBride_Resume.pdf" target="_blank">here</a> or connect with me on <a href="https://www.linkedin.com/in/madeleine-mcbride/" target="_blank">LinkedIn</a>.</p>
-    <p class="about-signature">xx Madeleine</p>
+    <div class="signature">xx Madeleine</div>
   </section>
 
   <section class="section">
     <h2>Highlights</h2>
-    <div class="cards">
+    <div class="cards-container">
       <div class="card">
-        <img src="profilepic.jpg" alt="Networking Highlight">
-        <h3>Networking Projects</h3>
-        <p>Explore my hands-on work supporting enterprise infrastructure as a Network Operator.</p>
-        <a href="networking/">Read More! →</a>
+        <img src="https://via.placeholder.com/280x180" alt="Networking">
+        <div class="card-title">Networking</div>
+        <div class="card-text">Explore my hands-on experience with infrastructure and switch configuration.</div>
       </div>
       <div class="card">
-        <img src="me_giving_speech.jpg" alt="Research Highlight">
-        <h3>Cybersecurity Research</h3>
-        <p>Learn how I’m advancing MFA and mobile security as a CSA researcher.</p>
-        <a href="research/">Read More! →</a>
+        <img src="https://via.placeholder.com/280x180" alt="Research">
+        <div class="card-title">Research</div>
+        <div class="card-text">Discover my projects in context-aware multifactor authentication and cyber policy.</div>
       </div>
       <div class="card">
-        <img src="" alt="Future Highlight">
-        <h3>Coming Soon</h3>
-        <p>A new project or publication will appear here shortly!</p>
-        <a href="#">Check Back Later →</a>
+        <img src="https://via.placeholder.com/280x180" alt="Coming Soon">
+        <div class="card-title">Coming Soon</div>
+        <div class="card-text">A new featured project or story will be added here soon—stay tuned!</div>
       </div>
     </div>
   </section>
