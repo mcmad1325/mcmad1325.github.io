@@ -31,17 +31,14 @@
       text-decoration: underline;
     }
     .hero-banner {
+      position: relative;
       display: flex;
-      flex-direction: row;
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
       gap: 20px;
       padding: 60px 20px 40px;
-      background-image: url("grid.webp");
-      background-size: cover;
-      background-position: center;
-      position: relative;
+      background: url('grid.webp') center/cover no-repeat;
     }
     .hero-banner::before {
       content: "";
@@ -50,12 +47,13 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(253, 250, 246, 0.94);
-      z-index: 1;
+      background: #fdfaf6;
+      opacity: 0.94;
+      z-index: 0;
     }
     .hero-text, .hero-img {
       position: relative;
-      z-index: 2;
+      z-index: 1;
     }
     .hero-text {
       font-size: 3.2em;
@@ -151,5 +149,50 @@
     </div>
     <img src="profilepic.jpg" alt="Madeleine McBride" class="hero-img" />
   </div>
+
+  <section class="section">
+    <h2>About Me</h2>
+    <p>
+      I am a Computer Information Systems junior at the UofSC Honors College and a DoD Cyber Service Academy Scholar, passionate about healthcare IT, cybersecurity, and computer networking.
+      With hands-on experience in network operations, IT support, and cybersecurity research, I have worked as a Network Operator for the past two years troubleshooting enterprise infrastructure and enforcing security policies. As an IT Service Technician, I resolved 300+ support tickets. I also develop context-aware multifactor authentication solutions through research.
+    </p>
+    <p>
+      My passion for healthcare combined with my expertise in IT, networking, and cybersecurity have prepared for a future in health care IT. I plan to delve into this through grad school and later professionally.
+    </p>
+    <p>You can view my full resume <a href="Madeleine_McBride_Resume.pdf" target="_blank">here</a> or connect with me on <a href="https://www.linkedin.com/in/madeleine-mcbride/" target="_blank">LinkedIn</a>.</p>
+  </section>
+
+  <section class="section">
+    <h2>Honors Feature</h2>
+    <img src="me_and_emma_pic.jpg" alt="Madeleine and Emma featured">
+    <p>
+      I was recently featured in a <strong>UofSC Honors College spotlight</strong> highlighting my journey in engineering, cybersecurity, and leadership as a DoD Cyber Service Academy Scholar.
+      <br><a href="https://www.linkedin.com/posts/uofsc-south-carolina-honors-college_while-their-paths-to-the-molinaroli-college-ugcPost-7264364624458702851-RMQM" target="_blank">Read the full article</a>.
+    </p>
+  </section>
+
+  <section class="section">
+    <h2>Why Engineering?</h2>
+    <img src="cis_linkedin.jpg" alt="Why Engineering CIS Interview">
+    <p>
+      I was honored to be featured by the College of Engineering and Computing as a model student for CIS. I shared how I blended tech and healthcare, and what drives my passion for IT infrastructure.
+      <br><a href="https://www.linkedin.com/posts/uofsc-cec_why-engineering-madeleine-mcbride-27-computer-activity-7138621619245109248-5Rj5" target="_blank">Read the post</a>.
+    </p>
+  </section>
+
+  <section class="section">
+    <h2>DoD CSA Talk</h2>
+    <img src="me_giving_speech.jpg" alt="Madeleine McBride giving speech on DoD CSA">
+    <p>
+      I had the opportunity to speak to Honors College students about the DoD Cyber Scholarship Program. I shared my experience and the doors it’s opened in research and cybersecurity.
+      <br><a href="https://www.linkedin.com/posts/madeleine-mcbride_excited-to-have-had-the-opportunity-to-speak-activity-7308499272142934019-nkaF" target="_blank">View the LinkedIn post</a>.
+    </p>
+  </section>
+
+  <footer class="footer" id="contact">
+    <h2 class="footer-title">Contact Me!</h2>
+    <p>📞 854-444-9269</p>
+    <p>📧 <a href="mailto:mm249@email.sc.edu">mm249@email.sc.edu</a></p>
+  </footer>
 </body>
 </html>
