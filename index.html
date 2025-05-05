@@ -6,7 +6,7 @@
   <title>Madeleine McBride</title>
   <link rel="stylesheet" href="styles.css" />
   <script defer data-domain="mcmad1325.github.io" src="https://plausible.io/js/script.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&family=Playfair+Display:wght@500&family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;900&family=Playfair+Display:wght@500&family=DM+Sans:wght@400;700&family=Homemade+Apple&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -31,38 +31,24 @@
       text-decoration: underline;
     }
     .hero-banner {
-      position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
-      gap: 20px;
-      padding: 60px 20px 40px;
-      background: url('grid.webp') center/cover no-repeat;
-    }
-    .hero-banner::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #fdfaf6;
-      opacity: 0.94;
-      z-index: 0;
-    }
-    .hero-text, .hero-img {
-      position: relative;
-      z-index: 1;
+      gap: 40px;
+      padding: 60px 20px;
+      background: linear-gradient(rgba(253, 250, 246, 0.92), rgba(253, 250, 246, 0.92)), url('grid.webp');
+      background-size: cover;
+      background-position: center;
     }
     .hero-text {
       font-size: 3.2em;
+      font-family: 'Rubik', sans-serif;
       font-weight: 900;
       text-transform: uppercase;
       line-height: 1.3;
       letter-spacing: 2px;
       color: #1d1d1d;
-      font-family: 'Rubik', sans-serif;
     }
     .hero-text span {
       display: block;
@@ -78,6 +64,7 @@
       max-width: 800px;
       margin: 0 auto 60px;
       padding: 0 20px;
+      position: relative;
     }
     .section h2 {
       display: flex;
@@ -106,6 +93,14 @@
       border-radius: 12px;
       margin-top: 20px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+    .signature {
+      position: absolute;
+      bottom: -30px;
+      right: 20px;
+      font-family: 'Homemade Apple', cursive;
+      font-size: 1.6em;
+      color: #6b4e71;
     }
     .footer {
       background-color: #f6f2eb;
@@ -157,9 +152,10 @@
       With hands-on experience in network operations, IT support, and cybersecurity research, I have worked as a Network Operator for the past two years troubleshooting enterprise infrastructure and enforcing security policies. As an IT Service Technician, I resolved 300+ support tickets. I also develop context-aware multifactor authentication solutions through research.
     </p>
     <p>
-      My passion for healthcare combined with my expertise in IT, networking, and cybersecurity have prepared for a future in health care IT. I plan to delve into this through grad school and later professionally.
+      My passion for healthcare combined with my expertise in IT, networking, and cybersecurity have prepared for a future in health care IT. I plan to delve into this through grad school and later professionaly.
     </p>
     <p>You can view my full resume <a href="Madeleine_McBride_Resume.pdf" target="_blank">here</a> or connect with me on <a href="https://www.linkedin.com/in/madeleine-mcbride/" target="_blank">LinkedIn</a>.</p>
+    <p class="signature">xx Madeleine</p>
   </section>
 
   <section class="section">
