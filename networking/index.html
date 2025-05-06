@@ -5,20 +5,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Networking Operations</title>
   <link rel="stylesheet" href="../styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&family=DM+Sans:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #fff0f5;
+      font-family: 'DM Sans', sans-serif;
+      background: #fdfaf6;
       margin: 0;
       padding: 0;
       color: #333;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('../grid.webp') center/cover no-repeat;
+      z-index: -2;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(253, 250, 246, 0.85);
+      z-index: -1;
     }
 
     .back-btn {
       position: fixed;
       top: 20px;
       left: 20px;
-      background: #b03060;
+      background: #6b4e71;
       color: white;
       padding: 10px 16px;
       border-radius: 8px;
@@ -26,40 +50,57 @@
       font-weight: bold;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       z-index: 1000;
+      transition: background 0.3s ease;
     }
 
     .back-btn:hover {
-      background: #902c4c;
+      background: #5a3e5f;
     }
 
     .content {
       max-width: 800px;
       margin: 100px auto 60px;
-      padding: 20px;
+      padding: 30px 24px;
       background: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
     }
 
     h1 {
-      color: #b03060;
-      font-size: 2em;
-      margin-bottom: 20px;
-    }
-
-    .section {
+      font-family: 'Rubik', sans-serif;
+      color: #6b4e71;
+      font-size: 2.4em;
+      font-weight: 800;
+      text-align: center;
       margin-bottom: 30px;
     }
 
+    .section {
+      margin-bottom: 40px;
+    }
+
     .section h2 {
-      color: #b03060;
-      font-size: 1.3em;
-      margin-bottom: 10px;
+      color: #6b4e71;
+      font-size: 1.4em;
+      font-weight: bold;
+      font-family: 'DM Sans', sans-serif;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+    }
+
+    .section h2::before {
+      content: "";
+      flex: 1;
+      height: 3px;
+      background-color: #6b4e71;
+      margin-right: 12px;
     }
 
     .section p {
-      font-size: 1em;
+      font-size: 1.05em;
       line-height: 1.6;
+      color: #444;
     }
 
     ul.brand-list, ul.tool-list {
@@ -69,16 +110,23 @@
 
     ul.brand-list li::before {
       content: "📦 ";
+      margin-right: 4px;
     }
 
     ul.tool-list li::before {
       content: "🛠️ ";
+      margin-right: 4px;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+      font-size: 1em;
     }
 
     .image-section img {
       width: 100%;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       margin-top: 15px;
     }
 
@@ -88,25 +136,47 @@
       text-align: center;
       margin-top: 6px;
     }
+
+    @media (max-width: 768px) {
+      .content {
+        margin: 80px 16px 40px;
+        padding: 24px 18px;
+      }
+
+      .back-btn {
+        padding: 8px 14px;
+        font-size: 0.95em;
+      }
+
+      h1 {
+        font-size: 2em;
+      }
+
+      .section h2 {
+        font-size: 1.2em;
+      }
+    }
   </style>
 </head>
 <body>
   <a href="../index.html" class="back-btn">← Back</a>
+
   <div class="content">
     <h1>Networking Operations at UofSC</h1>
 
     <div class="section">
       <h2>Overview</h2>
       <p>As a student Network Operator for the University of South Carolina's Division of IT, I support the backbone of our campus connectivity. My role involves working hands-on with enterprise hardware and software to troubleshoot issues, maintain equipment, and ensure network stability across campus environments.</p>
-      <div class="section accomplishments-box">
-  <h2 class="section-title">🌟 My Accomplishments</h2>
-  <ul>
-    <li>✅ Resolved over <strong>300 ServiceNow tickets</strong></li>
-    <li>🚗 Traveled to the <strong>USC Greenville School of Business</strong> to repair a network outage</li>
-    <li>👩‍🏫 Trained multiple new interns on tools and procedures</li>
-    <li>🔧 Independently configured and wiped Aruba, Cisco, and Juniper switches.</li>
-  </ul>
-</div>
+    </div>
+
+    <div class="section accomplishments-box">
+      <h2>🌟 My Accomplishments</h2>
+      <ul>
+        <li>✅ Resolved over <strong>300 ServiceNow tickets</strong></li>
+        <li>🚗 Traveled to the <strong>USC Greenville School of Business</strong> to repair a network outage</li>
+        <li>👩‍🏫 Trained multiple new interns on tools and procedures</li>
+        <li>🔧 Independently configured and wiped Aruba, Cisco, and Juniper switches.</li>
+      </ul>
     </div>
 
     <div class="section">
