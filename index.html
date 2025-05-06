@@ -207,6 +207,37 @@
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
+    @media (max-width: 768px) {
+      .navbar {
+        flex-wrap: wrap;
+        padding: 16px;
+        gap: 16px;
+      }
+
+      .hero-banner {
+        flex-direction: column;
+        padding: 40px 16px 20px;
+        text-align: center;
+      }
+
+      .hero-text {
+        font-size: 2em;
+        line-height: 1.2;
+        padding: 0 10px;
+      }
+
+      .hero-img {
+        width: 200px;
+        height: 200px;
+      }
+
+      body {
+        padding: 0;
+        margin: 0;
+        overflow-x: hidden; /* prevents horizontal scroll from small overflow */
+      }
+    }
+
   </style>
 </head>
 <body>
