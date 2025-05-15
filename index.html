@@ -207,6 +207,62 @@
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
+
+    .timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.timeline-event {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+
+.timeline-event:hover {
+  box-shadow: 0 6px 14px rgba(107, 78, 113, 0.15);
+  transform: translateY(-3px);
+}
+
+.timeline-event img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.timeline-event h3 {
+  margin: 0;
+  color: #6b4e71;
+  font-size: 1.2em;
+}
+
+.timeline-event p {
+  margin: 4px 0 0;
+  font-size: 1em;
+  color: #444;
+}
+
+@media (max-width: 768px) {
+  .timeline-event {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .timeline-event img {
+    width: 80px;
+    height: 80px;
+  }
+}
+
     @media (max-width: 768px) {
       .navbar {
         flex-wrap: wrap;
@@ -284,6 +340,64 @@
       </div>
     </div>
   </section>
+
+  <section class="section">
+    <h2>My Journey</h2>
+    <div class="timeline">
+      <div class="timeline-event">
+        <img src="USC.webp" alt="Start USC">
+        <div>
+          <h3>Aug 2022</h3>
+          <p>Started my undergraduate studies at the University of South Carolina.</p>
+        </div>
+      </div>
+
+      <div class="timeline-event">
+        <div>
+          <h3>June 2023</h3>
+          <p>Begun working as an IT Service Technician for the USC Division of IT.</p>
+        </div>
+      </div>
+
+      <div class="timeline-event">
+        <div>
+          <h3>Dec 2023</h3>
+          <p>Started working as a Network Operator for the USC Division of IT.</p>
+        </div>
+      </div>
+
+      <div class="timeline-event">
+        <div>
+          <h3>April 2024</h3>
+          <p>Became a VICEROY DECREE Scholar.</p>
+        </div>
+      </div>
+
+      <div class="timeline-event">
+        <img src="NIWC.webp" alt="DOD CSA Scholar">
+        <div>
+          <h3>May 2024</h3>
+          <p>Accepted as a DoD CSA scholar through the Naval Information Warfare Center.</p>
+        </div>
+      </div>
+
+      <div class="timeline-event">
+        <img src="robotics_camp.jpeg" alt="Cybersecurity Youth Instructor">
+        <div>
+          <h3>June 2024</h3>
+          <p>Worked as a Cybersecurity Youth Instructor for Trident Technical College.</p>
+        </div>
+      </div>
+
+      <div class="timeline-event">
+        <div>
+          <h3>Sept 2024</h3>
+          <p>Started multifactor authentication research with Dr. Farkas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
 
   <div class="feature">
     <img src="me_and_emma_pic.jpg" alt="Honors Feature">
