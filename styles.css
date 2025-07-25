@@ -266,7 +266,7 @@ h1 {
 
 .timeline {
   position: relative;
-  max-width: 900px;
+  max-width: 1000px;
   margin: auto;
 }
 
@@ -301,6 +301,7 @@ h1 {
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   position: relative;
+  width: calc(100% - 40px);
 }
 
 .timeline-item.left .timeline-content::after {
@@ -339,19 +340,22 @@ h1 {
   object-fit: cover;
 }
 
-/* ===== Responsive ===== */
+/* Responsive */
 @media screen and (max-width: 768px) {
   .timeline::before {
     left: 31px;
   }
+
   .timeline-item {
     width: 100%;
     padding-left: 70px;
     padding-right: 25px;
   }
+
   .timeline-item.right {
     left: 0%;
   }
+
   .timeline-content::after {
     left: 20px !important;
     border-color: transparent #fff transparent transparent !important;
