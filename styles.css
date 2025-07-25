@@ -344,17 +344,14 @@ h1 {
   .timeline::before {
     left: 31px;
   }
-
   .timeline-item {
     width: 100%;
     padding-left: 70px;
     padding-right: 25px;
   }
-
   .timeline-item.right {
     left: 0%;
   }
-
   .timeline-content::after {
     left: 20px !important;
     border-color: transparent #fff transparent transparent !important;
