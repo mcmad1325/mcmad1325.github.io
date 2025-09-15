@@ -148,6 +148,15 @@
     .highlight-card a:hover {
       background: #5a3e5f;
     }
+    /* show entire graph without cropping */
+.highlight-card img.img-contain {
+  height: 200px;          /* a bit taller so labels are readable */
+  object-fit: contain;    /* no cropping */
+  background: #fff;       /* “letterbox” edges look clean */
+  padding: 8px;           /* breathing room around the plot */
+  border: 1px solid #eee; /* subtle frame */
+}
+
     .feature {
       display: flex;
       align-items: center;
@@ -375,7 +384,8 @@
         <a href="networking/">Visit Networking</a>
       </div>
       <div class="highlight-card">
-        <img src="./graph.png" alt="Research Highlight">
+        <!-- change this one line -->
+        <img class="img-contain" src="./graph.png" alt="Research Highlight">
         <p>This<strong> NSA-Funded</strong> research on context-aware multifactor authentication using adversarial simulation and machine learning.</p>
         <a href="research/">Visit Research</a>
       </div>
