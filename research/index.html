@@ -129,11 +129,16 @@
 
     <section class="glass card">
       <h3>Interactive Lab</h3>
-      <p class="muted">Use the sliders to explore how trust separation behaves. The bar shows distributions; text shows overlap & AUC; the wheel shows overseas risk.
-        The amount they overlap shows how hard it is to tell them apart.
-        - If the spans are far apart, overlap is tiny → good separation.
-        - If they slide close together, overlap grows → harder to separate
-      </p>
+      <p class="muted">
+  Use the sliders to explore how trust separation behaves. 
+  The bar shows distributions; text shows overlap &amp; AUC; 
+  the wheel shows overseas risk.<br><br>
+  The amount the spans overlap shows how hard it is to tell them apart:
+</p>
+<ul class="muted">
+  <li>If the spans are far apart, overlap is tiny → good separation.</li>
+  <li>If they slide close together, overlap grows → harder to separate.</li>
+</ul>
       <div style="margin:16px 0">
         <label>Normal center: moves where the average normal user trust score sits <input type="range" min="20" max="70" value="60" id="aRange"></label><br>
         <label>Attacker center:moves where the average attacker trust score sits  <input type="range" min="5" max="40" value="25" id="bRange"></label><br>
