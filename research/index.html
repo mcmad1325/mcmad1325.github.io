@@ -10,20 +10,20 @@
   <script defer data-domain="mcmad1325.github.io" src="https://plausible.io/js/script.js"></script>
   <style>
     :root{
-      --bg: #0b0b14;
-      --panel: rgba(255,255,255,0.06);
-      --text: #e6e7eb;
-      --muted: #9aa3b2;
-      --brand: #a78bfa; /* lilac */
-      --brand-2: #f472b6; /* pink */
+      --bg: #fdfaf6;
+      --panel: #ffffff;
+      --text: #333333;
+      --muted: #444444;
+      --brand: #6b4e71; /* deep mauve */
+      --brand-2: #f4e6f4; /* light pinkish background */
       --ok: #22c55e;
       --warn: #f59e0b;
       --bad: #ef4444;
-      --card-bd: rgba(255,255,255,0.08);
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --card-bd: #e6d6ea;
+      --shadow: 0 4px 10px rgba(0,0,0,.08);
       --radius: 16px;
     }
-    body{margin:0;font-family:Inter,system-ui,sans-serif;background:radial-gradient(1200px 600px at 10% -10%, rgba(167,139,250,.18), transparent 60%),radial-gradient(1000px 500px at 90% 10%, rgba(244,114,182,.18), transparent 55%),linear-gradient(180deg, #0a0b13 0%, #0b0b14 50%, #0b0b14 100%);color:var(--text)}
+    body{margin:0;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text)}
     a{color:inherit}
     .wrap{max-width:1100px;margin:0 auto;padding:24px}
     header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(120%) blur(8px);background:rgba(11,13,18,.9);border-bottom:1px solid var(--card-bd)}
@@ -31,7 +31,7 @@
     .btn{padding:10px 14px;border-radius:12px;border:1px solid var(--card-bd);background:var(--panel);cursor:pointer}
     .btn:hover{border-color:rgba(255,255,255,.2)}
     .hero{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;padding:32px 0}
-    .badge{display:inline-flex;gap:8px;align-items:center;background:rgba(167,139,250,.12);color:#ede9fe;border:1px solid rgba(167,139,250,.4);border-radius:999px;padding:6px 12px;font-weight:600}
+    .badge{display:inline-flex;gap:8px;align-items:center;background:var(--brand-2);color:var(--brand);border:1px solid var(--card-bd);border-radius:999px;padding:6px 12px;font-weight:600}
     h2{font-size:36px;margin:14px 0 10px}
     .lead{color:var(--muted);line-height:1.6}
     .glass{background:var(--panel);border:1px solid var(--card-bd);border-radius:var(--radius);box-shadow:var(--shadow)}
@@ -43,6 +43,27 @@
     details summary{cursor:pointer;font-weight:600}
     footer{margin:40px 0 20px;color:var(--muted);text-align:center}
     @media(max-width:900px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
+  </style>
+  <style id="theme-override">
+    /* --- Light + Pinkish‑Purple Theme Override --- */
+    :root{
+      --bg:#fdfaf6;           /* cream */
+      --panel:#ffffff;         /* white cards */
+      --text:#333333;          /* dark text */
+      --muted:#444444;         /* body copy */
+      --brand:#6b4e71;         /* purple */
+      --brand-2:#f4e6f4;       /* light lavender */
+      --card-bd:#e6d6ea;       /* soft lilac border */
+      --shadow:0 4px 10px rgba(0,0,0,0.06);
+    }
+    body{background:var(--bg)!important;color:var(--text)!important}
+    header{backdrop-filter:saturate(120%) blur(6px);background:var(--brand-2)!important;border-bottom:1px solid var(--card-bd)!important}
+    .badge{background:var(--brand-2)!important;color:var(--brand)!important;border:1px solid #c9a7d4!important}
+    .glass{background:var(--panel)!important;border:1px solid var(--card-bd)!important;box-shadow:var(--shadow)!important}
+    .btn{background:var(--panel)!important;border:1px solid var(--card-bd)!important;color:var(--brand)!important}
+    .btn:hover{border-color:#c9a7d4!important}
+    .lead{color:var(--muted)!important}
+    footer{color:#6b4e71}
   </style>
 </head>
 <body>
