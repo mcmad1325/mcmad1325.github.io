@@ -4,176 +4,441 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Networking Operations</title>
-  <link rel="stylesheet" href="../styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Page-specific enhancements */
-    body {
-      margin: 0;
-      background: var(--background, #fdfaf6);
-      color: var(--text, #333);
-      overflow-x: hidden;
+    :root{
+      --bg: #0f0d14;
+      --bg-2:#14111b;
+      --card:#181422;
+      --ink:#e9e6f2;
+      --muted:#bdb7cc;
+      --accent:#8b5cf6;
+      --accent-2:#a78bfa;
+      --chip:#241b38;
+      --ring: 0 0 0 2px rgba(139,92,246,.35), 0 8px 30px rgba(139,92,246,.25);
     }
-    .back-btn {
-      position: fixed;top:20px;left:20px;z-index:10;
-      padding: 10px 16px;border-radius:8px;
-      background: var(--primary, #6b4e71);color:white;
-      font-weight:600;text-decoration:none;
-      box-shadow:0 4px 12px rgba(0,0,0,.15);
-      transition: background .3s ease;
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg:#f7f5ff;
+        --bg-2:#f1eeff;
+        --card:#ffffff;
+        --ink:#1e1633;
+        --muted:#534b66;
+        --chip:#efecff;
+      }
     }
-    .back-btn:hover { background: var(--primary-dark, #5a3e5f); }
-    .container { width:min(1100px,92vw);margin:100px auto 60px; }
-    .hero {
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:'DM Sans',system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(139,92,246,.20), transparent 60%),
+                  radial-gradient(1200px 600px at 120% 20%, rgba(167,139,250,.20), transparent 60%),
+                  var(--bg);
+      color:var(--ink);
+      overflow-x:hidden;
+    }
+    .grid-bg::before{
+      content:"";
+      position:fixed;inset:0;
+      background-image:linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px),
+                       linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size:36px 36px;
+      opacity:.25;
+      pointer-events:none;
+      z-index:-2;
+    }
+    .blob{
+      position:fixed;inset:auto -20% -20% auto;
+      width:60vmax;height:60vmax;border-radius:50%;
+      background:radial-gradient(circle at 40% 40%, rgba(139,92,246,.28), transparent 60%);
+      filter:blur(40px);opacity:.6;z-index:-3;transform:translateZ(0);
+    }
+    a.back{
+      position:fixed;top:16px;left:16px;z-index:10;
+      background:var(--card);color:var(--ink);
+      text-decoration:none;padding:10px 14px;border-radius:12px;
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:0 8px 24px rgba(0,0,0,.25);
+      display:inline-flex;gap:.6rem;align-items:center;
+      transition:.25s transform ease, .25s background ease;
+    }
+    a.back:hover{transform:translateY(-2px)}
+    .toggle{
+      position:fixed;top:16px;right:16px;z-index:10;
+      background:var(--card);color:var(--ink);
+      border:1px solid rgba(255,255,255,.08);border-radius:999px;
+      padding:8px 12px;cursor:pointer;
+      box-shadow:0 8px 24px rgba(0,0,0,.25);
+    }
+    .container{
+      width:min(1100px, 92vw);
+      margin:clamp(60px,6vw,100px) auto 80px;
+    }
+    .hero{
       display:grid;gap:20px;align-items:center;
-      grid-template-columns:1.2fr .8fr;
-      background: var(--card-bg, #fff);
-      border-radius:20px;
-      padding:30px 24px;
-      box-shadow:0 8px 20px rgba(0,0,0,.1);
+      grid-template-columns: 1.2fr .8fr;
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:24px;padding:28px 28px 24px;
+      box-shadow:0 30px 80px rgba(0,0,0,.35);
+      backdrop-filter: blur(8px);
     }
-    .hero h1 { font-family:'Rubik',sans-serif;font-size:2.2em;margin:0 0 10px;color:var(--primary,#6b4e71);}
-    .hero p { line-height:1.6;color:var(--text,#333);}
-    .badge-row { margin-top:12px;display:flex;flex-wrap:wrap;gap:10px; }
-    .badge { background:var(--primary-light,#eee);padding:6px 12px;border-radius:999px;font-size:.9em; }
-    .kpis { display:grid;grid-template-columns:repeat(3,1fr);gap:16px; }
-    .kpi { background:var(--card-bg,#fff);border-radius:14px;padding:16px;text-align:center;box-shadow:0 6px 12px rgba(0,0,0,.05);}
-    .kpi .num { font-size:1.6em;font-weight:800;color:var(--primary,#6b4e71);}
-    .section { margin-top:40px; }
-    .section h2 { font-family:'Rubik',sans-serif;font-size:1.4em;margin-bottom:12px;color:var(--primary,#6b4e71);}
-    .card { background:var(--card-bg,#fff);border-radius:14px;padding:18px;box-shadow:0 4px 12px rgba(0,0,0,.08);}
-    details { background:var(--card-bg,#fff);border-radius:14px;margin-bottom:10px;box-shadow:0 4px 12px rgba(0,0,0,.08);}
-    summary { cursor:pointer;padding:14px 16px;font-weight:600; }
-    .acc-body { padding:0 16px 16px;line-height:1.6;color:var(--text,#444);}
-    .gallery { display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px; }
-    .img-card { border-radius:12px;overflow:hidden;cursor:pointer; }
-    .img-card img { width:100%;display:block;transition:.25s transform ease; }
-    .img-card:hover img { transform:scale(1.03); }
-    .chip { display:inline-block;padding:8px 12px;border-radius:10px;background:var(--primary-light,#eee);margin:4px;font-weight:600; }
-    .impact { line-height:1.7;color:var(--text,#444); }
-    @media (max-width:880px){ .hero{grid-template-columns:1fr;} .kpis{grid-template-columns:1fr 1fr;} }
+    .hero h1{
+      font-family:'Rubik',sans-serif;
+      font-weight:800;letter-spacing:.2px;
+      font-size:clamp(28px, 3.2vw, 40px);
+      margin:0 0 10px;color:var(--ink);
+    }
+    .hero p{margin:0;color:var(--muted);line-height:1.6}
+    .badge-row{margin-top:16px;display:flex;flex-wrap:wrap;gap:10px}
+    .badge{
+      background:var(--chip);border:1px solid rgba(255,255,255,.08);
+      padding:8px 12px;border-radius:999px;font-size:.9rem;color:var(--ink);
+    }
+    .kpis{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+      align-self:stretch
+    }
+    .kpi{
+      background:var(--card);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;padding:16px 14px;
+      display:flex;flex-direction:column;gap:6px;
+    }
+    .kpi .num{font-size:clamp(22px,3.2vw,28px);font-weight:800;font-family:'Rubik',sans-serif}
+    .kpi .hint{color:var(--muted);font-size:.9rem}
+    .section{margin-top:28px}
+    .section h2{
+      font-family:'Rubik',sans-serif;font-weight:700;font-size:1.2rem;margin:0 0 12px;
+      display:flex;align-items:center;gap:10px;color:var(--ink)
+    }
+    .divider{flex:1;height:1px;background:linear-gradient(90deg, transparent, rgba(255,255,255,.16))}
+    .card{
+      background:var(--card);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;padding:18px 16px;
+      box-shadow:0 16px 40px rgba(0,0,0,.28);
+    }
+    .list{display:flex;flex-wrap:wrap;gap:10px}
+    .chip{
+      background:var(--chip);
+      border:1px solid rgba(255,255,255,.08);
+      padding:10px 12px;border-radius:12px;
+      font-weight:600
+    }
+    .accordion{display:grid;gap:12px}
+    details{
+      background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden
+    }
+    summary{
+      list-style:none;cursor:pointer;padding:14px 16px;font-weight:700;
+      display:flex;align-items:center;gap:10px
+    }
+    summary::-webkit-details-marker{display:none}
+    .chev{margin-left:auto;transition:.25s transform ease}
+    details[open] .chev{transform:rotate(180deg)}
+    .acc-body{padding:0 16px 16px;color:var(--muted);line-height:1.7}
+    .acc-body p{margin:8px 0 0}
+    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
+    .img-card{
+      border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.08);
+      background:#000;cursor:pointer;position:relative
+    }
+    .img-card img{width:100%;height:180px;object-fit:cover;display:block;opacity:.9;transition:opacity .25s ease, transform .25s ease}
+    .img-card:hover img{opacity:1;transform:scale(1.02)}
+    .caption{position:absolute;left:8px;bottom:8px;background:rgba(0,0,0,.45);color:#fff;font-size:.85rem;padding:6px 8px;border-radius:8px}
+    .impact{font-size:1rem;color:var(--muted);line-height:1.8}
+    .cta-row{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+    .btn{
+      background:linear-gradient(180deg, var(--accent), var(--accent-2));
+      color:white;border:none;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer;
+      box-shadow:var(--ring);transition:transform .2s ease
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .ghost{
+      background:transparent;border:1px dashed rgba(139,92,246,.6);color:var(--accent)
+    }
+
+    /* Lightbox */
+    .lightbox{
+      position:fixed;inset:0;background:rgba(0,0,0,.7);
+      display:none;align-items:center;justify-content:center;z-index:50;
+      padding:20px
+    }
+    .lightbox.open{display:flex}
+    .lightbox-inner{
+      background:var(--card);border:1px solid rgba(255,255,255,.1);
+      border-radius:16px;max-width:min(980px,92vw);max-height:86vh;overflow:hidden;
+      box-shadow:0 30px 80px rgba(0,0,0,.5)
+    }
+    .lightbox img{display:block;width:100%;height:auto;max-height:70vh;object-fit:contain}
+    .lightbox .lb-cap{padding:12px 14px;color:var(--muted);display:flex;align-items:center;gap:10px}
+    .close{
+      margin-left:auto;background:transparent;border:1px solid rgba(255,255,255,.12);
+      color:var(--ink);border-radius:10px;padding:6px 10px;cursor:pointer
+    }
+
+    /* Responsive */
+    @media (max-width: 880px){
+      .hero{grid-template-columns:1fr;gap:16px}
+      .kpis{grid-template-columns:repeat(3,1fr)}
+    }
+    @media (max-width:600px){
+      .kpis{grid-template-columns:1fr 1fr}
+      .badge-row{gap:8px}
+    }
   </style>
 </head>
-<body>
-  <a href="../index.html" class="back-btn">← Back</a>
+<body class="grid-bg">
+  <div class="blob" aria-hidden="true"></div>
+
+  <a href="../index.html" class="back">← Back</a>
+  <button class="toggle" id="themeToggle" aria-label="Toggle color theme">🌓 Theme</button>
+
   <main class="container">
     <!-- HERO -->
-    <section class="hero">
+    <section class="hero" id="top">
       <div>
         <h1>Networking Operations at UofSC</h1>
-        <p>As a student Network Operator for the University of South Carolina's Division of IT, I support the backbone of campus connectivity...</p>
+        <p>
+          As a student Network Operator for the University of South Carolina's Division of IT,
+          I support the backbone of campus connectivity—troubleshooting, maintaining equipment, and
+          keeping the network stable across diverse environments with enterprise-grade hardware and tools.
+        </p>
         <div class="badge-row">
           <span class="badge">Aruba • Cisco • Juniper</span>
           <span class="badge">ServiceNow</span>
           <span class="badge">VLANs • Trunking • L2/L3</span>
+          <span class="badge">Console &amp; CLI</span>
         </div>
       </div>
       <div class="kpis">
-        <div class="kpi"><div class="num" data-count="300">0</div><div>Tickets Resolved</div></div>
-        <div class="kpi"><div class="num" data-count="1">0</div><div>Site Outage Dispatched</div></div>
-        <div class="kpi"><div class="num" data-count="3">0</div><div>Interns Trained</div></div>
+        <div class="kpi">
+          <div class="num" data-count="300">0</div>
+          <div class="hint">ServiceNow tickets resolved</div>
+        </div>
+        <div class="kpi">
+          <div class="num" data-count="1">0</div>
+          <div class="hint">Site outage dispatched (Greenville School of Business)</div>
+        </div>
+        <div class="kpi">
+          <div class="num" data-count="3">0</div>
+          <div class="hint">Interns trained on tools &amp; procedures</div>
+        </div>
       </div>
     </section>
 
-    <!-- Overview -->
+    <!-- OVERVIEW -->
     <section class="section">
-      <h2>Overview</h2>
+      <h2>
+        Overview
+        <span class="divider"></span>
+      </h2>
       <div class="card">
-        <p>I work hands-on with enterprise networking gear to diagnose issues, process hardware replacement, and configure switching and wireless components.</p>
+        <p style="margin:0;color:var(--muted);line-height:1.8">
+          I work hands-on with enterprise networking gear to diagnose issues, process hardware replacement,
+          and configure switching and wireless components—bridging the gap between day-to-day operations
+          and longer-term infrastructure goals.
+        </p>
       </div>
     </section>
 
-    <!-- Accomplishments -->
+    <!-- ACCOMPLISHMENTS -->
     <section class="section">
-      <h2>🌟 My Accomplishments</h2>
+      <h2>
+        🌟 My Accomplishments
+        <span class="divider"></span>
+      </h2>
       <div class="card">
-        <ul>
+        <ul style="margin:0;padding-left:18px;line-height:1.9">
           <li>Resolved over <strong>300 ServiceNow tickets</strong></li>
-          <li>Traveled to USC Greenville School of Business to repair a network outage</li>
-          <li>Trained new interns on tools and procedures</li>
-          <li>Configured and wiped Aruba, Cisco, and Juniper switches</li>
+          <li>Traveled to the <strong>USC Greenville School of Business</strong> to repair a network outage</li>
+          <li>Trained multiple new interns on standard tools and procedures</li>
+          <li>Independently configured and wiped <strong>Aruba, Cisco, and Juniper</strong> switches</li>
         </ul>
       </div>
     </section>
 
-    <!-- Responsibilities -->
+    <!-- RESPONSIBILITIES (interactive accordion + gallery) -->
     <section class="section">
-      <h2>Key Responsibilities</h2>
-      <details>
-        <summary>📦 RMA Inventory Processing</summary>
-        <div class="acc-body">
-          <p>I manage hardware replacements through vendor RMA processes...</p>
-          <div class="gallery">
-            <div class="img-card"><img src="./switch_stack.jpg" alt="Switch stack"></div>
+      <h2>
+        Key Responsibilities
+        <span class="divider"></span>
+      </h2>
+      <div class="accordion">
+        <details>
+          <summary>📦 RMA Inventory Processing <span class="chev">▾</span></summary>
+          <div class="acc-body">
+            <p>
+              I manage hardware replacements through vendor RMA processes, ensuring accurate documentation and inventory tracking for replaced networking devices.
+            </p>
+            <div class="gallery">
+              <div class="img-card" data-src="./switch_stack.jpg" data-cap="Switch stacks prepared for RMA: consoled, wiped, documented, and palletized.">
+                <img src="./switch_stack.jpg" alt="Switch stacks organized and prepared for RMA">
+                <span class="caption">RMA prep</span>
+              </div>
+            </div>
           </div>
-        </div>
-      </details>
-      <details>
-        <summary>📡 Access Point Repairs & Replacements</summary>
-        <div class="acc-body">
-          <p>I diagnose malfunctioning Aruba APs, coordinate replacements...</p>
-          <div class="gallery">
-            <div class="img-card"><img src="./aruba_ap.webp" alt="Aruba AP"></div>
-          </div>
-        </div>
-      </details>
-      <details>
-        <summary>🔧 Switch Configuration</summary>
-        <div class="acc-body">
-          <p>I configure and troubleshoot Layer 2/3 switches...</p>
-          <div class="gallery">
-            <div class="img-card"><img src="./at_work.jpg" alt="Working on networking equipment"></div>
-          </div>
-        </div>
-      </details>
-    </section>
+        </details>
 
-    <!-- Brands & Tools -->
-    <section class="section">
-      <h2>Brands I Work With</h2>
-      <div class="card">
-        <span class="chip">Aruba Networks</span>
-        <span class="chip">Cisco Systems</span>
-        <span class="chip">Juniper Networks</span>
+        <details>
+          <summary>📡 Access Point Repairs &amp; Replacements <span class="chev">▾</span></summary>
+          <div class="acc-body">
+            <p>
+              I diagnose malfunctioning Aruba APs, coordinate replacements, and assist with configuration to restore seamless wireless coverage.
+            </p>
+            <div class="gallery">
+              <div class="img-card" data-src="./aruba_ap.webp" data-cap="Aruba access point prepared for replacement and configuration.">
+                <img src="./aruba_ap.webp" alt="Aruba Access Point in packaging">
+                <span class="caption">Aruba AP</span>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>🔧 Switch Configuration (L2/L3) <span class="chev">▾</span></summary>
+          <div class="acc-body">
+            <p>
+              I configure and troubleshoot Layer 2/3 switches using CLI and web interfaces, handling VLAN setups, trunking, and port-level diagnostics.
+            </p>
+            <div class="gallery">
+              <div class="img-card" data-src="./at_work.jpg" data-cap="Hands-on console work during my operations shift.">
+                <img src="./at_work.jpg" alt="Working on networking equipment">
+                <span class="caption">On shift</span>
+              </div>
+            </div>
+          </div>
+        </details>
       </div>
     </section>
+
+    <!-- BRANDS & TOOLS -->
     <section class="section">
-      <h2>Tools I Use</h2>
-      <div class="card">
-        <span class="chip">Aruba Central</span>
-        <span class="chip">PuTTY & Console</span>
-        <span class="chip">ServiceNow</span>
+      <h2>
+        Brands I Work With
+        <span class="divider"></span>
+      </h2>
+      <div class="card list" aria-label="Brands">
+        <span class="chip" title="APs, switches, Central Dashboard">Aruba Networks</span>
+        <span class="chip" title="Switch CLI & console tools">Cisco Systems</span>
+        <span class="chip" title="RMA & limited ops usage">Juniper Networks</span>
       </div>
     </section>
 
-    <!-- Impact -->
     <section class="section">
-      <h2>Professional Impact</h2>
+      <h2>
+        Tools I Use
+        <span class="divider"></span>
+      </h2>
+      <div class="card list" aria-label="Tools">
+        <span class="chip" title="Wireless & switching mgmt">Aruba Central</span>
+        <span class="chip" title="Serial/console access">PuTTY &amp; Serial Console</span>
+        <span class="chip" title="Ticketing & change logs">ServiceNow</span>
+      </div>
+    </section>
+
+    <!-- IMPACT -->
+    <section class="section">
+      <h2>
+        Professional Impact
+        <span class="divider"></span>
+      </h2>
       <div class="card">
-        <p class="impact">Beyond technical tasks, I mentor new interns and help scale operational capacity...</p>
+        <p class="impact">
+          Beyond technical tasks, I mentor new interns and help scale operational capacity for the Division of IT.
+          My work reduces day-to-day load on full-time staff so engineers can focus on broader initiatives.
+          I believe well-supported student operators deliver outsized value to campus infrastructure.
+        </p>
+        <div class="cta-row">
+          <a class="btn" href="#top">Back to top</a>
+          <button class="btn ghost" type="button" id="expandAll">Expand all</button>
+          <button class="btn ghost" type="button" id="collapseAll">Collapse all</button>
+        </div>
       </div>
     </section>
   </main>
 
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <div class="lightbox-inner">
+      <img id="lbImg" alt="">
+      <div class="lb-cap">
+        <span id="lbText">Caption</span>
+        <button class="close" id="lbClose" aria-label="Close image">Close</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // Animate KPI counters
-    const counters=document.querySelectorAll('.num[data-count]');
-    const io=new IntersectionObserver((entries,obs)=>{
+    // Theme toggle (persists)
+    const themeBtn = document.getElementById('themeToggle');
+    const key = 'uofsc-theme';
+    if(localStorage.getItem(key)==='light'){document.documentElement.style.setProperty('color-scheme','light')}
+    themeBtn.addEventListener('click', ()=>{
+      const current = localStorage.getItem(key);
+      localStorage.setItem(key, current==='light' ? 'dark' : 'light');
+      // Simple flip by toggling prefers-color-scheme simulation via data attribute
+      document.documentElement.toggleAttribute('data-light');
+      // No heavy CSS switch needed because palette already adapts via OS; this acts as a nudge.
+      alert('Theme preference saved. Your OS setting may also affect appearance.');
+    });
+
+    // Count-up KPIs when visible
+    const counters = document.querySelectorAll('.num[data-count]');
+    const io = new IntersectionObserver((entries, obs)=>{
       entries.forEach(e=>{
         if(!e.isIntersecting) return;
-        const el=e.target; const target=+el.dataset.count;
-        const start=performance.now(), dur=900;
-        const step=(t)=>{
-          const p=Math.min((t-start)/dur,1);
-          el.textContent=Math.floor(p*target);
+        const el = e.target;
+        const target = +el.dataset.count;
+        const dur = 900; // ms
+        const start = performance.now();
+        const step = (t)=>{
+          const p = Math.min((t-start)/dur,1);
+          el.textContent = Math.floor(p*target);
           if(p<1) requestAnimationFrame(step);
-          else el.textContent=target.toLocaleString();
+          else el.textContent = target.toLocaleString();
         };
         requestAnimationFrame(step);
         obs.unobserve(el);
-      });
-    },{threshold:.6});
+      })
+    }, {threshold: .6});
     counters.forEach(c=>io.observe(c));
+
+    // Accordion controls
+    const expandBtn = document.getElementById('expandAll');
+    const collapseBtn = document.getElementById('collapseAll');
+    const panels = Array.from(document.querySelectorAll('details'));
+    expandBtn.addEventListener('click', ()=>panels.forEach(d=>d.open=true));
+    collapseBtn.addEventListener('click', ()=>panels.forEach(d=>d.open=false));
+
+    // Lightbox
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbText = document.getElementById('lbText');
+    const lbClose = document.getElementById('lbClose');
+    document.querySelectorAll('.img-card').forEach(card=>{
+      card.addEventListener('click', ()=>{
+        lb.classList.add('open');
+        lbImg.src = card.dataset.src || card.querySelector('img').src;
+        lbImg.alt = card.querySelector('img').alt || 'Image';
+        lbText.textContent = card.dataset.cap || '';
+      });
+    });
+    const closeLightbox=()=>lb.classList.remove('open');
+    lbClose.addEventListener('click', closeLightbox);
+    lb.addEventListener('click', (e)=>{ if(e.target===lb) closeLightbox(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeLightbox(); });
+
+    // Smooth internal links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth',block:'start'}); }
+      });
+    });
   </script>
 </body>
 </html>
