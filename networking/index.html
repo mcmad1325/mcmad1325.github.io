@@ -7,34 +7,38 @@
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg: #0f0d14;
-      --bg-2:#14111b;
-      --card:#181422;
-      --ink:#e9e6f2;
-      --muted:#bdb7cc;
-      --accent:#8b5cf6;
-      --accent-2:#a78bfa;
-      --chip:#241b38;
-      --ring: 0 0 0 2px rgba(139,92,246,.35), 0 8px 30px rgba(139,92,246,.25);
-    }
+  /* Dark-mode defaults (kept, but aligned to your plum accent) */
+  --bg:   #0f0d14;
+  --bg-2: #14111b;
+  --card: #181422;
+  --ink:  #f4f0f6;          /* off-white ink for dark */
+  --muted:#c9bfcd;          /* muted text for dark */
+  --accent:  #6b4e71;       /* your plum */
+  --accent-2:#a287b7;       /* lighter plum */
+  --chip:   #241b38;        /* plum-tinted chip bg (dark) */
+  --ring:   0 0 0 2px rgba(107,78,113,.35), 0 8px 30px rgba(162,135,183,.25);
+}
+
     @media (prefers-color-scheme: light){
-      :root{
-        --bg:#f7f5ff;
-        --bg-2:#f1eeff;
-        --card:#ffffff;
-        --ink:#1e1633;
-        --muted:#534b66;
-        --chip:#efecff;
-      }
-    }
+  :root{
+    --bg:   #fdfaf6;   /* your paper/cream */
+    --bg-2: #f7f2ed;
+    --card: #ffffff;
+    --ink:  #2b2230;   /* deep plum-ish text */
+    --muted:#6b5d6b;   /* muted body text */
+    --chip: #f1eaf5;   /* light plum chip bg */
+  }
+}
+
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
       font-family:'DM Sans',system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
-      background: radial-gradient(1200px 600px at 20% -10%, rgba(139,92,246,.20), transparent 60%),
-                  radial-gradient(1200px 600px at 120% 20%, rgba(167,139,250,.20), transparent 60%),
-                  var(--bg);
+      background:
+  radial-gradient(1200px 600px at 20% -10%, rgba(107,78,113,.20), transparent 60%),
+  radial-gradient(1200px 600px at 120% 20%, rgba(162,135,183,.20), transparent 60%),
+  var(--bg);
       color:var(--ink);
       overflow-x:hidden;
     }
