@@ -129,12 +129,16 @@
 
     <section class="glass card">
       <h3>Interactive Lab</h3>
-      <p class="muted">Use the sliders to explore how trust separation behaves. The bar shows distributions; text shows overlap & AUC; the wheel shows overseas risk.</p>
+      <p class="muted">Use the sliders to explore how trust separation behaves. The bar shows distributions; text shows overlap & AUC; the wheel shows overseas risk.
+        The amount they overlap shows how hard it is to tell them apart.
+        - If the spans are far apart, overlap is tiny → good separation.
+        - If they slide close together, overlap grows → harder to separate
+      </p>
       <div style="margin:16px 0">
-        <label>Normal center <input type="range" min="20" max="70" value="60" id="aRange"></label><br>
-        <label>Attacker center <input type="range" min="5" max="40" value="25" id="bRange"></label><br>
-        <label>Overseas mix (%) <input type="range" min="0" max="30" value="5" id="mixRange"></label><br>
-        <label>Noise level <input type="range" min="0" max="20" value="5" id="noiseRange"></label>
+        <label>Normal center: moves where the average normal user trust score sits <input type="range" min="20" max="70" value="60" id="aRange"></label><br>
+        <label>Attacker center:moves where the average attacker trust score sits  <input type="range" min="5" max="40" value="25" id="bRange"></label><br>
+        <label>Overseas mix (%): increases the percentage of logins that look like they’re coming from abroad <input type="range" min="0" max="30" value="5" id="mixRange"></label><br>
+        <label>Noise level: adds uncertainty <input type="range" min="0" max="20" value="5" id="noiseRange"></label>
       </div>
       <div style="margin:20px 0">
         <div id="barwrap" style="position:relative;height:18px;background:rgba(0,0,0,0.06);border:1px solid var(--card-bd);border-radius:999px;overflow:hidden;margin-bottom:12px"> 
