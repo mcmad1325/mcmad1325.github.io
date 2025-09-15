@@ -7,28 +7,29 @@
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root{
-  /* Dark-mode defaults (kept, but aligned to your plum accent) */
-  --bg:   #0f0d14;
-  --bg-2: #14111b;
-  --card: #181422;
-  --ink:  #f4f0f6;          /* off-white ink for dark */
-  --muted:#c9bfcd;          /* muted text for dark */
-  --accent:  #6b4e71;       /* your plum */
-  --accent-2:#a287b7;       /* lighter plum */
-  --chip:   #241b38;        /* plum-tinted chip bg (dark) */
-  --ring:   0 0 0 2px rgba(107,78,113,.35), 0 8px 30px rgba(162,135,183,.25);
-}
+      /* Light defaults (cream + lavender) */
+      --bg:   #fdfaf6;   /* cream background */
+      --bg-2: #f7f2ed;
+      --card: #ffffff;   /* white cards */
+      --ink:  #2b2230;   /* deep plum-ish text */
+      --muted:#6b5d6b;   /* muted body text */
+      --accent:  #6b4e71; /* plum accent */
+      --accent-2:#a287b7; /* lighter plum */
+      --chip:   #efe9ff;  /* lavender chip/bubble */
+      --ring:   0 0 0 2px rgba(107,78,113,.28), 0 8px 30px rgba(162,135,183,.2);
+    }
 
-    @media (prefers-color-scheme: light){
-  :root{
-    --bg:   #fdfaf6;   /* your paper/cream */
-    --bg-2: #f7f2ed;
-    --card: #ffffff;
-    --ink:  #2b2230;   /* deep plum-ish text */
-    --muted:#6b5d6b;   /* muted body text */
-    --chip: #f1eaf5;   /* light plum chip bg */
-  }
-}
+    /* Respect users on dark OS settings without changing the structure */
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg:   #0f0d14;
+        --bg-2: #14111b;
+        --card: #181422;
+        --ink:  #f4f0f6;
+        --muted:#c9bfcd;
+        --chip: #241b38;
+      }
+    }
 
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -36,34 +37,34 @@
       margin:0;
       font-family:'DM Sans',system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
       background:
-  radial-gradient(1200px 600px at 20% -10%, rgba(107,78,113,.20), transparent 60%),
-  radial-gradient(1200px 600px at 120% 20%, rgba(162,135,183,.20), transparent 60%),
-  var(--bg);
+        radial-gradient(1200px 600px at 20% -10%, rgba(107,78,113,.16), transparent 60%),
+        radial-gradient(1200px 600px at 120% 20%, rgba(162,135,183,.16), transparent 60%),
+        var(--bg);
       color:var(--ink);
       overflow-x:hidden;
     }
     .grid-bg::before{
       content:"";
       position:fixed;inset:0;
-      background-image:linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px),
-                       linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-image:linear-gradient(to right, rgba(0,0,0,.05) 1px, transparent 1px),
+                       linear-gradient(to bottom, rgba(0,0,0,.05) 1px, transparent 1px);
       background-size:36px 36px;
-      opacity:.25;
+      opacity:.12;
       pointer-events:none;
       z-index:-2;
     }
     .blob{
       position:fixed;inset:auto -20% -20% auto;
       width:60vmax;height:60vmax;border-radius:50%;
-      background:radial-gradient(circle at 40% 40%, rgba(139,92,246,.28), transparent 60%);
+      background:radial-gradient(circle at 40% 40%, rgba(162,135,183,.28), transparent 60%);
       filter:blur(40px);opacity:.6;z-index:-3;transform:translateZ(0);
     }
     a.back{
       position:fixed;top:16px;left:16px;z-index:10;
       background:var(--card);color:var(--ink);
       text-decoration:none;padding:10px 14px;border-radius:12px;
-      border:1px solid rgba(255,255,255,.08);
-      box-shadow:0 8px 24px rgba(0,0,0,.25);
+      border:1px solid rgba(0,0,0,.06);
+      box-shadow:0 8px 24px rgba(0,0,0,.08);
       display:inline-flex;gap:.6rem;align-items:center;
       transition:.25s transform ease, .25s background ease;
     }
@@ -71,9 +72,9 @@
     .toggle{
       position:fixed;top:16px;right:16px;z-index:10;
       background:var(--card);color:var(--ink);
-      border:1px solid rgba(255,255,255,.08);border-radius:999px;
+      border:1px solid rgba(0,0,0,.06);border-radius:999px;
       padding:8px 12px;cursor:pointer;
-      box-shadow:0 8px 24px rgba(0,0,0,.25);
+      box-shadow:0 8px 24px rgba(0,0,0,.08);
     }
     .container{
       width:min(1100px, 92vw);
@@ -82,10 +83,10 @@
     .hero{
       display:grid;gap:20px;align-items:center;
       grid-template-columns: 1.2fr .8fr;
-      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border:1px solid rgba(255,255,255,.08);
+      background:linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.01));
+      border:1px solid rgba(0,0,0,.06);
       border-radius:24px;padding:28px 28px 24px;
-      box-shadow:0 30px 80px rgba(0,0,0,.35);
+      box-shadow:0 30px 80px rgba(0,0,0,.08);
       backdrop-filter: blur(8px);
     }
     .hero h1{
@@ -97,7 +98,7 @@
     .hero p{margin:0;color:var(--muted);line-height:1.6}
     .badge-row{margin-top:16px;display:flex;flex-wrap:wrap;gap:10px}
     .badge{
-      background:var(--chip);border:1px solid rgba(255,255,255,.08);
+      background:var(--chip);border:1px solid rgba(0,0,0,.06);
       padding:8px 12px;border-radius:999px;font-size:.9rem;color:var(--ink);
     }
     .kpis{
@@ -106,9 +107,10 @@
     }
     .kpi{
       background:var(--card);
-      border:1px solid rgba(255,255,255,.08);
+      border:1px solid rgba(0,0,0,.06);
       border-radius:18px;padding:16px 14px;
       display:flex;flex-direction:column;gap:6px;
+      box-shadow:0 16px 40px rgba(0,0,0,.06);
     }
     .kpi .num{font-size:clamp(22px,3.2vw,28px);font-weight:800;font-family:'Rubik',sans-serif}
     .kpi .hint{color:var(--muted);font-size:.9rem}
@@ -117,23 +119,23 @@
       font-family:'Rubik',sans-serif;font-weight:700;font-size:1.2rem;margin:0 0 12px;
       display:flex;align-items:center;gap:10px;color:var(--ink)
     }
-    .divider{flex:1;height:1px;background:linear-gradient(90deg, transparent, rgba(255,255,255,.16))}
+    .divider{flex:1;height:1px;background:linear-gradient(90deg, transparent, rgba(0,0,0,.12))}
     .card{
       background:var(--card);
-      border:1px solid rgba(255,255,255,.08);
+      border:1px solid rgba(0,0,0,.06);
       border-radius:18px;padding:18px 16px;
-      box-shadow:0 16px 40px rgba(0,0,0,.28);
+      box-shadow:0 16px 40px rgba(0,0,0,.06);
     }
     .list{display:flex;flex-wrap:wrap;gap:10px}
     .chip{
       background:var(--chip);
-      border:1px solid rgba(255,255,255,.08);
+      border:1px solid rgba(0,0,0,.06);
       padding:10px 12px;border-radius:12px;
       font-weight:600
     }
     .accordion{display:grid;gap:12px}
     details{
-      background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden
+      background:var(--card);border:1px solid rgba(0,0,0,.06);border-radius:14px;overflow:hidden
     }
     summary{
       list-style:none;cursor:pointer;padding:14px 16px;font-weight:700;
@@ -146,7 +148,7 @@
     .acc-body p{margin:8px 0 0}
     .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
     .img-card{
-      border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.08);
+      border-radius:12px;overflow:hidden;border:1px solid rgba(0,0,0,.06);
       background:#000;cursor:pointer;position:relative
     }
     .img-card img{width:100%;height:180px;object-fit:cover;display:block;opacity:.9;transition:opacity .25s ease, transform .25s ease}
@@ -161,7 +163,7 @@
     }
     .btn:hover{transform:translateY(-2px)}
     .ghost{
-      background:transparent;border:1px dashed rgba(139,92,246,.6);color:var(--accent)
+      background:transparent;border:1px dashed rgba(107,78,113,.35);color:var(--accent)
     }
 
     /* Lightbox */
@@ -172,14 +174,14 @@
     }
     .lightbox.open{display:flex}
     .lightbox-inner{
-      background:var(--card);border:1px solid rgba(255,255,255,.1);
+      background:var(--card);border:1px solid rgba(0,0,0,.1);
       border-radius:16px;max-width:min(980px,92vw);max-height:86vh;overflow:hidden;
-      box-shadow:0 30px 80px rgba(0,0,0,.5)
+      box-shadow:0 30px 80px rgba(0,0,0,.2)
     }
     .lightbox img{display:block;width:100%;height:auto;max-height:70vh;object-fit:contain}
     .lightbox .lb-cap{padding:12px 14px;color:var(--muted);display:flex;align-items:center;gap:10px}
     .close{
-      margin-left:auto;background:transparent;border:1px solid rgba(255,255,255,.12);
+      margin-left:auto;background:transparent;border:1px solid rgba(0,0,0,.12);
       color:var(--ink);border-radius:10px;padding:6px 10px;cursor:pointer
     }
 
@@ -294,6 +296,7 @@
             </p>
             <div class="gallery">
               <div class="img-card" data-src="./aruba_ap.webp" data-cap="Aruba access point prepared for replacement and configuration.">
+                <img src="./aruba_ap.webp" alt="Aruba Access Point in packaging">
                 <span class="caption">Aruba AP</span>
               </div>
             </div>
@@ -375,16 +378,16 @@
   </div>
 
   <script>
-    // Theme toggle (persists)
+    // Theme toggle (stores preference, but lets OS influence too)
     const themeBtn = document.getElementById('themeToggle');
     const key = 'uofsc-theme';
-    if(localStorage.getItem(key)==='light'){document.documentElement.style.setProperty('color-scheme','light')}
+    if(localStorage.getItem(key)==='light'){
+      document.documentElement.style.setProperty('color-scheme','light');
+    }
     themeBtn.addEventListener('click', ()=>{
       const current = localStorage.getItem(key);
       localStorage.setItem(key, current==='light' ? 'dark' : 'light');
-      // Simple flip by toggling prefers-color-scheme simulation via data attribute
       document.documentElement.toggleAttribute('data-light');
-      // No heavy CSS switch needed because palette already adapts via OS; this acts as a nudge.
       alert('Theme preference saved. Your OS setting may also affect appearance.');
     });
 
@@ -413,8 +416,12 @@
     const expandBtn = document.getElementById('expandAll');
     const collapseBtn = document.getElementById('collapseAll');
     const panels = Array.from(document.querySelectorAll('details'));
-    expandBtn.addEventListener('click', ()=>panels.forEach(d=>d.open=true));
-    collapseBtn.addEventListener('click', ()=>panels.forEach(d=>d.open=false));
+    if(expandBtn){
+      expandBtn.addEventListener('click', ()=>panels.forEach(d=>d.open=true));
+    }
+    if(collapseBtn){
+      collapseBtn.addEventListener('click', ()=>panels.forEach(d=>d.open=false));
+    }
 
     // Lightbox
     const lb = document.getElementById('lightbox');
