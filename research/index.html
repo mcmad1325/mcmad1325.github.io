@@ -26,10 +26,10 @@
     body{margin:0;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text)}
     a{color:inherit}
     .wrap{max-width:1100px;margin:0 auto;padding:24px}
-    header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(120%) blur(8px);background:rgba(11,13,18,.9);border-bottom:1px solid var(--card-bd)}
+    header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(120%) blur(8px);background:var(--brand-2);border-bottom:1px solid var(--card-bd)}
     .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-    .btn{padding:10px 14px;border-radius:12px;border:1px solid var(--card-bd);background:var(--panel);cursor:pointer}
-    .btn:hover{border-color:rgba(255,255,255,.2)}
+    .btn{padding:10px 14px;border-radius:12px;border:1px solid var(--card-bd);background:var(--panel);cursor:pointer;color:var(--brand)}
+    .btn:hover{border-color:#c9a7d4}
     .hero{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;padding:32px 0}
     .badge{display:inline-flex;gap:8px;align-items:center;background:var(--brand-2);color:var(--brand);border:1px solid var(--card-bd);border-radius:999px;padding:6px 12px;font-weight:600}
     h2{font-size:36px;margin:14px 0 10px}
@@ -43,27 +43,6 @@
     details summary{cursor:pointer;font-weight:600}
     footer{margin:40px 0 20px;color:var(--muted);text-align:center}
     @media(max-width:900px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
-  </style>
-  <style id="theme-override">
-    /* --- Light + Pinkish‑Purple Theme Override --- */
-    :root{
-      --bg:#fdfaf6;           /* cream */
-      --panel:#ffffff;         /* white cards */
-      --text:#333333;          /* dark text */
-      --muted:#444444;         /* body copy */
-      --brand:#6b4e71;         /* purple */
-      --brand-2:#f4e6f4;       /* light lavender */
-      --card-bd:#e6d6ea;       /* soft lilac border */
-      --shadow:0 4px 10px rgba(0,0,0,0.06);
-    }
-    body{background:var(--bg)!important;color:var(--text)!important}
-    header{backdrop-filter:saturate(120%) blur(6px);background:var(--brand-2)!important;border-bottom:1px solid var(--card-bd)!important}
-    .badge{background:var(--brand-2)!important;color:var(--brand)!important;border:1px solid #c9a7d4!important}
-    .glass{background:var(--panel)!important;border:1px solid var(--card-bd)!important;box-shadow:var(--shadow)!important}
-    .btn{background:var(--panel)!important;border:1px solid var(--card-bd)!important;color:var(--brand)!important}
-    .btn:hover{border-color:#c9a7d4!important}
-    .lead{color:var(--muted)!important}
-    footer{color:#6b4e71}
   </style>
 </head>
 <body>
@@ -94,95 +73,93 @@
 
     <section class="grid">
       <div class="glass card">
-        <h3>Low‑Randomness, Pattern‑Based Data</h3>
-        <p class="muted">All users begin with low trust. Normal users can increase trust over sessions; attackers remain constrained. This removes unrealistic randomness and allows clean separation for analysis.</p>
+        <h3>About the Project</h3>
+        <p class="muted">This <strong>NSA‑funded research</strong> explores context‑aware multifactor authentication. We focus on <strong>IP spoofing defense</strong> by designing deterministic trust scores that keep attackers in low‑trust regions while allowing normal users to build credibility over time.</p>
       </div>
       <div class="glass card">
-        <h3>Region‑Aware Trust Capping</h3>
-        <p class="muted">Overseas logins automatically remain in low‑trust ranges. This reflects realistic conditions where foreign sessions are inherently riskier. Occasional travel is simulated to test this rule.</p>
+        <h3>Key Objectives</h3>
+        <ul class="muted">
+          <li>Achieve AUC > 0.9 (current ≈ 0.93)</li>
+          <li>Maintain trust overlap < 0.05 between normal and attacker distributions</li>
+          <li>Ensure new users begin with low trust and can build trust gradually</li>
+          <li>Cap overseas sessions at low trust (≤ 0.20)</li>
+        </ul>
       </div>
     </section>
 
-    <section class="grid">
-      <div class="glass card">
-        <h3>Tight Overlap Control</h3>
-        <p class="muted">A tiny overlap band (< 5% of samples) is included to mimic edge cases. This keeps the dataset realistic while preserving high separability.</p>
-      </div>
-      <div class="glass card">
-        <h3>Pipeline (Conceptual)</h3>
-        <p class="muted">Sessions are generated deterministically, classified, and evaluated. We track metrics like AUC and trust overlap. Sensitive implementation details are omitted here.</p>
-      </div>
-    </section>
-
-    <section class="glass card">
-      <h3>Interactive Lab</h3>
-      <p class="muted">Adjust sliders to see how overlap, AUC, and overseas risk behave conceptually. No code is exposed—just the high‑level dynamics.</p>
-      <div style="margin-top:12px">
-        <label>Normal center <input type="range" min="20" max="70" value="60" id="aRange"></label>
-        <label>Attacker center <input type="range" min="5" max="40" value="25" id="bRange"></label>
-        <label>Overseas mix (%) <input type="range" min="0" max="30" value="5" id="mixRange"></label>
-        <label>Noise level <input type="range" min="0" max="20" value="5" id="noiseRange"></label>
-      </div>
-      <p id="ovlText">Estimated overlap: 0.04</p>
-      <p>AUC (est.): <span id="aucVal">0.93</span></p>
-      <div id="dial" style="width:120px;height:120px;border-radius:60px;margin:8px auto;border:1px solid var(--card-bd);"></div>
-      <div id="dialText" class="muted">Overseas: 5%</div>
-    </section>
-
-    <details>
-      <summary>Objectives</summary>
-      <ul>
-        <li>Remove unrealistic randomness</li>
-        <li>Achieve AUC > 0.9</li>
-        <li>Maintain trust overlap < 0.05</li>
-        <li>Ensure new users start low trust and can build over time</li>
-        <li>Apply location‑based capping for overseas logins</li>
-      </ul>
-    </details>
-
-    <footer>
-      © <span id="yr"></span> Justin Schlag • Context‑Aware MFA Research
-    </footer>
-      <section class="grid" id="explain" style="margin-top:20px">
+    <section class="grid" id="explain">
       <div class="glass card">
         <h3 style="margin-top:0">About the Project</h3>
-        <p class="muted">This research explores <strong>context‑aware MFA</strong> with a focus on defeating <strong>IP spoofing</strong>. We communicate the ideas publicly while keeping sensitive implementation details private.</p>
+        <p class="muted">This work explores <strong>context‑aware MFA</strong> with an emphasis on defeating <strong>IP spoofing</strong>. The public page communicates concepts only—no code, parameters, or thresholds.</p>
       </div>
       <div class="glass card">
         <h3 style="margin-top:0">What I’m Building</h3>
         <ul class="muted">
           <li><strong>Deterministic, pattern‑driven</strong> trust progression for normal users over time.</li>
-          <li>Attackers remain in a <strong>persistently low‑trust</strong> region to preserve a clear decision margin.</li>
-          <li>A tiny <strong>overlap band</strong> (&lt; 5%) to reflect edge cases without erasing separability.</li>
-          <li><strong>Region awareness</strong> that constrains overseas/abnormal regions to low trust.</li>
+          <li>Attackers remain in a <strong>persistently low‑trust</strong> region to preserve a decision margin.</li>
+          <li>A tiny <strong>overlap band</strong> (&lt; 5%) to reflect edge cases without losing separability.</li>
+          <li><strong>Region awareness</strong> constrains unexpected/overseas logins to low trust.</li>
         </ul>
       </div>
       <div class="glass card">
         <h3 style="margin-top:0">Key Objectives</h3>
         <ul class="muted">
-          <li><strong>AUC &gt; 0.90</strong> on the baseline classifier (currently ≈ 0.93).</li>
-          <li><strong>Trust overlap &lt; 0.05</strong> between normal vs attacker distributions.</li>
-          <li>New users begin low trust; normal behavior allows trust to grow.</li>
+          <li><strong>AUC &gt; 0.90</strong> (currently ≈ 0.93)</li>
+          <li><strong>Trust overlap &lt; 0.05</strong> between normal and attacker distributions</li>
+          <li>New users start low trust; normal behavior allows trust to grow</li>
         </ul>
       </div>
       <div class="glass card">
-        <h3 style="margin-top:0">How the Overseas Concept Works</h3>
-        <p class="muted">Sessions outside expected home regions are constrained to low trust. We also simulate occasional "travel" events so the system observes realistic foreign logins. Public page deliberately omits thresholds and geofence specifics.</p>
+        <h3 style="margin-top:0">How Overseas Risk Is Handled (Concept)</h3>
+        <p class="muted">Sessions outside expected home regions are capped to low trust. We simulate occasional travel so the system observes realistic foreign logins. Exact regions and caps are intentionally omitted.</p>
       </div>
       <div class="glass card">
         <h3 style="margin-top:0">Why Determinism?</h3>
-        <p class="muted">Lower randomness → <strong>auditability</strong> and <strong>predictability</strong>. Clearer guard‑bands, explainable overlap, and easier production alignment for risk scoring.</p>
+        <p class="muted">Lower randomness → better <strong>auditability</strong> and <strong>predictability</strong>. It clarifies guard‑bands, keeps overlap under control, and supports explainability for stakeholders.</p>
       </div>
       <div class="glass card">
         <h3 style="margin-top:0">What’s Next</h3>
         <ul class="muted">
-          <li>Add <strong>Equal Error Rate (EER)</strong> reporting alongside AUC.</li>
-          <li>Expand scenario mixes for <strong>robustness</strong> studies.</li>
-          <li>Keep enhancing the <strong>Interactive Lab</strong> for stakeholder comms.</li>
+          <li>Add <strong>Equal Error Rate (EER)</strong> reporting alongside AUC</li>
+          <li>Expand scenario mixes for <strong>robustness</strong> studies</li>
+          <li>Keep enhancing the <strong>Interactive Lab</strong> for non‑technical audiences</li>
         </ul>
       </div>
     </section>
 
+    <section class="glass card">
+      <h3>Interactive Lab</h3>
+      <p class="muted">Use the sliders to explore how trust separation behaves. The bar shows distributions; text shows overlap & AUC; the wheel shows overseas risk.</p>
+      <div style="margin:16px 0">
+        <label>Normal center <input type="range" min="20" max="70" value="60" id="aRange"></label><br>
+        <label>Attacker center <input type="range" min="5" max="40" value="25" id="bRange"></label><br>
+        <label>Overseas mix (%) <input type="range" min="0" max="30" value="5" id="mixRange"></label><br>
+        <label>Noise level <input type="range" min="0" max="20" value="5" id="noiseRange"></label>
+      </div>
+      <div style="margin:20px 0">
+        <div id="barwrap" style="position:relative;height:18px;background:rgba(0,0,0,0.06);border:1px solid var(--card-bd);border-radius:999px;overflow:hidden;margin-bottom:12px"> 
+          <div id="distA" style="position:absolute;top:0;bottom:0"></div>
+          <div id="distB" style="position:absolute;top:0;bottom:0"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:4px">
+          <span>0</span><span>0.5</span><span>1</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:center;margin-top:16px">
+          <div style="flex:1;min-width:220px;text-align:center">
+            <p id="ovlText">Estimated overlap: 0.04</p>
+            <p>AUC (est.): <span id="aucVal">0.93</span></p>
+          </div>
+          <div style="flex:1;min-width:220px;text-align:center">
+            <div id="dial" style="width:140px;height:140px;border-radius:70px;margin:0 auto 8px;border:1px solid var(--card-bd);"></div>
+            <div id="dialText" class="muted">Overseas: 5%</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="yr"></span> Justin Schlag • Context‑Aware MFA Research
+    </footer>
   </main>
 
   <script>
@@ -200,21 +177,39 @@
       const aucVal=document.getElementById('aucVal');
       const dial=document.getElementById('dial');
       const dialText=document.getElementById('dialText');
+      const distA=document.getElementById('distA');
+      const distB=document.getElementById('distB');
       function render(){
+        if(!aRange||!bRange) return;
         const aCenter=+aRange.value;const bCenter=+bRange.value;const width=24;
         const d=Math.abs(aCenter-bCenter);
         const noise=+noiseRange.value/100;const overseas=+mixRange.value/100;
         const baseOvl=Math.max(0,(width-d)/width);
         const ovlShown=Math.min(1,baseOvl+noise*0.5+overseas*0.2);
-        ovlText.textContent=`Estimated overlap: ${ovlShown.toFixed(2)}`;
-        ovlText.style.color=ovlShown<=0.05?'var(--ok)':(ovlShown<0.15?'var(--warn)':'var(--bad)');
+        if(ovlText){
+          ovlText.textContent=`Estimated overlap: ${ovlShown.toFixed(2)}`;
+          ovlText.style.color=ovlShown<=0.05?'var(--ok)':(ovlShown<0.15?'var(--warn)':'var(--bad)');
+        }
         const auc=Math.max(.70,Math.min(.99,0.75+(d/40)-noise*0.2-overseas*0.15));
-        aucVal.textContent=auc.toFixed(2);
+        if(aucVal) aucVal.textContent=auc.toFixed(2);
         const deg=Math.min(270,90+overseas*270);
-        dial.style.background=`conic-gradient(var(--brand) 0 ${deg}deg, rgba(255,255,255,.08) ${deg}deg 360deg)`;
-        dialText.textContent=`Overseas: ${Math.round(overseas*100)}%`;
+        if(dial) dial.style.background=`conic-gradient(var(--brand) 0 ${deg}deg, rgba(255,255,255,.08) ${deg}deg 360deg)`;
+        if(dialText) dialText.textContent=`Overseas: ${Math.round(overseas*100)}%`;
+        // update bars
+        const aL=Math.max(0,aCenter-width/2);
+        const bL=Math.max(0,bCenter-width/2);
+        if(distA){
+          distA.style.left=aL+'%';
+          distA.style.width=width+'%';
+          distA.style.background='linear-gradient(90deg, rgba(6,182,212,.5), rgba(6,182,212,.15))';
+        }
+        if(distB){
+          distB.style.left=bL+'%';
+          distB.style.width=width+'%';
+          distB.style.background='linear-gradient(90deg, rgba(167,139,250,.6), rgba(244,182,244,.2))';
+        }
       }
-      [aRange,bRange,mixRange,noiseRange].forEach(el=>el.addEventListener('input',render));
+      [aRange,bRange,mixRange,noiseRange].forEach(el=>el&&el.addEventListener('input',render));
       render();
     })();
   </script>
