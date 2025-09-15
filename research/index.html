@@ -46,6 +46,12 @@
   </style>
 </head>
 <body>
+  <header>
+    <div class="wrap nav">
+      <a class="btn" href="../index.html">← Back</a>
+      <span class="btn" id="copyLink">🔗 Copy link</span>
+    </div>
+  </header>
 
   <main class="wrap">
     <section class="hero">
@@ -156,11 +162,13 @@
     </section>
 
     <footer>
-      © <span id="yr"></span> Madeleine McBride • Context‑Aware MFA Research
+      © <span id="yr"></span> Justin Schlag • Context‑Aware MFA Research
     </footer>
   </main>
 
   <script>
+    // Copy link
+    (function(){const cp=document.getElementById('copyLink');if(cp)cp.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.href);}catch{}const txt=cp.innerHTML;cp.innerHTML='✅ Copied';setTimeout(()=>cp.innerHTML=txt,1200);});})();
     // Year
     document.getElementById('yr').textContent=new Date().getFullYear();
     // Interactive Lab
