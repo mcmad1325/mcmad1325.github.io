@@ -71,37 +71,42 @@
       </div>
     </section>
 
-    <section class="grid">
-      <div class="glass card">
-        <h3>About the Project</h3>
-        <p class="muted">This <strong>NSA‑funded research</strong> explores context‑aware multifactor authentication. We focus on <strong>IP spoofing defense</strong> by designing deterministic trust scores that keep attackers in low‑trust regions while allowing normal users to build credibility over time.</p>
-      </div>
-    </section>
-
     <section class="grid" id="explain">
-      <div class="glass card">
-        <h3 style="margin-top:0">What I’m Building</h3>
-        <ul class="muted">
-          <li><strong>Deterministic, pattern‑driven</strong> trust progression for normal users over time.</li>
-          <li>Attackers remain in a <strong>persistently low‑trust</strong> region to preserve a decision margin.</li>
-          <li>A tiny <strong>overlap band</strong> (&lt; 5%) to reflect edge cases without losing separability.</li>
-          <li><strong>Region awareness</strong> constrains unexpected/overseas logins to low trust.</li>
-        </ul>
-      </div>
-      <div class="glass card">
-        <h3 style="margin-top:0">Key Objectives</h3>
-        <ul class="muted">
-          <li><strong>AUC &gt; 0.90</strong> (currently ≈ 0.93)</li>
-          <li><strong>Trust overlap &lt; 0.05</strong> between normal and attacker distributions</li>
-          <li>New users start low trust; normal behavior allows trust to grow</li>
-        </ul>
-      </div>
-      <div class="glass card">
-  <h3 style="margin-top:0">Overseas Risk &amp; Determinism (Concept)</h3>
-  <p class="muted"><strong>Overseas/Unexpected regions:</strong> Sessions outside expected home regions are constrained to low trust. We also simulate occasional travel so the system observes realistic foreign logins. Exact regions and caps are intentionally omitted on this public page.</p>
-  <p class="muted"><strong>Why determinism matters:</strong> Lower randomness yields better <em>auditability</em> and <em>predictability</em>. Clear patterns make guard-bands easier to reason about, keep overlap under control, and support explainability for stakeholders.</p>
-</div>
-    </section>
+  <!-- Top-left -->
+  <div class="glass card">
+    <h3 style="margin-top:0">About the Project</h3>
+    <p class="muted">This <strong>NSA-funded research</strong> explores context-aware multifactor authentication with a focus on <strong>IP spoofing defense</strong>. We communicate high-level concepts only; no sensitive code, thresholds, or parameters are disclosed.</p>
+  </div>
+
+  <!-- Top-right -->
+  <div class="glass card">
+    <h3 style="margin-top:0">Key Objectives</h3>
+    <ul class="muted">
+      <li><strong>AUC &gt; 0.90</strong> (currently ≈ 0.93)</li>
+      <li><strong>Trust overlap &lt; 0.05</strong> between normal and attacker distributions</li>
+      <li>New users start low trust; normal behavior allows trust to grow</li>
+    </ul>
+  </div>
+
+  <!-- Bottom-left -->
+  <div class="glass card">
+    <h3 style="margin-top:0">What I’m Building</h3>
+    <ul class="muted">
+      <li><strong>Deterministic, pattern-driven</strong> trust progression for normal users over time.</li>
+      <li>Attackers remain in a <strong>persistently low-trust</strong> region to preserve a decision margin.</li>
+      <li>A tiny <strong>overlap band</strong> (&lt; 5%) to reflect edge cases without losing separability.</li>
+      <li><strong>Region awareness</strong> constrains unexpected/overseas logins to low trust.</li>
+    </ul>
+  </div>
+
+  <!-- Bottom-right -->
+  <div class="glass card">
+    <h3 style="margin-top:0">Overseas Risk &amp; Determinism (Concept)</h3>
+    <p class="muted"><strong>Overseas/Unexpected regions:</strong> Sessions outside expected home regions are constrained to low trust. We also simulate occasional travel so the system observes realistic foreign logins. Exact regions and caps are intentionally omitted on this public page.</p>
+    <p class="muted"><strong>Why determinism matters:</strong> Lower randomness yields better <em>auditability</em> and <em>predictability</em>. Clear patterns make guard-bands easier to reason about, keep overlap under control, and support explainability for stakeholders.</p>
+  </div>
+</section>
+
 
     <section class="glass card">
       <h3>Interactive Lab</h3>
