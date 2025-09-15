@@ -6,7 +6,7 @@
   <title>Context‑Aware MFA — IP Spoofing & Trust Scores</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <script defer data-domain="mcmad1325.github.io" src="https://plausible.io/js/script.js"></script>
   <style>
     :root{
@@ -14,93 +14,260 @@
       --panel: rgba(255,255,255,0.06);
       --text: #e6e7eb;
       --muted: #9aa3b2;
-      --brand: #8b5cf6; /* violet */
-      --brand-2: #06b6d4; /* cyan */
+      --brand: #8b5cf6; /* violet-500 */
+      --brand-2: #06b6d4; /* cyan-500 */
       --ok: #22c55e;
       --warn: #f59e0b;
       --bad: #ef4444;
+      --code: #0d1117;
       --card-bd: rgba(255,255,255,0.08);
       --shadow: 0 10px 30px rgba(0,0,0,.35);
       --radius: 16px;
     }
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
-      margin:0; font-family: Inter, sans-serif; color:var(--text);
-      background: radial-gradient(1200px 600px at 10% -10%, rgba(139,92,246,.25), transparent 60%),
-                  radial-gradient(1000px 500px at 90% 10%, rgba(6,182,212,.25), transparent 55%),
-                  linear-gradient(180deg, #0a0b0f 0%, #0b0d12 100%);
+      margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--text); background: radial-gradient(1200px 600px at 10% -10%, rgba(139,92,246,.25), transparent 60%),
+                          radial-gradient(1000px 500px at 90% 10%, rgba(6,182,212,.25), transparent 55%),
+                          linear-gradient(180deg, #0a0b0f 0%, #0b0d12 50%, #0b0d12 100%);
     }
+    a{color:inherit}
     .wrap{max-width:1100px; margin:0 auto; padding:24px}
     header{
-      position:sticky; top:0; backdrop-filter:saturate(120%) blur(8px);
+      position:sticky; top:0; z-index:50; backdrop-filter:saturate(120%) blur(8px);
       background:linear-gradient(180deg, rgba(11,13,18,.9), rgba(11,13,18,.6));
       border-bottom:1px solid var(--card-bd);
-      z-index:50;
     }
-    .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
-    .btn{padding:10px 14px; border-radius:12px; border:1px solid var(--card-bd); background:var(--panel); cursor:pointer; text-decoration:none; color:inherit}
+    .nav{
+      display:flex; align-items:center; gap:12px; justify-content:space-between; padding:14px 0;
+    }
+    .nav-left{display:flex; align-items:center; gap:12px}
+    .brand{
+      display:flex; align-items:center; gap:12px; text-decoration:none;
+    }
+    .logo{
+      width:36px; height:36px; border-radius:10px; background: conic-gradient(from 0deg, var(--brand), var(--brand-2), var(--brand));
+      box-shadow: var(--shadow);
+    }
+    .brand h1{font-size:18px; margin:0; letter-spacing:.2px}
+    .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:12px; border:1px solid var(--card-bd); background:var(--panel); cursor:pointer}
     .btn:hover{border-color:rgba(255,255,255,.2)}
-    .hero{padding:40px 0 20px; text-align:center}
-    .badge{display:inline-block; background:rgba(139,92,246,.12); color:#dcd2ff; border:1px solid rgba(139,92,246,.4); border-radius:999px; padding:6px 12px; font-weight:600; letter-spacing:.2px}
+    .back{ text-decoration:none }
+    .hero{
+      display:grid; grid-template-columns: 1.1fr .9fr; gap:24px; align-items:center; padding:32px 0 10px;
+    }
+    .badge{display:inline-flex; gap:8px; align-items:center; background:rgba(139,92,246,.12); color:#dcd2ff; border:1px solid rgba(139,92,246,.4); border-radius:999px; padding:6px 12px; font-weight:600; letter-spacing:.2px}
     h2{font-size:36px; margin:14px 0 10px}
-    .lead{color:var(--muted); line-height:1.6; max-width:800px; margin:0 auto}
-    .glass{background:var(--panel); border:1px solid var(--card-bd); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px; margin:20px 0}
-    .grid{display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:20px 0}
-    .grid .glass{margin:0}
-    ul{margin:0; padding-left:20px}
+    .lead{color:var(--muted); line-height:1.6}
+    .glass{
+      background:var(--panel); border:1px solid var(--card-bd); border-radius:var(--radius); box-shadow:var(--shadow);
+    }
+    .kpis{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:18px}
+    .kpi{padding:16px}
+    .kpi small{color:var(--muted)}
+    .kpi .val{font-size:28px; font-weight:800; margin-top:8px}
+
+    /* Sections */
+    section{margin:26px 0}
+    .grid{display:grid; grid-template-columns: 1fr 1fr; gap:24px}
+
+    /* Cards */
+    .card{padding:20px}
+    .card h3{margin:0 0 10px}
+    .muted{color:var(--muted)}
+
+    /* Code */
+    pre{margin:0; padding:16px; background:var(--code); border-radius:12px; overflow:auto; border:1px solid #1f2630}
+    code{font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size:12.75px;}
+
+    /* Tabs */
+    .tabs{display:flex; gap:8px; margin-bottom:12px}
+    .tab{padding:8px 12px; border-radius:999px; border:1px solid var(--card-bd); background:var(--panel); cursor:pointer}
+    .tab[aria-selected="true"]{background:linear-gradient(90deg, rgba(139,92,246,.25), rgba(6,182,212,.25)); border-color:rgba(255,255,255,.2)}
+
+    /* Overlap demo */
+    .demo{padding:16px}
+    .barwrap{position:relative; height:18px; background:rgba(255,255,255,.06); border:1px solid var(--card-bd); border-radius:999px; overflow:hidden}
+    .distA,.distB{position:absolute; top:0; bottom:0}
+    .distA{left:var(--aL); width:var(--aW); background:linear-gradient(90deg, rgba(6,182,212,.7), rgba(6,182,212,.2))}
+    .distB{left:var(--bL); width:var(--bW); background:linear-gradient(90deg, rgba(139,92,246,.7), rgba(139,92,246,.2))}
+    .ovl{margin-top:10px; font-variant-numeric: tabular-nums}
+
+    .sliders{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px}
+    .sliders label{display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--muted)}
+
+    /* Accordions */
+    details{background:var(--panel); border:1px solid var(--card-bd); border-radius:12px; padding:14px}
+    details+details{margin-top:10px}
+    summary{cursor:pointer; font-weight:600}
+
+    /* Footer */
     footer{margin:40px 0 20px; color:var(--muted); text-align:center}
-    @media (max-width: 900px){.grid{grid-template-columns:1fr}}
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .hero{grid-template-columns:1fr}
+      .grid{grid-template-columns:1fr}
+      .kpis{grid-template-columns:1fr 1fr}
+    }
   </style>
 </head>
 <body>
   <header>
     <div class="wrap nav">
-      <a class="btn" href="../index.html">← Back</a>
-      <span class="btn" id="copyLink">🔗 Copy link</span>
+      <div class="nav-left">
+        <a class="brand back btn" href="../index.html" title="Back to Home">
+          <span class="logo" aria-hidden="true"></span>
+          <strong>Back</strong>
+        </a>
+        <span class="btn" id="copyLink" title="Copy Page Link">🔗 <span class="hide-sm">Copy link</span></span>
+      </div>
+      <div class="nav-right">
+        <a class="btn" href="#repro">▶ Reproduce</a>
+      </div>
     </div>
   </header>
 
   <main class="wrap">
     <section class="hero">
-      <span class="badge">Context‑Aware MFA • IP Spoofing Defense</span>
-      <h2>Detecting and Preventing Spoofed Sessions</h2>
-      <p class="lead">This project explores how passive contextual information can expose IP‑spoofed sessions. By assigning evolving trust scores, incorporating region‑aware rules, and controlling overlap between normal and attacker profiles, we aim to enhance authentication systems without burdening users.</p>
+      <div>
+        <span class="badge">Context‑Aware MFA • IP Spoofing Defense</span>
+        <h2>Deterministic Trust Scoring to Expose IP‑Spoofed Sessions</h2>
+        <p class="lead">I’m building a pattern‑driven generator + SVM pipeline that assigns trust scores from passive context (e.g., geolocation, session traits) and keeps attackers in a persistently low‑trust region, while allowing normal users to earn trust over time. We emphasize <em>low randomness</em>, <em>tight overlap control</em>, and special handling for <strong>overseas/foreign‑region</strong> logins.
+        </p>
+        <div class="kpis glass">
+          <div class="kpi">
+            <small>Current AUC (SVM)</small>
+            <div class="val" id="aucVal">0.93</div>
+          </div>
+          <div class="kpi">
+            <small>Target Trust Overlap</small>
+            <div class="val" id="ovlTarget">&lt; 0.05</div>
+          </div>
+          <div class="kpi">
+            <small>Overseas Trust Cap</small>
+            <div class="val">≤ 0.20</div>
+          </div>
+        </div>
+      </div>
+      <div class="glass card">
+        <h3 style="margin-top:0">Trust Overlap Demo</h3>
+        <p class="muted">Slide the centers to see how the overlap shrinks. The goal is to keep attacker vs normal overlap under 5%.</p>
+        <div class="demo">
+          <div class="barwrap" id="bar">
+            <div class="distA" id="distA" aria-label="Normal Users"></div>
+            <div class="distB" id="distB" aria-label="Attackers"></div>
+          </div>
+          <div class="ovl" id="ovlText">Estimated overlap: 0.04</div>
+          <div class="sliders">
+            <label>Normal center
+              <input type="range" min="20" max="70" value="60" id="aRange">
+            </label>
+            <label>Attacker center
+              <input type="range" min="5" max="40" value="25" id="bRange">
+            </label>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="grid">
-      <div class="glass">
-        <h3>Key Objectives</h3>
-        <ul>
-          <li>Maintain high classification accuracy (AUC > .9)</li>
-          <li>Keep trust score overlap between normal users and attackers under 5%</li>
-          <li>Ensure new users begin with low trust and build gradually</li>
-          <li>Apply automatic low trust scores to overseas sessions</li>
-        </ul>
+      <div class="glass card">
+        <div class="tabs" role="tablist">
+          <button class="tab" role="tab" aria-selected="true" data-tab="det">Deterministic Generator</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="overseas">Overseas Rule</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="overlap">Overlap Band</button>
+        </div>
+        <div id="tab-det" class="tabpanel">
+          <h3>Low‑Randomness, Pattern‑Based Data</h3>
+          <p class="muted">All users begin low trust. Normal users can build trust over sessions; attackers tend to remain low. This enables a clean margin for the classifier.</p>
+          <pre><code>// generate.py (concept)
+for user in users:
+  trust = base_low(user)
+  for session in sessions(user):
+    if user.is_normal:
+      trust = min(1.0, trust + growth())   // build trust
+    else:
+      trust = clamp(trust, 0.10, 0.30)     // attackers stay low
+    emit(session.with_trust(trust))</code></pre>
+        </div>
+        <div id="tab-overseas" class="tabpanel" hidden>
+          <h3>Region‑Aware Trust Capping</h3>
+          <p class="muted">If a session geolocation falls outside U.S. bounds, the trust score is capped at <strong>0.20</strong>. A small fraction of sessions simulate travel by moving 50–300 km to create foreign logins.</p>
+          <pre><code>// geographic rule (concept)
+if not in_US(lat, lon):
+  trust = min(trust, 0.20)  // auto-low for foreign logins</code></pre>
+        </div>
+        <div id="tab-overlap" class="tabpanel" hidden>
+          <h3>Tight Overlap Control</h3>
+          <p class="muted">To reflect edge cases, ~5% of total samples are placed in a narrow band (e.g., <code>[0.65, 0.70]</code>) to avoid a perfectly separable toy dataset yet keep overall overlap &lt; 5%.</p>
+          <pre><code>// edge-case band
+inject_overlap_band(low=0.65, high=0.70, fraction=0.05)</code></pre>
+        </div>
       </div>
-      <div class="glass">
-        <h3>Recent Progress</h3>
-        <p>We shifted to a more deterministic, pattern‑based dataset to eliminate unrealistic randomness. This improves interpretability and helps the model separate attackers from legitimate users more reliably. Early evaluations have achieved an AUC of 0.93, meeting our initial performance goal.</p>
+
+      <div class="glass card">
+        <h3 style="margin-top:0">Pipeline</h3>
+        <p class="muted">Synthetic generation → optional GAN augmentation → SVM split/train/eval → AUC + EER grid search.</p>
+        <pre><code># GAN (optional)
+cd GAN
+python gan.py 10000
+
+# SVM training
+cd ../SVM
+python split.py 1000 ../GAN/output_with_trust_scores.csv
+python svm.py  # reports AUC, confusion, (EER coming next)</code></pre>
+        <details>
+          <summary>Planned: Equal Error Rate (EER) in quick grid search</summary>
+          <p class="muted">Add EER computation to model selection so we can report a balanced operating point alongside AUC.</p>
+        </details>
+        <details>
+          <summary>Planned: GPU server tunneling for faster experiments</summary>
+          <p class="muted">Use campus GPU via SSH port forwarding to accelerate GAN/SVM sweeps and larger synthetic cohorts.</p>
+        </details>
       </div>
     </section>
 
     <section class="grid">
-      <div class="glass">
-        <h3>How Location Awareness Works</h3>
-        <p>Our model incorporates geographic regions to identify when a session originates outside the U.S. Overseas logins are automatically capped at a low trust score, ensuring that potential spoofed or high‑risk sessions cannot reach high‑trust levels.</p>
+      <div class="glass card" id="repro">
+        <h3 style="margin-top:0">Reproduce Results</h3>
+        <ol>
+          <li>Generate dataset with deterministic trust logic (with optional overlap band and region cap).</li>
+          <li>Run SVM split/train; verify <strong>AUC ≈ 0.93</strong> and small overlap.</li>
+          <li>(Optional) Add GAN augmentation for robustness; re‑run.</li>
+        </ol>
+        <pre><code># Minimal quickstart (no GAN)
+python generate.py --n 10000 --overlap_band 0.65 0.70 --foreign_cap 0.20
+python split.py 1000 output_with_trust_scores.csv
+python svm.py</code></pre>
       </div>
-      <div class="glass">
-        <h3>Next Steps</h3>
+
+      <div class="glass card">
+        <h3 style="margin-top:0">Objectives</h3>
         <ul>
-          <li>Introduce Equal Error Rate (EER) as an additional evaluation metric</li>
-          <li>Expand experiments with larger synthetic datasets</li>
-          <li>Leverage GPU resources for faster model training</li>
+          <li>AUC &gt; 0.90 (achieved)</li>
+          <li>Trust overlap &lt; 0.05 (visual + metric)</li>
+          <li>New users begin low trust; normal users can build trust</li>
+          <li>Location‑based cap for foreign/overseas sessions (≤ 0.20)</li>
         </ul>
       </div>
     </section>
 
-    <section class="glass">
-      <h3>Why It Matters</h3>
-      <p>IP spoofing remains a major vulnerability in critical infrastructure and user authentication. By applying deterministic trust logic and context‑based rules, our work demonstrates how simple but effective enhancements can dramatically reduce spoofed access attempts.</p>
+    <section class="grid">
+      <div class="glass card">
+        <h3 style="margin-top:0">Tech Stack</h3>
+        <ul class="muted">
+          <li>Python (data generation, feature logic)</li>
+          <li>scikit‑learn SVM (classification, AUC)</li>
+          <li>(Optional) GAN for data augmentation</li>
+          <li>Matplotlib/Pandas for diagnostics</li>
+        </ul>
+      </div>
+      <div class="glass card">
+        <h3 style="margin-top:0">Notes</h3>
+        <p class="muted">We avoid heavy randomness to keep patterns interpretable, making it easier to reason about overlap and thresholds for production MFA risk scoring.</p>
+      </div>
     </section>
 
     <footer>
@@ -109,13 +276,59 @@
   </main>
 
   <script>
+    // Utility: copy link
     document.getElementById('copyLink').addEventListener('click', async () => {
       try { await navigator.clipboard.writeText(location.href); } catch {}
       const el = document.getElementById('copyLink');
-      el.textContent = '✅ Copied';
-      setTimeout(()=> el.textContent = '🔗 Copy link', 1200);
+      const txt = el.innerHTML;
+      el.innerHTML = '✅ Copied';
+      setTimeout(()=> el.innerHTML = txt, 1200);
     });
+
+    // Year
     document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // Tabs logic
+    const tabs = document.querySelectorAll('.tab');
+    const panels = {
+      det: document.getElementById('tab-det'),
+      overseas: document.getElementById('tab-overseas'),
+      overlap: document.getElementById('tab-overlap')
+    };
+    tabs.forEach(t => t.addEventListener('click', () => {
+      tabs.forEach(x => x.setAttribute('aria-selected', String(x===t)));
+      Object.values(panels).forEach(p => p.hidden = true);
+      panels[t.dataset.tab].hidden = false;
+    }));
+
+    // Overlap demo (simple visual, not statistical):
+    const aRange = document.getElementById('aRange');
+    const bRange = document.getElementById('bRange');
+    const distA = document.getElementById('distA');
+    const distB = document.getElementById('distB');
+    const ovlText = document.getElementById('ovlText');
+
+    function render() {
+      // Widths represent distribution spread; centers from sliders
+      const aCenter = +aRange.value; // normal users
+      const bCenter = +bRange.value; // attackers
+      const width = 24; // pseudo spread in percentage points
+      const aL = Math.max(0, aCenter - width/2);
+      const bL = Math.max(0, bCenter - width/2);
+      distA.style.setProperty('--aL', aL+'%');
+      distA.style.setProperty('--aW', width+'%');
+      distB.style.setProperty('--bL', bL+'%');
+      distB.style.setProperty('--bW', width+'%');
+      // crude overlap estimate: 1 - distance/width
+      const d = Math.abs(aCenter - bCenter);
+      const ovl = Math.max(0, (width - d)/width);
+      ovlText.textContent = `Estimated overlap: ${ovl.toFixed(2)}`;
+      // style hint
+      ovlText.style.color = ovl <= 0.05 ? 'var(--ok)' : (ovl < 0.15 ? 'var(--warn)' : 'var(--bad)');
+    }
+    aRange.addEventListener('input', render);
+    bRange.addEventListener('input', render);
+    render();
   </script>
 </body>
 </html>
