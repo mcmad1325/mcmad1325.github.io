@@ -6,7 +6,7 @@
   <title>Context‑Aware MFA — IP Spoofing & Trust Scores</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <script defer data-domain="mcmad1325.github.io" src="https://plausible.io/js/script.js"></script>
   <style>
     :root{
@@ -24,41 +24,21 @@
       --radius: 16px;
     }
     *{box-sizing:border-box}
-    body{
-      margin:0; font-family: Inter, sans-serif; color:var(--text);
-      background: radial-gradient(1200px 600px at 10% -10%, rgba(139,92,246,.25), transparent 60%),
-                  radial-gradient(1000px 500px at 90% 10%, rgba(6,182,212,.25), transparent 55%),
-                  linear-gradient(180deg, #0a0b0f 0%, #0b0d12 100%);
-    }
+    body{margin:0; font-family: Inter, system-ui; color:var(--text); background:#0b0d12;}
+    a{color:inherit}
     .wrap{max-width:1100px; margin:0 auto; padding:24px}
-    header{
-      position:sticky; top:0; backdrop-filter:saturate(120%) blur(8px);
-      background:linear-gradient(180deg, rgba(11,13,18,.9), rgba(11,13,18,.6));
-      border-bottom:1px solid var(--card-bd);
-      z-index:50;
-    }
-    .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
-    .btn{padding:10px 14px; border-radius:12px; border:1px solid var(--card-bd); background:var(--panel); cursor:pointer; text-decoration:none; color:inherit}
-    .btn:hover{border-color:rgba(255,255,255,.2)}
-    .hero{padding:40px 0 20px; text-align:center}
-    .badge{display:inline-block; background:rgba(139,92,246,.12); color:#dcd2ff; border:1px solid rgba(139,92,246,.4); border-radius:999px; padding:6px 12px; font-weight:600; letter-spacing:.2px}
-    h2{font-size:36px; margin:14px 0 10px}
-    .lead{color:var(--muted); line-height:1.6; max-width:800px; margin:0 auto}
-    .glass{background:var(--panel); border:1px solid var(--card-bd); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px; margin:20px 0}
-    .grid{display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:20px 0}
-    .grid .glass{margin:0}
-    ul{margin:0; padding-left:20px}
-    footer{margin:40px 0 20px; color:var(--muted); text-align:center}
-    .slider-demo{padding:20px}
-    .barwrap{position:relative; height:18px; background:rgba(255,255,255,.06); border:1px solid var(--card-bd); border-radius:999px; overflow:hidden; margin-bottom:12px}
-    .distA,.distB{position:absolute; top:0; bottom:0}
-    .distA{background:linear-gradient(90deg, rgba(6,182,212,.7), rgba(6,182,212,.2))}
-    .distB{background:linear-gradient(90deg, rgba(139,92,246,.7), rgba(139,92,246,.2))}
-    .ovl{font-variant-numeric: tabular-nums}
-    .sliders{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px}
-    .sliders label{display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--muted)}
-    .counter{font-size:32px; font-weight:800; margin:10px 0;}
-    @media (max-width: 900px){.grid{grid-template-columns:1fr}}
+    header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(120%) blur(8px);background:rgba(11,13,18,.9);border-bottom:1px solid var(--card-bd)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid var(--card-bd);background:var(--panel);cursor:pointer}
+    .hero{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;padding:32px 0}
+    .badge{display:inline-flex;gap:8px;align-items:center;background:rgba(139,92,246,.12);color:#dcd2ff;border:1px solid rgba(139,92,246,.4);border-radius:999px;padding:6px 12px;font-weight:600}
+    h2{font-size:32px;margin:14px 0}
+    .lead{color:var(--muted);line-height:1.6}
+    .glass{background:var(--panel);border:1px solid var(--card-bd);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .muted{color:var(--muted)}
+    footer{margin:40px 0 20px;color:var(--muted);text-align:center}
+    @media(max-width:900px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -68,234 +48,151 @@
       <span class="btn" id="copyLink">🔗 Copy link</span>
     </div>
   </header>
-
   <main class="wrap">
     <section class="hero">
-      <span class="badge">Context‑Aware MFA • IP Spoofing Defense</span>
-      <h2>Detecting and Preventing Spoofed Sessions</h2>
-      <p class="lead">This project explores how passive contextual information can expose IP‑spoofed sessions. By assigning evolving trust scores, incorporating region‑aware rules, and controlling overlap between normal and attacker profiles, we aim to enhance authentication systems without burdening users.</p>
-    </section>
-
-    <section class="grid">
-      <div class="glass">
-        <h3>Key Objectives</h3>
-        <ul>
-          <li>Maintain high classification accuracy (AUC > .9)</li>
-          <li>Keep trust score overlap between normal users and attackers under 5%</li>
-          <li>Ensure new users begin with low trust and build gradually</li>
-          <li>Apply automatic low trust scores to overseas sessions</li>
-        </ul>
-      </div>
-      <div class="glass">
-        <h3>Recent Progress</h3>
-        <p>We shifted to a more deterministic, pattern‑based dataset to eliminate unrealistic randomness. This improves interpretability and helps the model separate attackers from legitimate users more reliably. Early evaluations have achieved an AUC of 0.93, meeting our initial performance goal.</p>
-      </div>
-    </section>
-
-    <section class="glass slider-demo">
-      <h3>Trust Overlap Demo</h3>
-      <p class="muted">Slide to adjust normal vs attacker centers. Goal: keep overlap below 5%.</p>
-      <div class="barwrap">
-        <div class="distA" id="distA"></div>
-        <div class="distB" id="distB"></div>
-      </div>
-      <div class="ovl" id="ovlText">Estimated overlap: 0.04</div>
-      <div class="sliders">
-        <label>Normal center
-          <input type="range" min="20" max="70" value="60" id="aRange">
-        </label>
-        <label>Attacker center
-          <input type="range" min="5" max="40" value="25" id="bRange">
-        </label>
-      </div>
-    </section>
-
-    <section class="grid">
-      <div class="glass">
-        <h3>How Location Awareness Works</h3>
-        <p>Our model incorporates geographic regions to identify when a session originates outside the U.S. Overseas logins are automatically capped at a low trust score, ensuring that potential spoofed or high‑risk sessions cannot reach high‑trust levels.</p>
-      </div>
-      <div class="glass">
-        <h3>Next Steps</h3>
-        <ul>
-          <li>Introduce Equal Error Rate (EER) as an additional evaluation metric</li>
-          <li>Expand experiments with larger synthetic datasets</li>
-          <li>Leverage GPU resources for faster model training</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="grid">
-      <div class="glass">
-        <h3>Impact Meter</h3>
-        <p class="muted">An animated counter showing progress toward research goals.</p>
-        <div class="counter" id="impactCounter">0%</div>
-      </div>
-      <div class="glass">
-        <h3>Why It Matters</h3>
-        <p>IP spoofing remains a major vulnerability in critical infrastructure and user authentication. By applying deterministic trust logic and context‑based rules, our work demonstrates how simple but effective enhancements can dramatically reduce spoofed access attempts.</p>
-      </div>
-    </section>
-
-    <footer>
-      © <span id="yr"></span> Justin Schlag • Context‑Aware MFA Research
-    </footer>
-      <section class="glass" id="interactive">
-      <h3 style="margin-top:0">Interactive Lab — No Code Shown</h3>
-      <p class="lead" style="font-size:14px">Adjust the knobs to see how trust distributions and headline metrics react. This is a conceptual demo; implementation details are intentionally omitted for sensitivity.</p>
-
-      <div class="grid">
-        <div class="glass" style="margin:0">
-          <h4 style="margin:0 0 8px">Trust Overlap Demo</h4>
-          <p class="muted" style="margin-top:0">Goal: keep attacker vs. normal overlap under <strong>5%</strong>.</p>
-          <div style="padding:10px 0">
-            <div id="barwrap" style="position:relative;height:18px;background:rgba(255,255,255,.06);border:1px solid var(--card-bd);border-radius:999px;overflow:hidden">
-              <div id="distA" aria-label="Normal Users" style="position:absolute;top:0;bottom:0"></div>
-              <div id="distB" aria-label="Attackers" style="position:absolute;top:0;bottom:0"></div>
-            </div>
-            <div id="ovlText" style="margin-top:10px;color:var(--muted);font-variant-numeric:tabular-nums">Estimated overlap: 0.04</div>
-          </div>
-          <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
-            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted)">Normal center
-              <input type="range" min="20" max="70" value="60" id="aRange">
-            </label>
-            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted)">Attacker center
-              <input type="range" min="5" max="40" value="25" id="bRange">
-            </label>
-          </div>
-        </div>
-
-        <div class="glass" style="margin:0">
-          <h4 style="margin:0 0 8px">What‑If Controls</h4>
-          <div class="grid" style="grid-template-columns:1fr;gap:10px">
-            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted)">Overseas session mix (%)
-              <input type="range" min="0" max="30" value="5" id="mixRange">
-            </label>
-            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted)">Ambient noise level (concept)
-              <input type="range" min="0" max="20" value="5" id="noiseRange">
-            </label>
-          </div>
-          <div class="grid" style="margin-top:12px;grid-template-columns:1fr 1fr;gap:14px">
-            <div class="glass" style="margin:0; text-align:center">
-              <small class="muted">AUC (est.)</small>
-              <div id="aucVal" style="font-size:28px;font-weight:800;margin-top:6px">0.93</div>
-            </div>
-            <div class="glass" style="margin:0; text-align:center">
-              <small class="muted">Risk Dial</small>
-              <div id="dial" style="width:120px;height:120px;border-radius:60px;margin:8px auto;border:1px solid var(--card-bd);"></div>
-              <div id="dialText" class="muted" style="font-variant-numeric:tabular-nums">Overseas: 5%</div>
-            </div>
-          </div>
+      <div>
+        <span class="badge">Context‑Aware MFA • IP Spoofing Defense</span>
+        <h2>Interactive Trust Scoring Concept</h2>
+        <p class="lead">Visualizing overlap, overseas impact, and noise — without exposing sensitive code.</p>
+        <div class="glass" style="margin-top:20px">
+          <small class="muted">AUC (est.)</small>
+          <div id="aucVal" style="font-size:28px;font-weight:800">0.93</div>
         </div>
       </div>
-
-      <details class="glass">
-        <summary>What you can infer (without code)</summary>
-        <ul>
-          <li>Increasing distance between centers reduces overlap and typically raises AUC.</li>
-          <li>Higher overseas mix pushes the risk dial up and narrows safe operating points.</li>
-          <li>Even small noise requires measured guard‑bands to keep overlap under 5%.</li>
-        </ul>
-      </details>
+      <div class="glass">
+        <h3>Trust Overlap Demo</h3>
+        <div style="height:18px;background:rgba(255,255,255,.06);border:1px solid var(--card-bd);border-radius:999px;position:relative;overflow:hidden">
+          <div id="distA" style="position:absolute;top:0;bottom:0"></div>
+          <div id="distB" style="position:absolute;top:0;bottom:0"></div>
+        </div>
+        <div id="ovlText" class="muted" style="margin-top:8px">Estimated overlap: 0.04</div>
+        <div class="grid" style="margin-top:12px">
+          <label class="muted">Normal center<input type="range" min="20" max="70" value="60" id="aRange"></label>
+          <label class="muted">Attacker center<input type="range" min="5" max="40" value="25" id="bRange"></label>
+        </div>
+      </div>
     </section>
-
+    <section class="grid">
+      <div class="glass">
+        <h3>What‑If Controls</h3>
+        <label class="muted">Overseas session mix (%)<input type="range" min="0" max="30" value="5" id="mixRange"></label>
+        <label class="muted">Ambient noise (concept)<input type="range" min="0" max="20" value="5" id="noiseRange"></label>
+        <div class="glass" style="margin-top:12px;text-align:center">
+          <small class="muted">Risk Dial</small>
+          <div id="dial" style="width:120px;height:120px;border-radius:60px;margin:8px auto;border:1px solid var(--card-bd)"></div>
+          <div id="dialText" class="muted">Overseas: 5%</div>
+        </div>
+      </div>
+      <div class="glass">
+        <h3>Insights</h3>
+        <ul>
+          <li>Greater distance between groups lowers overlap.</li>
+          <li>More overseas mix increases overall risk.</li>
+          <li>Noise requires buffer margins to keep overlap under 5%.</li>
+        </ul>
+      </div>
+    </section>
+    <footer>© <span id="yr"></span> Justin Schlag • Context‑Aware MFA Research</footer>
   </main>
-
   <script>
-    // Re-attach year if moved
-    (function(){var y=document.getElementById('yr'); if(y) y.textContent=new Date().getFullYear();})();
+    // ===== Unified Script (no duplicate declarations) =====
+    // Copy link
+    (function(){
+      const cp = document.getElementById('copyLink');
+      if (cp) cp.addEventListener('click', async () => {
+        try { await navigator.clipboard.writeText(location.href); } catch {}
+        const txt = cp.innerHTML; cp.innerHTML = '✅ Copied';
+        setTimeout(()=> cp.innerHTML = txt, 1200);
+      });
+    })();
 
-    // Slider demo logic (conceptual visuals only)
-    const aRange = document.getElementById('aRange');
-    const bRange = document.getElementById('bRange');
-    const mixRange = document.getElementById('mixRange');
-    const noiseRange = document.getElementById('noiseRange');
-    const distA = document.getElementById('distA');
-    const distB = document.getElementById('distB');
-    const ovlText = document.getElementById('ovlText');
-    const aucVal = document.getElementById('aucVal');
-    const dial = document.getElementById('dial');
-    const dialText = document.getElementById('dialText');
+    // Year
+    (function(){ const y = document.getElementById('yr'); if (y) y.textContent = new Date().getFullYear(); })();
 
-    function styleDist(el, leftPct, widthPct, gradA, gradB){
-      el.style.left = leftPct + '%';
-      el.style.width = widthPct + '%';
-      el.style.background = `linear-gradient(90deg, ${gradA}, ${gradB})`;
-      el.style.borderRight = '1px solid rgba(255,255,255,.08)';
-    }
+    // Tabs (if present)
+    (function(){
+      const tabs = document.querySelectorAll('.tab');
+      const panels = {
+        det: document.getElementById('tab-det'),
+        overseas: document.getElementById('tab-overseas'),
+        overlap: document.getElementById('tab-overlap')
+      };
+      if (tabs.length){
+        tabs.forEach(t => t.addEventListener('click', () => {
+          tabs.forEach(x => x.setAttribute('aria-selected', String(x===t)));
+          Object.values(panels).forEach(p => p && (p.hidden = true));
+          panels[t.dataset.tab] && (panels[t.dataset.tab].hidden = false);
+        }));
+      }
+    })();
 
-    function render(){
-      const aCenter = +aRange.value; // normal users
-      const bCenter = +bRange.value; // attackers
-      const width = 24; // conceptual spread
-      const aL = Math.max(0, aCenter - width/2);
-      const bL = Math.max(0, bCenter - width/2);
-      styleDist(distA, aL, width, 'rgba(6,182,212,.7)', 'rgba(6,182,212,.2)');
-      styleDist(distB, bL, width, 'rgba(139,92,246,.7)', 'rgba(139,92,246,.2)');
+    // Interactive Lab — single source of truth
+    (function(){
+      const aRange = document.getElementById('aRange');
+      const bRange = document.getElementById('bRange');
+      const mixRange = document.getElementById('mixRange');
+      const noiseRange = document.getElementById('noiseRange');
+      const distA = document.getElementById('distA');
+      const distB = document.getElementById('distB');
+      const ovlText = document.getElementById('ovlText');
+      const aucVal = document.getElementById('aucVal');
+      const dial = document.getElementById('dial');
+      const dialText = document.getElementById('dialText');
 
-      const d = Math.abs(aCenter - bCenter);
-      const ovl = Math.max(0, (width - d)/width);
-      const noise = +noiseRange.value / 100; // small perturbation
-      const overseas = +mixRange.value / 100;
+      function styleDist(el, leftPct, widthPct, gradA, gradB){
+        if (!el) return;
+        el.style.left = leftPct + '%';
+        el.style.width = widthPct + '%';
+        el.style.background = `linear-gradient(90deg, ${gradA}, ${gradB})`;
+        el.style.borderRight = '1px solid rgba(255,255,255,.08)';
+        el.style.position = 'absolute';
+        el.style.top = '0';
+        el.style.bottom = '0';
+      }
 
-      // Display overlap
-      const ovlShown = Math.min(1, ovl + noise*0.5 + overseas*0.2);
-      ovlText.textContent = `Estimated overlap: ${ovlShown.toFixed(2)}`;
-      ovlText.style.color = ovlShown <= 0.05 ? 'var(--ok)' : (ovlShown < 0.15 ? 'var(--warn)' : 'var(--bad)');
+      function render(){
+        if (!(aRange && bRange)) return;
+        const aCenter = +aRange.value; // normal users
+        const bCenter = +bRange.value; // attackers
+        const width = 24; // conceptual spread
+        const aL = Math.max(0, aCenter - width/2);
+        const bL = Math.max(0, bCenter - width/2);
+        styleDist(distA, aL, width, 'rgba(6,182,212,.7)', 'rgba(6,182,212,.2)');
+        styleDist(distB, bL, width, 'rgba(139,92,246,.7)', 'rgba(139,92,246,.2)');
 
-      // AUC heuristic (purely illustrative): higher d & lower noise/overseas => better
-      const auc = Math.max(.70, Math.min(.99, 0.75 + (d/40) - noise*0.2 - overseas*0.15));
-      aucVal.textContent = auc.toFixed(2);
+        const d = Math.abs(aCenter - bCenter);
+        const noise = noiseRange ? (+noiseRange.value / 100) : 0;
+        const overseas = mixRange ? (+mixRange.value / 100) : 0.05;
 
-      // Risk dial based on overseas mix (visual only)
-      const deg = Math.min(270, 90 + overseas*270);
-      dial.style.background = `conic-gradient(var(--bad) 0 ${deg}deg, rgba(255,255,255,.08) ${deg}deg 360deg)`;
-      dialText.textContent = `Overseas: ${Math.round(overseas*100)}%`;
-    }
+        // Overlap (illustrative only)
+        const baseOvl = Math.max(0, (width - d)/width);
+        const ovlShown = Math.min(1, baseOvl + noise*0.5 + overseas*0.2);
+        if (ovlText){
+          ovlText.textContent = `Estimated overlap: ${ovlShown.toFixed(2)}`;
+          ovlText.style.color = ovlShown <= 0.05 ? 'var(--ok)' : (ovlShown < 0.15 ? 'var(--warn)' : 'var(--bad)');
+        }
 
-    [aRange,bRange,mixRange,noiseRange].forEach(el=> el && el.addEventListener('input', render));
-    render();
-  </script>
-</body>
-</html>
+        // AUC heuristic (visual only)
+        const auc = Math.max(.70, Math.min(.99, 0.75 + (d/40) - noise*0.2 - overseas*0.15));
+        if (aucVal) aucVal.textContent = auc.toFixed(2);
 
-  <script>
-    document.getElementById('copyLink').addEventListener('click', async () => {
-      try { await navigator.clipboard.writeText(location.href); } catch {}
-      const el = document.getElementById('copyLink');
-      el.textContent = '✅ Copied';
-      setTimeout(()=> el.textContent = '🔗 Copy link', 1200);
-    });
-    document.getElementById('yr').textContent = new Date().getFullYear();
+        // Risk dial
+        if (dial && dialText){
+          const deg = Math.min(270, 90 + overseas*270);
+          dial.style.background = `conic-gradient(var(--bad) 0 ${deg}deg, rgba(255,255,255,.08) ${deg}deg 360deg)`;
+          dialText.textContent = `Overseas: ${Math.round(overseas*100)}%`;
+        }
+      }
 
-    const aRange = document.getElementById('aRange');
-    const bRange = document.getElementById('bRange');
-    const distA = document.getElementById('distA');
-    const distB = document.getElementById('distB');
-    const ovlText = document.getElementById('ovlText');
-    function render(){
-      const aCenter = +aRange.value;
-      const bCenter = +bRange.value;
-      const width = 24;
-      distA.style.left = (aCenter-width/2)+"%";
-      distA.style.width = width+"%";
-      distB.style.left = (bCenter-width/2)+"%";
-      distB.style.width = width+"%";
-      const d = Math.abs(aCenter-bCenter);
-      const ovl = Math.max(0,(width-d)/width);
-      ovlText.textContent = `Estimated overlap: ${ovl.toFixed(2)}`;
-      ovlText.style.color = ovl<=0.05? 'var(--ok)' : (ovl<0.15? 'var(--warn)' : 'var(--bad)');
-    }
-    aRange.addEventListener('input', render);
-    bRange.addEventListener('input', render);
-    render();
+      ['input','change'].forEach(evt => {
+        aRange && aRange.addEventListener(evt, render);
+        bRange && bRange.addEventListener(evt, render);
+        mixRange && mixRange.addEventListener(evt, render);
+        noiseRange && noiseRange.addEventListener(evt, render);
+      });
 
-    // Animated counter
-    let val = 0;
-    const counterEl = document.getElementById('impactCounter');
-    function tick(){
-      if(val<93){val++; counterEl.textContent = val+"%"; setTimeout(tick,30);} }
-    tick();
+      render();
+    })();
   </script>
 </body>
 </html>
