@@ -154,6 +154,33 @@
       background:transparent;border:1px dashed rgba(107,78,113,.35);color:var(--accent)
     }
 
+    .top-banner {
+  background: #f1eaf5; /* lavender */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 18px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.top-banner a {
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,.08);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: #6b4e71; /* plum text */
+  font-weight: 600;
+}
+
+.top-banner a:hover {
+  background: #faf8fc;
+}
+
+
     /* Lightbox */
     .lightbox{
       position:fixed;inset:0;background:rgba(0,0,0,.7);
@@ -185,6 +212,12 @@
   </style>
 </head>
 <body class="grid-bg">
+  <!-- TOP BANNER -->
+<header class="top-banner">
+  <a href="../index.html" class="back-link">← Back</a>
+  <a href="#" class="copy-link">🔗 Copy link</a>
+</header>
+
   <div class="blob" aria-hidden="true"></div>
 
   <a href="../index.html" class="back">← Back</a>
