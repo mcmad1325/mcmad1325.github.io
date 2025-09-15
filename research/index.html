@@ -211,7 +211,7 @@
         const auc=Math.max(.70,Math.min(.99,0.75+(d/40)-noise*0.2-overseas*0.15));
         aucVal.textContent=auc.toFixed(2);
         const deg=Math.min(270,90+overseas*270);
-        dial.style.background=`conic-gradient(var(--bad) 0 ${deg}deg, rgba(255,255,255,.08) ${deg}deg 360deg)`;
+        dial.style.background=`conic-gradient(var(--brand) 0 ${deg}deg, rgba(255,255,255,.08) ${deg}deg 360deg)`;
         dialText.textContent=`Overseas: ${Math.round(overseas*100)}%`;
       }
       [aRange,bRange,mixRange,noiseRange].forEach(el=>el.addEventListener('input',render));
