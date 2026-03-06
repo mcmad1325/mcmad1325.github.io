@@ -2,472 +2,1454 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Networking Operations</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Networking Operations | Justin Schlag</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
+
   <style>
     :root{
-      /* Light defaults (cream + lavender) */
-      --bg:   #fdfaf6;   /* cream background */
-      --bg-2: #f7f2ed;
-      --card: #ffffff;   /* white cards */
-      --ink:  #2b2230;   /* deep plum-ish text */
-      --muted:#6b5d6b;   /* muted body text */
-      --accent:  #6b4e71; /* plum accent */
-      --accent-2:#a287b7; /* lighter plum */
-      --chip:   #efe9ff;  /* lavender chip/bubble */
-      --ring:   0 0 0 2px rgba(107,78,113,.28), 0 8px 30px rgba(162,135,183,.2);
+      --bg: #08111f;
+      --bg-2: #0d1728;
+      --panel: rgba(15, 24, 40, 0.78);
+      --panel-2: rgba(18, 31, 52, 0.9);
+      --card: rgba(255,255,255,0.04);
+      --card-strong: rgba(255,255,255,0.07);
+      --border: rgba(255,255,255,0.10);
+      --border-strong: rgba(255,255,255,0.16);
+      --text: #eef4ff;
+      --muted: #a9b7d0;
+      --soft: #d8e3f7;
+      --accent: #65b7ff;
+      --accent-2: #7c8cff;
+      --accent-3: #79f2d5;
+      --shadow: 0 24px 60px rgba(0,0,0,0.32);
+      --radius: 22px;
+      --radius-sm: 16px;
+      --max: 1200px;
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family:'DM Sans',system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+      font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--text);
       background:
-        radial-gradient(1200px 600px at 20% -10%, rgba(107,78,113,.16), transparent 60%),
-        radial-gradient(1200px 600px at 120% 20%, rgba(162,135,183,.16), transparent 60%),
-        var(--bg);
-      color:var(--ink);
+        radial-gradient(circle at top left, rgba(101,183,255,0.18), transparent 30%),
+        radial-gradient(circle at 90% 10%, rgba(124,140,255,0.15), transparent 25%),
+        radial-gradient(circle at 70% 80%, rgba(121,242,213,0.08), transparent 20%),
+        linear-gradient(180deg, #07101d 0%, #0a1424 40%, #08111f 100%);
       overflow-x:hidden;
     }
-    .grid-bg::before{
+
+    body::before{
       content:"";
-      position:fixed;inset:0;
-      background-image:linear-gradient(to right, rgba(0,0,0,.05) 1px, transparent 1px),
-                       linear-gradient(to bottom, rgba(0,0,0,.05) 1px, transparent 1px);
-      background-size:36px 36px;
-      opacity:.12;
+      position:fixed;
+      inset:0;
       pointer-events:none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0));
+      z-index:-3;
+    }
+
+    .glow{
+      position:fixed;
+      width:42rem;
+      height:42rem;
+      border-radius:50%;
+      filter: blur(90px);
+      opacity:0.2;
       z-index:-2;
+      pointer-events:none;
     }
-    .blob{
-      position:fixed;inset:auto -20% -20% auto;
-      width:60vmax;height:60vmax;border-radius:50%;
-      background:radial-gradient(circle at 40% 40%, rgba(162,135,183,.28), transparent 60%);
-      filter:blur(40px);opacity:.6;z-index:-3;transform:translateZ(0);
+    .glow.one{
+      top:-10rem;
+      left:-8rem;
+      background: #4ea6ff;
     }
-    a.back{
-      position:fixed;top:16px;left:16px;z-index:10;
-      background:var(--card);color:var(--ink);
-      text-decoration:none;padding:10px 14px;border-radius:12px;
-      border:1px solid rgba(0,0,0,.06);
-      box-shadow:0 8px 24px rgba(0,0,0,.08);
-      display:inline-flex;gap:.6rem;align-items:center;
-      transition:.25s transform ease, .25s background ease;
+    .glow.two{
+      bottom:-14rem;
+      right:-10rem;
+      background: #7c8cff;
     }
-    a.back:hover{transform:translateY(-2px)}
-    .toggle{
-      position:fixed;top:16px;right:16px;z-index:10;
-      background:var(--card);color:var(--ink);
-      border:1px solid rgba(0,0,0,.06);border-radius:999px;
-      padding:8px 12px;cursor:pointer;
-      box-shadow:0 8px 24px rgba(0,0,0,.08);
+
+    a{
+      color:inherit;
+      text-decoration:none;
     }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:100;
+      backdrop-filter: blur(16px);
+      background: rgba(8, 17, 31, 0.72);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .topbar-inner{
+      width:min(var(--max), 92vw);
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 0;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:700;
+      letter-spacing:0.02em;
+      color:var(--soft);
+    }
+
+    .brand-badge{
+      width:40px;
+      height:40px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      font-weight:800;
+      background: linear-gradient(135deg, rgba(101,183,255,0.25), rgba(124,140,255,0.2));
+      border:1px solid rgba(255,255,255,0.12);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .nav-btn{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color:var(--soft);
+      padding:10px 14px;
+      border-radius:12px;
+      font-size:0.95rem;
+      font-weight:600;
+      transition:0.25s ease;
+    }
+    .nav-btn:hover{
+      transform:translateY(-1px);
+      border-color:var(--border-strong);
+      background: rgba(255,255,255,0.07);
+    }
+
+    .nav-btn.primary{
+      background: linear-gradient(135deg, rgba(101,183,255,0.22), rgba(124,140,255,0.18));
+      border-color: rgba(101,183,255,0.28);
+    }
+
     .container{
-      width:min(1100px, 92vw);
-      margin:clamp(60px,6vw,100px) auto 80px;
+      width:min(var(--max), 92vw);
+      margin: 34px auto 90px;
     }
+
     .hero{
-      display:grid;gap:20px;align-items:center;
-      grid-template-columns: 1.2fr .8fr;
-      background:linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.01));
-      border:1px solid rgba(0,0,0,.06);
-      border-radius:24px;padding:28px 28px 24px;
-      box-shadow:0 30px 80px rgba(0,0,0,.08);
-      backdrop-filter: blur(8px);
+      display:grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap:22px;
+      align-items:stretch;
     }
-    .hero h1{
-      font-family:'Rubik',sans-serif;
-      font-weight:800;letter-spacing:.2px;
-      font-size:clamp(28px, 3.2vw, 40px);
-      margin:0 0 10px;color:var(--ink);
+
+    .hero-main,
+    .hero-side{
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+      border:1px solid var(--border);
+      border-radius:30px;
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
     }
-    .hero p{margin:0;color:var(--muted);line-height:1.6}
-    .badge-row{margin-top:16px;display:flex;flex-wrap:wrap;gap:10px}
-    .badge{
-      background:var(--chip);border:1px solid rgba(0,0,0,.06);
-      padding:8px 12px;border-radius:999px;font-size:.9rem;color:var(--ink);
+
+    .hero-main{
+      padding:34px;
+      min-height:520px;
     }
-    .kpis{
-      display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
-      align-self:stretch
+
+    .hero-main::before{
+      content:"";
+      position:absolute;
+      inset:auto -15% -25% auto;
+      width:340px;
+      height:340px;
+      border-radius:50%;
+      background: radial-gradient(circle, rgba(101,183,255,0.20), transparent 65%);
+      pointer-events:none;
     }
-    .kpi{
-      background:var(--card);
-      border:1px solid rgba(0,0,0,.06);
-      border-radius:18px;padding:16px 14px;
-      display:flex;flex-direction:column;gap:6px;
-      box-shadow:0 16px 40px rgba(0,0,0,.06);
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-size:0.84rem;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:0.14em;
+      color:#b8c6de;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      margin-bottom:20px;
     }
-    .kpi .num{font-size:clamp(22px,3.2vw,28px);font-weight:800;font-family:'Rubik',sans-serif}
-    .kpi .hint{color:var(--muted);font-size:.9rem}
-    .section{margin-top:28px}
-    .section h2{
-      font-family:'Rubik',sans-serif;font-weight:700;font-size:1.2rem;margin:0 0 12px;
-      display:flex;align-items:center;gap:10px;color:var(--ink)
+
+    .pulse{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background: var(--accent-3);
+      box-shadow: 0 0 0 0 rgba(121,242,213,0.6);
+      animation: pulse 2s infinite;
     }
-    .divider{flex:1;height:1px;background:linear-gradient(90deg, transparent, rgba(0,0,0,.12))}
-    .card{
-      background:var(--card);
-      border:1px solid rgba(0,0,0,.06);
-      border-radius:18px;padding:18px 16px;
-      box-shadow:0 16px 40px rgba(0,0,0,.06);
+
+    @keyframes pulse{
+      0%{ box-shadow:0 0 0 0 rgba(121,242,213,0.55); }
+      70%{ box-shadow:0 0 0 12px rgba(121,242,213,0); }
+      100%{ box-shadow:0 0 0 0 rgba(121,242,213,0); }
     }
-    .list{display:flex;flex-wrap:wrap;gap:10px}
-    .chip{
-      background:var(--chip);
-      border:1px solid rgba(0,0,0,.06);
-      padding:10px 12px;border-radius:12px;
-      font-weight:600
+
+    h1{
+      margin:0;
+      font-family:'Manrope', sans-serif;
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      line-height:1.04;
+      letter-spacing:-0.04em;
+      max-width: 11ch;
     }
-    .accordion{display:grid;gap:12px}
-    details{
-      background:var(--card);border:1px solid rgba(0,0,0,.06);border-radius:14px;overflow:hidden
+
+    .hero-subtext{
+      margin:18px 0 0;
+      max-width:62ch;
+      color:var(--muted);
+      font-size:1.05rem;
+      line-height:1.8;
     }
-    summary{
-      list-style:none;cursor:pointer;padding:14px 16px;font-weight:700;
-      display:flex;align-items:center;gap:10px
+
+    .hero-badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:24px;
     }
-    summary::-webkit-details-marker{display:none}
-    .chev{margin-left:auto;transition:.25s transform ease}
-    details[open] .chev{transform:rotate(180deg)}
-    .acc-body{padding:0 16px 16px;color:var(--muted);line-height:1.7}
-    .acc-body p{margin:8px 0 0}
-    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
-    .img-card{
-      border-radius:12px;overflow:hidden;border:1px solid rgba(0,0,0,.06);
-      background:#000;cursor:pointer;position:relative
+
+    .hero-badge{
+      padding:10px 14px;
+      border-radius:999px;
+      background: rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.10);
+      color:var(--soft);
+      font-size:0.93rem;
+      font-weight:600;
     }
-    .img-card img{width:100%;height:180px;object-fit:cover;display:block;opacity:.9;transition:opacity .25s ease, transform .25s ease}
-    .img-card:hover img{opacity:1;transform:scale(1.02)}
-    .caption{position:absolute;left:8px;bottom:8px;background:rgba(0,0,0,.45);color:#fff;font-size:.85rem;padding:6px 8px;border-radius:8px}
-    .impact{font-size:1rem;color:var(--muted);line-height:1.8}
-    .cta-row{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+
+    .hero-cta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:28px;
+    }
+
     .btn{
-      background:linear-gradient(180deg, var(--accent), var(--accent-2));
-      color:white;border:none;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer;
-      box-shadow:var(--ring);transition:transform .2s ease
+      border:none;
+      cursor:pointer;
+      padding:13px 18px;
+      border-radius:14px;
+      font-weight:700;
+      font-size:0.96rem;
+      transition:0.25s ease;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
     }
-    .btn:hover{transform:translateY(-2px)}
-    .ghost{
-      background:transparent;border:1px dashed rgba(107,78,113,.35);color:var(--accent)
+
+    .btn-solid{
+      color:white;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 18px 34px rgba(101,183,255,0.18);
     }
 
-    .top-banner {
-  background: #f4e6f4; /* lavender */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 18px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
+    .btn-outline{
+      color:var(--soft);
+      background: rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.12);
+    }
 
-.top-banner a {
-  background: #ffffff;
-  border: 1px solid rgba(0,0,0,.08);
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  text-decoration: none;
-  color: #6b4e71; /* plum text */
-  font-weight: 600;
-}
+    .btn:hover{
+      transform: translateY(-2px);
+    }
 
-.top-banner a:hover {
-  background: #faf8fc;
-}
+    .hero-side{
+      display:grid;
+      grid-template-rows:auto auto 1fr;
+      gap:16px;
+      padding:22px;
+    }
 
+    .side-card{
+      background: rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.09);
+      border-radius:22px;
+      padding:18px;
+    }
 
-    /* Lightbox */
+    .side-label{
+      font-size:0.78rem;
+      text-transform:uppercase;
+      letter-spacing:0.12em;
+      color:#93a5c4;
+      font-weight:700;
+      margin-bottom:10px;
+    }
+
+    .stat-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+    }
+
+    .stat{
+      padding:18px;
+      border-radius:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.04));
+      border:1px solid rgba(255,255,255,0.09);
+    }
+
+    .stat-num{
+      font-family:'Manrope', sans-serif;
+      font-size:1.8rem;
+      font-weight:800;
+      letter-spacing:-0.04em;
+      margin-bottom:6px;
+    }
+
+    .stat-text{
+      color:var(--muted);
+      line-height:1.5;
+      font-size:0.93rem;
+    }
+
+    .status-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .status-item{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      padding:14px 14px;
+      border-radius:16px;
+      background: rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+    }
+
+    .status-dot{
+      width:11px;
+      height:11px;
+      margin-top:6px;
+      border-radius:50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-3));
+      flex-shrink:0;
+    }
+
+    .status-item strong{
+      display:block;
+      margin-bottom:4px;
+      color:var(--soft);
+    }
+
+    .status-item span{
+      color:var(--muted);
+      font-size:0.95rem;
+      line-height:1.55;
+    }
+
+    .section{
+      margin-top:26px;
+    }
+
+    .section-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.035));
+      border:1px solid var(--border);
+      border-radius:28px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .section-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:16px;
+      padding:28px 28px 0;
+      flex-wrap:wrap;
+    }
+
+    .section-header h2{
+      margin:0;
+      font-family:'Manrope', sans-serif;
+      font-size:1.6rem;
+      letter-spacing:-0.03em;
+    }
+
+    .section-header p{
+      margin:8px 0 0;
+      color:var(--muted);
+      max-width:62ch;
+      line-height:1.7;
+    }
+
+    .section-body{
+      padding:24px 28px 28px;
+    }
+
+    .overview-grid{
+      display:grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap:18px;
+    }
+
+    .feature-panel{
+      background: rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:22px;
+      padding:20px;
+    }
+
+    .feature-panel h3{
+      margin:0 0 12px;
+      font-size:1.05rem;
+      color:var(--soft);
+    }
+
+    .feature-panel p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.75;
+    }
+
+    .mini-list{
+      display:grid;
+      gap:12px;
+      margin-top:4px;
+    }
+
+    .mini-list .row{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding:12px 0;
+      border-bottom:1px solid rgba(255,255,255,0.08);
+    }
+
+    .mini-list .row:last-child{
+      border-bottom:none;
+    }
+
+    .mini-list .label{
+      color:var(--muted);
+    }
+
+    .mini-list .value{
+      color:var(--soft);
+      font-weight:600;
+      text-align:right;
+    }
+
+    .timeline{
+      display:grid;
+      gap:16px;
+      position:relative;
+      margin-top:10px;
+    }
+
+    .timeline::before{
+      content:"";
+      position:absolute;
+      top:4px;
+      bottom:4px;
+      left:18px;
+      width:2px;
+      background: linear-gradient(to bottom, rgba(101,183,255,0.65), rgba(124,140,255,0.2));
+    }
+
+    .timeline-item{
+      position:relative;
+      padding-left:52px;
+      background: rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.09);
+      border-radius:20px;
+      padding-top:18px;
+      padding-right:18px;
+      padding-bottom:18px;
+      transition:0.25s ease;
+    }
+
+    .timeline-item:hover{
+      transform:translateY(-2px);
+      background: rgba(255,255,255,0.06);
+      border-color:rgba(255,255,255,0.14);
+    }
+
+    .timeline-item::before{
+      content:"";
+      position:absolute;
+      left:11px;
+      top:22px;
+      width:16px;
+      height:16px;
+      border-radius:50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 0 5px rgba(101,183,255,0.12);
+    }
+
+    .timeline-top{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-bottom:8px;
+    }
+
+    .timeline-top strong{
+      font-size:1.04rem;
+      color:var(--soft);
+    }
+
+    .timeline-top span{
+      color:#8ea2c3;
+      font-size:0.9rem;
+      font-weight:600;
+    }
+
+    .timeline-item p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .photo-grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:16px;
+      margin-top:8px;
+    }
+
+    .photo-card{
+      position:relative;
+      overflow:hidden;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,0.08);
+      background:#0a1220;
+      min-height:260px;
+      cursor:pointer;
+      isolation:isolate;
+    }
+
+    .photo-card img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transition: transform 0.35s ease, opacity 0.35s ease;
+      opacity:0.92;
+    }
+
+    .photo-card:hover img{
+      transform:scale(1.04);
+      opacity:1;
+    }
+
+    .photo-card::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(to top, rgba(4,8,15,0.86), rgba(4,8,15,0.1) 55%, rgba(4,8,15,0.02));
+      z-index:1;
+    }
+
+    .photo-info{
+      position:absolute;
+      left:16px;
+      right:16px;
+      bottom:16px;
+      z-index:2;
+    }
+
+    .photo-info strong{
+      display:block;
+      font-size:1rem;
+      margin-bottom:6px;
+    }
+
+    .photo-info span{
+      display:block;
+      color:#c0cee4;
+      font-size:0.92rem;
+      line-height:1.55;
+    }
+
+    .tabs-shell{
+      display:grid;
+      grid-template-columns: 270px 1fr;
+      gap:18px;
+      margin-top:6px;
+    }
+
+    .tab-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .tab-btn{
+      text-align:left;
+      padding:16px 16px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.09);
+      background: rgba(255,255,255,0.04);
+      color:var(--soft);
+      cursor:pointer;
+      transition:0.25s ease;
+      font-weight:700;
+      font-size:0.97rem;
+    }
+
+    .tab-btn span{
+      display:block;
+      color:var(--muted);
+      font-size:0.86rem;
+      font-weight:500;
+      margin-top:6px;
+      line-height:1.45;
+    }
+
+    .tab-btn.active,
+    .tab-btn:hover{
+      background: linear-gradient(135deg, rgba(101,183,255,0.16), rgba(124,140,255,0.12));
+      border-color: rgba(101,183,255,0.24);
+      transform:translateY(-1px);
+    }
+
+    .tab-panel{
+      display:none;
+      background: rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:22px;
+      padding:22px;
+      min-height:320px;
+    }
+
+    .tab-panel.active{
+      display:block;
+      animation: fadeUp 0.35s ease;
+    }
+
+    @keyframes fadeUp{
+      from{ opacity:0; transform:translateY(8px); }
+      to{ opacity:1; transform:translateY(0); }
+    }
+
+    .panel-title{
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+    }
+
+    .panel-title h3{
+      margin:0;
+      font-size:1.2rem;
+      color:var(--soft);
+    }
+
+    .panel-title p{
+      margin:8px 0 0;
+      color:var(--muted);
+      line-height:1.7;
+      max-width:64ch;
+    }
+
+    .chip-wrap{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:8px;
+    }
+
+    .chip{
+      padding:10px 12px;
+      border-radius:12px;
+      background: rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      color:var(--soft);
+      font-weight:600;
+      font-size:0.92rem;
+    }
+
+    .impact-grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:16px;
+    }
+
+    .impact-card{
+      background: rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:20px;
+      padding:22px;
+      transition:0.25s ease;
+    }
+
+    .impact-card:hover{
+      transform:translateY(-2px);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .impact-card h3{
+      margin:0 0 12px;
+      font-size:1.05rem;
+      color:var(--soft);
+    }
+
+    .impact-card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.75;
+    }
+
+    .quote-block{
+      background:
+        linear-gradient(135deg, rgba(101,183,255,0.13), rgba(124,140,255,0.10));
+      border:1px solid rgba(101,183,255,0.18);
+      border-radius:24px;
+      padding:26px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .quote-block::before{
+      content:"“";
+      position:absolute;
+      top:-6px;
+      left:18px;
+      font-size:5rem;
+      line-height:1;
+      color:rgba(255,255,255,0.08);
+      font-family:Georgia, serif;
+    }
+
+    .quote-block p{
+      margin:0;
+      font-size:1.05rem;
+      line-height:1.85;
+      color:#dfe8f6;
+      max-width:70ch;
+      position:relative;
+      z-index:1;
+    }
+
+    .footer-actions{
+      margin-top:20px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+
     .lightbox{
-      position:fixed;inset:0;background:rgba(0,0,0,.7);
-      display:none;align-items:center;justify-content:center;z-index:50;
-      padding:20px
-    }
-    .lightbox.open{display:flex}
-    .lightbox-inner{
-      background:var(--card);border:1px solid rgba(0,0,0,.1);
-      border-radius:16px;max-width:min(980px,92vw);max-height:86vh;overflow:hidden;
-      box-shadow:0 30px 80px rgba(0,0,0,.2)
-    }
-    .lightbox img{display:block;width:100%;height:auto;max-height:70vh;object-fit:contain}
-    .lightbox .lb-cap{padding:12px 14px;color:var(--muted);display:flex;align-items:center;gap:10px}
-    .close{
-      margin-left:auto;background:transparent;border:1px solid rgba(0,0,0,.12);
-      color:var(--ink);border-radius:10px;padding:6px 10px;cursor:pointer
+      position:fixed;
+      inset:0;
+      background: rgba(2,8,16,0.84);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      z-index:200;
+      backdrop-filter: blur(10px);
     }
 
-    /* Responsive */
-    @media (max-width: 880px){
-      .hero{grid-template-columns:1fr;gap:16px}
-      .kpis{grid-template-columns:repeat(3,1fr)}
+    .lightbox.open{
+      display:flex;
     }
-    @media (max-width:600px){
-      .kpis{grid-template-columns:1fr 1fr}
-      .badge-row{gap:8px}
+
+    .lightbox-inner{
+      width:min(1000px, 94vw);
+      background: #0c1627;
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius:24px;
+      overflow:hidden;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.45);
+    }
+
+    .lightbox-inner img{
+      width:100%;
+      max-height:75vh;
+      object-fit:contain;
+      display:block;
+      background:#07101d;
+    }
+
+    .lightbox-caption{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding:16px 18px;
+      color:var(--muted);
+      flex-wrap:wrap;
+    }
+
+    .close-btn{
+      border:1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color:var(--soft);
+      border-radius:12px;
+      padding:10px 14px;
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    .reveal{
+      opacity:0;
+      transform:translateY(18px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    @media (max-width: 1024px){
+      .hero{
+        grid-template-columns:1fr;
+      }
+
+      .overview-grid,
+      .tabs-shell{
+        grid-template-columns:1fr;
+      }
+
+      .photo-grid,
+      .impact-grid{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media (max-width: 700px){
+      .topbar-inner,
+      .container{
+        width:min(94vw, var(--max));
+      }
+
+      .hero-main{
+        padding:24px;
+        min-height:auto;
+      }
+
+      .hero-side{
+        padding:16px;
+      }
+
+      .section-header{
+        padding:24px 20px 0;
+      }
+
+      .section-body{
+        padding:20px;
+      }
+
+      .stat-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .photo-grid,
+      .impact-grid{
+        grid-template-columns:1fr;
+      }
+
+      .timeline-item{
+        padding-right:14px;
+      }
+
+      .nav-btn{
+        font-size:0.9rem;
+      }
+
+      h1{
+        max-width:none;
+      }
+    }
+
+    @media (max-width: 520px){
+      .stat-grid{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions{
+        justify-content:flex-end;
+      }
     }
   </style>
 </head>
-<body class="grid-bg">
-  <!-- TOP BANNER -->
-<header class="top-banner">
-  <a href="../index.html" class="back-link">← Back</a>
-  <a href="#" class="copy-link">🔗 Copy link</a>
-</header>
+<body>
+  <div class="glow one" aria-hidden="true"></div>
+  <div class="glow two" aria-hidden="true"></div>
 
-  <div class="blob" aria-hidden="true"></div>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-badge">JS</div>
+        <span>Networking Operations</span>
+      </div>
 
-  <button class="toggle" id="themeToggle" aria-label="Toggle color theme">🌓 Theme</button>
+      <div class="top-actions">
+        <a href="../index.html" class="nav-btn">← Back to Home</a>
+        <a href="#experience" class="nav-btn">Experience</a>
+        <a href="#tools" class="nav-btn">Tools</a>
+        <button class="nav-btn primary" id="copyLinkBtn" type="button">Copy Link</button>
+      </div>
+    </div>
+  </header>
 
   <main class="container">
-    <!-- HERO -->
-    <section class="hero" id="top">
-      <div>
-        <h1>Networking Operations at UofSC</h1>
+    <section class="hero reveal" id="top">
+      <div class="hero-main">
+        <div class="eyebrow">
+          <span class="pulse"></span>
+          University of South Carolina Division of IT
+        </div>
+
+        <h1>Enterprise Networking Operations at UofSC</h1>
+
+        <p class="hero-subtext">
+          As a student Network Operator for the University of South Carolina, I support the infrastructure that keeps campus connectivity reliable, responsive, and operational. My work spans ticket resolution, switch provisioning, access point support, RMA processing, outage response, and hands-on configuration across enterprise networking environments.
+        </p>
+
+        <div class="hero-badges">
+          <span class="hero-badge">Aruba</span>
+          <span class="hero-badge">Cisco</span>
+          <span class="hero-badge">Juniper</span>
+          <span class="hero-badge">ServiceNow</span>
+          <span class="hero-badge">VLANs & Trunking</span>
+          <span class="hero-badge">CLI & Console Access</span>
+        </div>
+
+        <div class="hero-cta">
+          <a href="#experience" class="btn btn-solid">View Experience</a>
+          <a href="#gallery" class="btn btn-outline">See Work Highlights</a>
+        </div>
+      </div>
+
+      <aside class="hero-side">
+        <div class="side-card">
+          <div class="side-label">At a glance</div>
+          <div class="stat-grid">
+            <div class="stat">
+              <div class="stat-num" data-count="300">0</div>
+              <div class="stat-text">ServiceNow tickets resolved</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num" data-count="3">0</div>
+              <div class="stat-text">Interns trained on tools and workflow</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num" data-count="1">0</div>
+              <div class="stat-text">Off-site outage response completed</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num" data-count="2026">0</div>
+              <div class="stat-text">Summer cohort for ServiceNow CSA</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="side-card">
+          <div class="side-label">Current development</div>
+          <div class="status-list">
+            <div class="status-item">
+              <div class="status-dot"></div>
+              <div>
+                <strong>ServiceNow CSA Cohort</strong>
+                <span>
+                  Joining the 2026 summer cohort to earn the ServiceNow Certified System Administrator certification, with the program funded by the university.
+                </span>
+              </div>
+            </div>
+
+            <div class="status-item">
+              <div class="status-dot"></div>
+              <div>
+                <strong>Operational Readiness</strong>
+                <span>
+                  Building deeper experience in campus-scale network support through day-to-day troubleshooting, equipment handling, and documentation.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="side-card">
+          <div class="side-label">Focus areas</div>
+          <div class="chip-wrap">
+            <span class="chip">Switch deployment</span>
+            <span class="chip">Wireless support</span>
+            <span class="chip">Inventory workflow</span>
+            <span class="chip">Infrastructure response</span>
+            <span class="chip">Intern mentorship</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2>Professional Overview</h2>
+            <p>
+              This role has given me direct exposure to how enterprise networking operations actually function behind the scenes: not just configuration, but response, process, reliability, inventory, teamwork, and consistency.
+            </p>
+          </div>
+        </div>
+
+        <div class="section-body">
+          <div class="overview-grid">
+            <div class="feature-panel">
+              <h3>What I do</h3>
+              <p>
+                I work with production networking hardware and operational systems to help maintain connectivity across university environments. My responsibilities include troubleshooting switch and access point issues, handling hardware replacements, supporting deployments, resolving tickets, and assisting with technical workflow that keeps campus systems running.
+              </p>
+            </div>
+
+            <div class="feature-panel">
+              <h3>Core profile</h3>
+              <div class="mini-list">
+                <div class="row">
+                  <div class="label">Role</div>
+                  <div class="value">Student Network Operator</div>
+                </div>
+                <div class="row">
+                  <div class="label">Department</div>
+                  <div class="value">UofSC Division of IT</div>
+                </div>
+                <div class="row">
+                  <div class="label">Environment</div>
+                  <div class="value">Enterprise campus infrastructure</div>
+                </div>
+                <div class="row">
+                  <div class="label">Next milestone</div>
+                  <div class="value">2026 ServiceNow CSA cohort</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="experience">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2>Experience Timeline</h2>
+            <p>
+              A snapshot of the kinds of work, responsibility, and growth I have had in this role.
+            </p>
+          </div>
+        </div>
+
+        <div class="section-body">
+          <div class="timeline">
+            <article class="timeline-item">
+              <div class="timeline-top">
+                <strong>Resolved 300+ ServiceNow tickets</strong>
+                <span>Operations Support</span>
+              </div>
+              <p>
+                Worked through a high volume of support requests involving campus networking infrastructure, documenting issues, processing tasks efficiently, and helping keep operational queues moving.
+              </p>
+            </article>
+
+            <article class="timeline-item">
+              <div class="timeline-top">
+                <strong>Supported off-site outage response</strong>
+                <span>Greenville School of Business</span>
+              </div>
+              <p>
+                Traveled to the USC Greenville School of Business to help address a network outage, gaining direct experience with real-world infrastructure support beyond the main campus environment.
+              </p>
+            </article>
+
+            <article class="timeline-item">
+              <div class="timeline-top">
+                <strong>Configured and wiped enterprise switches</strong>
+                <span>Aruba • Cisco • Juniper</span>
+              </div>
+              <p>
+                Independently handled switch preparation and lifecycle tasks, including configuration support, console access, wipe procedures, and hardware readiness for redeployment or replacement.
+              </p>
+            </article>
+
+            <article class="timeline-item">
+              <div class="timeline-top">
+                <strong>Mentored new interns</strong>
+                <span>Team Enablement</span>
+              </div>
+              <p>
+                Helped train multiple interns on standard tools, operational procedures, and day-to-day workflow so they could contribute more effectively and confidently.
+              </p>
+            </article>
+
+            <article class="timeline-item">
+              <div class="timeline-top">
+                <strong>Selected for ServiceNow CSA cohort</strong>
+                <span>Summer 2026</span>
+              </div>
+              <p>
+                Joining the 2026 summer cohort to complete the ServiceNow Certified System Administrator certification, with the program paid for by the school as part of continued professional development.
+              </p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="gallery">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2>Work Highlights</h2>
+            <p>
+              Click any image to expand it. These visuals help show the hands-on side of my networking operations work.
+            </p>
+          </div>
+        </div>
+
+        <div class="section-body">
+          <div class="photo-grid">
+            <article class="photo-card" data-src="./switch_stack.jpg" data-caption="Switch stacks prepared for RMA: documented, wiped, organized, and staged for processing.">
+              <img src="./switch_stack.jpg" alt="Switch stacks organized for RMA processing">
+              <div class="photo-info">
+                <strong>RMA Inventory Processing</strong>
+                <span>Preparing switch hardware for replacement workflow and documentation.</span>
+              </div>
+            </article>
+
+            <article class="photo-card" data-src="./aruba_ap.webp" data-caption="Aruba access point replacement workflow and device handling.">
+              <img src="./aruba_ap.webp" alt="Aruba access point prepared for support or replacement">
+              <div class="photo-info">
+                <strong>Wireless Support</strong>
+                <span>Diagnosing and replacing access points to restore coverage and reliability.</span>
+              </div>
+            </article>
+
+            <article class="photo-card" data-src="./at_work.jpg" data-caption="Hands-on networking work during an operations shift.">
+              <img src="./at_work.jpg" alt="Justin working with networking equipment">
+              <div class="photo-info">
+                <strong>Console & Configuration</strong>
+                <span>Direct switch work involving CLI access, setup, and troubleshooting.</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="tools">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2>Tools, Platforms, and Technical Areas</h2>
+            <p>
+              Explore the tabs below for a more structured view of the systems and skills I use in networking operations.
+            </p>
+          </div>
+        </div>
+
+        <div class="section-body">
+          <div class="tabs-shell">
+            <div class="tab-list" role="tablist" aria-label="Technical categories">
+              <button class="tab-btn active" role="tab" aria-selected="true" data-tab="tab1">
+                Networking Hardware
+                <span>Enterprise vendors and equipment I work with</span>
+              </button>
+
+              <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab2">
+                Operational Tools
+                <span>Platforms used for ticketing, access, and workflow</span>
+              </button>
+
+              <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab3">
+                Technical Concepts
+                <span>Key infrastructure topics I support in practice</span>
+              </button>
+            </div>
+
+            <div>
+              <div class="tab-panel active" id="tab1" role="tabpanel">
+                <div class="panel-title">
+                  <div>
+                    <h3>Enterprise Networking Hardware</h3>
+                    <p>
+                      I work with equipment from major networking vendors in a campus production environment, supporting setup, handling, replacement, and troubleshooting tasks.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="chip-wrap">
+                  <span class="chip">Aruba Networks</span>
+                  <span class="chip">Cisco Systems</span>
+                  <span class="chip">Juniper Networks</span>
+                  <span class="chip">Switch stacks</span>
+                  <span class="chip">Wireless access points</span>
+                  <span class="chip">Console-connected devices</span>
+                </div>
+              </div>
+
+              <div class="tab-panel" id="tab2" role="tabpanel">
+                <div class="panel-title">
+                  <div>
+                    <h3>Operational Platforms and Workflow Tools</h3>
+                    <p>
+                      My role combines technical troubleshooting with operational process, including ticket management, documentation, serial access, and environment-specific support tooling.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="chip-wrap">
+                  <span class="chip">ServiceNow</span>
+                  <span class="chip">Aruba Central</span>
+                  <span class="chip">PuTTY</span>
+                  <span class="chip">Serial console access</span>
+                  <span class="chip">Documentation workflow</span>
+                  <span class="chip">Hardware processing</span>
+                </div>
+              </div>
+
+              <div class="tab-panel" id="tab3" role="tabpanel">
+                <div class="panel-title">
+                  <div>
+                    <h3>Technical Concepts in Practice</h3>
+                    <p>
+                      Through operations work, I’ve developed practical experience around the kinds of concepts that matter most in real environments: reliable connectivity, switching workflow, hardware readiness, and clear operational execution.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="chip-wrap">
+                  <span class="chip">Layer 2 / Layer 3 switching</span>
+                  <span class="chip">VLANs</span>
+                  <span class="chip">Trunking</span>
+                  <span class="chip">Device wipe procedures</span>
+                  <span class="chip">Inventory and RMA handling</span>
+                  <span class="chip">Outage response</span>
+                  <span class="chip">Team onboarding</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2>Professional Impact</h2>
+            <p>
+              This role has helped me grow not only as a technical contributor, but also as someone who can support infrastructure teams with consistency, responsibility, and professionalism.
+            </p>
+          </div>
+        </div>
+
+        <div class="section-body">
+          <div class="impact-grid">
+            <article class="impact-card">
+              <h3>Operational Reliability</h3>
+              <p>
+                By resolving tickets, preparing hardware, and assisting with infrastructure support, I help reduce day-to-day strain on full-time staff and contribute to a more reliable support process.
+              </p>
+            </article>
+
+            <article class="impact-card">
+              <h3>Hands-On Technical Growth</h3>
+              <p>
+                Working directly with switches, access points, and support systems has strengthened my confidence in enterprise environments and given me practical networking experience beyond the classroom.
+              </p>
+            </article>
+
+            <article class="impact-card">
+              <h3>Professional Development</h3>
+              <p>
+                Being selected for the university-funded 2026 summer ServiceNow CSA cohort reflects continued investment in my growth and will deepen my platform and systems administration knowledge.
+              </p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="quote-block">
         <p>
-          As a student Network Operator for the University of South Carolina's Division of IT,
-          I support the backbone of campus connectivity—troubleshooting, maintaining equipment, and
-          keeping the network stable across diverse environments with enterprise-grade hardware and tools.
+          Networking operations has shown me that strong infrastructure work is not just about hardware and commands. It is also about consistency, responsiveness, documentation, teamwork, and making sure the people who rely on the network never have to think about whether it will work.
         </p>
-        <div class="badge-row">
-          <span class="badge">Aruba • Cisco • Juniper</span>
-          <span class="badge">ServiceNow</span>
-          <span class="badge">VLANs • Trunking • L2/L3</span>
-          <span class="badge">Console &amp; CLI</span>
-        </div>
-      </div>
-      <div class="kpis">
-        <div class="kpi">
-          <div class="num" data-count="300">0</div>
-          <div class="hint">ServiceNow tickets resolved</div>
-        </div>
-        <div class="kpi">
-          <div class="num" data-count="1">0</div>
-          <div class="hint">Site outage dispatched (Greenville School of Business)</div>
-        </div>
-        <div class="kpi">
-          <div class="num" data-count="3">0</div>
-          <div class="hint">Interns trained on tools &amp; procedures</div>
-        </div>
-      </div>
-    </section>
 
-    <!-- OVERVIEW -->
-    <section class="section">
-      <h2>
-        Overview
-        <span class="divider"></span>
-      </h2>
-      <div class="card">
-        <p style="margin:0;color:var(--muted);line-height:1.8">
-          I work hands-on with enterprise networking gear to diagnose issues, process hardware replacement,
-          and configure switching and wireless components—bridging the gap between day-to-day operations
-          and longer-term infrastructure goals.
-        </p>
-      </div>
-    </section>
-
-    <!-- ACCOMPLISHMENTS -->
-    <section class="section">
-      <h2>
-        🌟 My Accomplishments
-        <span class="divider"></span>
-      </h2>
-      <div class="card">
-        <ul style="margin:0;padding-left:18px;line-height:1.9">
-          <li>Resolved over <strong>300 ServiceNow tickets</strong></li>
-          <li>Traveled to the <strong>USC Greenville School of Business</strong> to repair a network outage</li>
-          <li>Trained multiple new interns on standard tools and procedures</li>
-          <li>Independently configured and wiped <strong>Aruba, Cisco, and Juniper</strong> switches</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- RESPONSIBILITIES (interactive accordion + gallery) -->
-    <section class="section">
-      <h2>
-        Key Responsibilities
-        <span class="divider"></span>
-      </h2>
-      <div class="accordion">
-        <details>
-          <summary>📦 RMA Inventory Processing <span class="chev">▾</span></summary>
-          <div class="acc-body">
-            <p>
-              I manage hardware replacements through vendor RMA processes, ensuring accurate documentation and inventory tracking for replaced networking devices.
-            </p>
-            <div class="gallery">
-              <div class="img-card" data-src="./switch_stack.jpg" data-cap="Switch stacks prepared for RMA: consoled, wiped, documented, and palletized.">
-                <img src="./switch_stack.jpg" alt="Switch stacks organized and prepared for RMA">
-                <span class="caption">RMA prep</span>
-              </div>
-            </div>
-          </div>
-        </details>
-
-        <details>
-          <summary>📡 Access Point Repairs &amp; Replacements <span class="chev">▾</span></summary>
-          <div class="acc-body">
-            <p>
-              I diagnose malfunctioning Aruba APs, coordinate replacements, and assist with configuration to restore seamless wireless coverage.
-            </p>
-            <div class="gallery">
-              <div class="img-card" data-src="./aruba_ap.webp" data-cap="Aruba access point prepared for replacement and configuration.">
-                <img src="./aruba_ap.webp" alt="Aruba Access Point in packaging">
-                <span class="caption">Aruba AP</span>
-              </div>
-            </div>
-          </div>
-        </details>
-
-        <details>
-          <summary>🔧 Switch Configuration (L2/L3) <span class="chev">▾</span></summary>
-          <div class="acc-body">
-            <p>
-              I configure and troubleshoot Layer 2/3 switches using CLI and web interfaces, handling VLAN setups, trunking, and port-level diagnostics.
-            </p>
-            <div class="gallery">
-              <div class="img-card" data-src="./at_work.jpg" data-cap="Hands-on console work during my operations shift.">
-                <img src="./at_work.jpg" alt="Working on networking equipment">
-                <span class="caption">On shift</span>
-              </div>
-            </div>
-          </div>
-        </details>
-      </div>
-    </section>
-
-    <!-- BRANDS & TOOLS -->
-    <section class="section">
-      <h2>
-        Brands I Work With
-        <span class="divider"></span>
-      </h2>
-      <div class="card list" aria-label="Brands">
-        <span class="chip" title="APs, switches, Central Dashboard">Aruba Networks</span>
-        <span class="chip" title="Switch CLI & console tools">Cisco Systems</span>
-        <span class="chip" title="RMA & limited ops usage">Juniper Networks</span>
-      </div>
-    </section>
-
-    <section class="section">
-      <h2>
-        Tools I Use
-        <span class="divider"></span>
-      </h2>
-      <div class="card list" aria-label="Tools">
-        <span class="chip" title="Wireless & switching mgmt">Aruba Central</span>
-        <span class="chip" title="Serial/console access">PuTTY &amp; Serial Console</span>
-        <span class="chip" title="Ticketing & change logs">ServiceNow</span>
-      </div>
-    </section>
-
-    <!-- IMPACT -->
-    <section class="section">
-      <h2>
-        Professional Impact
-        <span class="divider"></span>
-      </h2>
-      <div class="card">
-        <p class="impact">
-          Beyond technical tasks, I mentor new interns and help scale operational capacity for the Division of IT.
-          My work reduces day-to-day load on full-time staff so engineers can focus on broader initiatives.
-          I believe well-supported student operators deliver outsized value to campus infrastructure.
-        </p>
-        <div class="cta-row">
-          <a class="btn" href="#top">Back to top</a>
-          <button class="btn ghost" type="button" id="expandAll">Expand all</button>
-          <button class="btn ghost" type="button" id="collapseAll">Collapse all</button>
+        <div class="footer-actions">
+          <a href="#top" class="btn btn-solid">Back to Top</a>
+          <button type="button" class="btn btn-outline" id="expandGalleryBtn">Open First Image</button>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- LIGHTBOX -->
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Expanded image viewer">
     <div class="lightbox-inner">
-      <img id="lbImg" alt="">
-      <div class="lb-cap">
-        <span id="lbText">Caption</span>
-        <button class="close" id="lbClose" aria-label="Close image">Close</button>
+      <img id="lightboxImg" src="" alt="">
+      <div class="lightbox-caption">
+        <span id="lightboxText">Caption</span>
+        <button type="button" class="close-btn" id="closeLightbox">Close</button>
       </div>
     </div>
   </div>
 
   <script>
-    // Theme toggle (stores preference, but lets OS influence too)
-    const themeBtn = document.getElementById('themeToggle');
-    const key = 'uofsc-theme';
-    if(localStorage.getItem(key)==='light'){
-      document.documentElement.style.setProperty('color-scheme','light');
-    }
-    themeBtn.addEventListener('click', ()=>{
-      const current = localStorage.getItem(key);
-      localStorage.setItem(key, current==='light' ? 'dark' : 'light');
-      document.documentElement.toggleAttribute('data-light');
-      alert('Theme preference saved. Your OS setting may also affect appearance.');
+    // Copy link
+    const copyLinkBtn = document.getElementById('copyLinkBtn');
+    copyLinkBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        copyLinkBtn.textContent = 'Copied!';
+        setTimeout(() => {
+          copyLinkBtn.textContent = 'Copy Link';
+        }, 1400);
+      } catch (err) {
+        copyLinkBtn.textContent = 'Unable to Copy';
+        setTimeout(() => {
+          copyLinkBtn.textContent = 'Copy Link';
+        }, 1400);
+      }
     });
 
-    // Count-up KPIs when visible
-    const counters = document.querySelectorAll('.num[data-count]');
-    const io = new IntersectionObserver((entries, obs)=>{
-      entries.forEach(e=>{
-        if(!e.isIntersecting) return;
-        const el = e.target;
-        const target = +el.dataset.count;
-        const dur = 900; // ms
-        const start = performance.now();
-        const step = (t)=>{
-          const p = Math.min((t-start)/dur,1);
-          el.textContent = Math.floor(p*target);
-          if(p<1) requestAnimationFrame(step);
-          else el.textContent = target.toLocaleString();
-        };
-        requestAnimationFrame(step);
-        obs.unobserve(el);
-      })
-    }, {threshold: .6});
-    counters.forEach(c=>io.observe(c));
+    // Animated counters
+    const counters = document.querySelectorAll('[data-count]');
+    const counterObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = parseInt(el.dataset.count, 10);
+        const duration = 1100;
+        const startTime = performance.now();
 
-    // Accordion controls
-    const expandBtn = document.getElementById('expandAll');
-    const collapseBtn = document.getElementById('collapseAll');
-    const panels = Array.from(document.querySelectorAll('details'));
-    if(expandBtn){
-      expandBtn.addEventListener('click', ()=>panels.forEach(d=>d.open=true));
-    }
-    if(collapseBtn){
-      collapseBtn.addEventListener('click', ()=>panels.forEach(d=>d.open=false));
-    }
+        function updateCount(now){
+          const progress = Math.min((now - startTime) / duration, 1);
+          el.textContent = Math.floor(target * progress).toLocaleString();
+          if(progress < 1){
+            requestAnimationFrame(updateCount);
+          } else {
+            el.textContent = target.toLocaleString();
+          }
+        }
+
+        requestAnimationFrame(updateCount);
+        obs.unobserve(el);
+      });
+    }, { threshold: 0.55 });
+
+    counters.forEach(counter => counterObserver.observe(counter));
+
+    // Reveal on scroll
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // Tabs
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.tab;
+
+        tabButtons.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+
+        tabPanels.forEach(panel => panel.classList.remove('active'));
+
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        document.getElementById(target).classList.add('active');
+      });
+    });
 
     // Lightbox
-    const lb = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lbImg');
-    const lbText = document.getElementById('lbText');
-    const lbClose = document.getElementById('lbClose');
-    document.querySelectorAll('.img-card').forEach(card=>{
-      card.addEventListener('click', ()=>{
-        lb.classList.add('open');
-        lbImg.src = card.dataset.src || card.querySelector('img').src;
-        lbImg.alt = card.querySelector('img').alt || 'Image';
-        lbText.textContent = card.dataset.cap || '';
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxText = document.getElementById('lightboxText');
+    const closeLightbox = document.getElementById('closeLightbox');
+    const photoCards = document.querySelectorAll('.photo-card');
+    const expandGalleryBtn = document.getElementById('expandGalleryBtn');
+
+    function openLightbox(src, alt, caption){
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || 'Expanded image';
+      lightboxText.textContent = caption || '';
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function hideLightbox(){
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    photoCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const img = card.querySelector('img');
+        openLightbox(card.dataset.src || img.src, img.alt, card.dataset.caption);
       });
     });
-    const closeLightbox=()=>lb.classList.remove('open');
-    lbClose.addEventListener('click', closeLightbox);
-    lb.addEventListener('click', (e)=>{ if(e.target===lb) closeLightbox(); });
-    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeLightbox(); });
 
-    // Smooth internal links
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', (e)=>{
-        const id = a.getAttribute('href').slice(1);
-        const el = document.getElementById(id);
-        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth',block:'start'}); }
-      });
+    expandGalleryBtn.addEventListener('click', () => {
+      const firstCard = document.querySelector('.photo-card');
+      if(firstCard){
+        const img = firstCard.querySelector('img');
+        openLightbox(firstCard.dataset.src || img.src, img.alt, firstCard.dataset.caption);
+      }
+    });
+
+    closeLightbox.addEventListener('click', hideLightbox);
+    lightbox.addEventListener('click', (e) => {
+      if(e.target === lightbox) hideLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape') hideLightbox();
     });
   </script>
 </body>
