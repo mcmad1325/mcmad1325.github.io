@@ -652,6 +652,25 @@
       }
     }
 
+    .research-figure{
+  width:100%;
+  max-width:720px;
+  display:block;
+  margin:18px auto 0;
+  border-radius:18px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow-soft);
+  background:#fff;
+}
+
+.figure-caption{
+  text-align:center;
+  color:var(--muted);
+  font-size:.95rem;
+  margin-top:12px;
+  line-height:1.6;
+}
+
     @media (max-width: 640px){
       .wrap{
         width:min(var(--maxw), calc(100% - 20px));
@@ -901,34 +920,57 @@
     </section>
 
     <section class="section">
-      <div class="section-head">
-        <div>
-          <h2>Model Evaluation</h2>
-          <p>
-            The generated dataset is used to train and evaluate an SVM classifier that separates
-            legitimate and malicious sessions.
-          </p>
-        </div>
-      </div>
+  <div class="section-head">
+    <div>
+      <h2>Model Evaluation</h2>
+      <p>
+        The generated dataset is used to train and evaluate an SVM classifier that separates
+        legitimate and malicious sessions.
+      </p>
+    </div>
+  </div>
 
-      <div class="grid-2">
-        <article class="card">
-          <h3>Classifier</h3>
-          <p>
-            A Support Vector Machine is trained on the resulting trust-aware dataset to learn a
-            boundary between legitimate users and attackers.
-          </p>
-        </article>
+  <div class="grid-2">
+    <article class="card">
+      <h3>Classifier</h3>
+      <p>
+        A Support Vector Machine is trained on the resulting trust-aware dataset to learn a
+        boundary between legitimate users and attackers.
+      </p>
+    </article>
 
-        <article class="card">
-          <h3>Performance</h3>
-          <p>
-            Performance is measured with Area Under the ROC Curve. In the current setup, the
-            model reaches <strong>0.93 AUC</strong>, which surpasses the project target of <strong>0.90</strong>.
-          </p>
-        </article>
-      </div>
-    </section>
+    <article class="card">
+      <h3>Performance</h3>
+      <p>
+        Performance is measured with Area Under the ROC Curve. In the current setup, the
+        model reaches <strong>0.93 AUC</strong>, which surpasses the project target of <strong>0.90</strong>.
+      </p>
+    </article>
+  </div>
+
+  <article class="card" style="margin-top:18px;">
+    <h3>ROC Curve</h3>
+    <p style="margin-bottom:16px;">
+      This ROC curve shows the SVM’s classification performance on the generated trust-score
+      dataset, with an observed AUC of <strong>0.93</strong>.
+    </p>
+
+    <img
+      src="../graph.png"
+      alt="ROC curve for SVM showing AUC of 0.93"
+      style="
+        width:100%;
+        max-width:720px;
+        display:block;
+        margin:0 auto;
+        border-radius:18px;
+        border:1px solid var(--border);
+        box-shadow:var(--shadow-soft);
+        background:#fff;
+      "
+    />
+  </article>
+</section>
 
     <section class="lab">
       <div class="lab-top">
