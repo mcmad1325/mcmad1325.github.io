@@ -3,203 +3,1134 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Context‑Aware MFA — IP Spoofing & Trust Scores</title>
+  <title>Deterministic MFA Trust Score Generation</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
   <script defer data-domain="mcmad1325.github.io" src="https://plausible.io/js/script.js"></script>
+
   <style>
     :root{
-      --bg: #fdfaf6;
-      --panel: #ffffff;
-      --text: #333333;
-      --muted: #444444;
-      --brand: #6b4e71; /* deep mauve */
-      --brand-2: #f4e6f4; /* light pinkish background */
-      --ok: #22c55e;
-      --warn: #f59e0b;
-      --bad: #ef4444;
-      --card-bd: #e6d6ea;
-      --shadow: 0 4px 10px rgba(0,0,0,.08);
-      --radius: 16px;
+      --bg: #fffafc;
+      --bg-2: #f9f4f8;
+      --panel: rgba(255,255,255,0.78);
+      --panel-strong: #ffffff;
+      --text: #2f2431;
+      --muted: #6f6271;
+      --brand: #8a5c7d;
+      --brand-dark: #6e4563;
+      --brand-soft: #f3e4ef;
+      --brand-soft-2: #ead8e5;
+      --accent: #d98cb3;
+      --accent-2: #b48bd6;
+      --success: #2d9d67;
+      --warning: #d38b22;
+      --danger: #d14f63;
+      --border: rgba(138, 92, 125, 0.18);
+      --shadow: 0 12px 35px rgba(101, 69, 91, 0.12);
+      --shadow-soft: 0 6px 18px rgba(101, 69, 91, 0.08);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --maxw: 1180px;
     }
-    body{margin:0;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text)}
-    a{color:inherit}
-    .wrap{max-width:1100px;margin:0 auto;padding:24px}
-    header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(120%) blur(8px);background:var(--brand-2);border-bottom:1px solid var(--card-bd)}
-    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-    .btn{padding:10px 14px;border-radius:12px;border:1px solid var(--card-bd);background:var(--panel);cursor:pointer;color:var(--brand)}
-    .btn:hover{border-color:#c9a7d4}
-    .hero{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;padding:32px 0}
-    .badge{display:inline-flex;gap:8px;align-items:center;background:var(--brand-2);color:var(--brand);border:1px solid var(--card-bd);border-radius:999px;padding:6px 12px;font-weight:600}
-    h2{font-size:36px;margin:14px 0 10px}
-    .lead{color:var(--muted);line-height:1.6}
-    .glass{background:var(--panel);border:1px solid var(--card-bd);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .card{padding:20px}
-    section{margin:26px 0}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-    .muted{color:var(--muted)}
-    details{background:var(--panel);border:1px solid var(--card-bd);border-radius:12px;padding:14px;margin-top:12px}
-    details summary{cursor:pointer;font-weight:600}
-    footer{margin:40px 0 20px;color:var(--muted);text-align:center}
-    @media(max-width:900px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body{
+      margin:0;
+      font-family:'Inter',sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, #f7e8f2 0%, transparent 30%),
+        radial-gradient(circle at top right, #efe4fb 0%, transparent 28%),
+        linear-gradient(180deg, #f8f1f6 0%, #fffafc 38%, #fffdfd 100%);
+    }
+
+    a{ color:inherit; text-decoration:none; }
+
+    .wrap{
+      width:min(var(--maxw), calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(16px) saturate(140%);
+      background:rgba(250, 241, 247, 0.7);
+      border-bottom:1px solid rgba(138, 92, 125, 0.10);
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:18px 0;
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:11px 16px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,0.82);
+      box-shadow:var(--shadow-soft);
+      color:var(--brand-dark);
+      font-weight:600;
+      transition:.2s ease;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+      border-color:rgba(138, 92, 125, 0.28);
+      background:#fff;
+    }
+
+    .hero{
+      padding:54px 0 26px;
+      display:grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap:26px;
+      align-items:stretch;
+    }
+
+    .hero-left{
+      position:relative;
+      padding:34px;
+      border-radius:var(--radius-xl);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.92), rgba(249,241,247,0.86)),
+        linear-gradient(135deg, #ffffff, #f5eaf1);
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      isolation:isolate;
+    }
+
+    .hero-left::before{
+      content:"";
+      position:absolute;
+      width:240px;
+      height:240px;
+      right:-70px;
+      top:-70px;
+      background:radial-gradient(circle, rgba(217,140,179,.24), transparent 65%);
+      z-index:-1;
+    }
+
+    .hero-left::after{
+      content:"";
+      position:absolute;
+      width:220px;
+      height:220px;
+      left:-80px;
+      bottom:-90px;
+      background:radial-gradient(circle, rgba(180,139,214,.18), transparent 65%);
+      z-index:-1;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 14px;
+      border-radius:999px;
+      background:linear-gradient(90deg, var(--brand-soft), #f7edf4);
+      border:1px solid var(--border);
+      color:var(--brand-dark);
+      font-weight:700;
+      letter-spacing:.02em;
+      font-size:.92rem;
+    }
+
+    h1{
+      margin:18px 0 14px;
+      font-size:clamp(2.2rem, 4vw, 4rem);
+      line-height:1.02;
+      letter-spacing:-0.04em;
+      max-width:11ch;
+    }
+
+    .hero-text{
+      color:var(--muted);
+      font-size:1.08rem;
+      line-height:1.8;
+      max-width:62ch;
+      margin-bottom:24px;
+    }
+
+    .hero-metrics{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:14px;
+      margin-top:24px;
+    }
+
+    .metric{
+      background:rgba(255,255,255,0.74);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:16px 14px;
+      box-shadow:var(--shadow-soft);
+    }
+
+    .metric .label{
+      font-size:.82rem;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin-bottom:8px;
+      font-weight:700;
+    }
+
+    .metric .value{
+      font-size:1.55rem;
+      font-weight:800;
+      color:var(--brand-dark);
+      line-height:1.1;
+    }
+
+    .hero-right{
+      display:grid;
+      gap:18px;
+    }
+
+    .panel{
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:var(--radius-lg);
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .panel.pad{
+      padding:24px;
+    }
+
+    .panel-title{
+      margin:0 0 14px;
+      font-size:1.25rem;
+      font-weight:800;
+      letter-spacing:-0.02em;
+    }
+
+    .summary-list{
+      margin:0;
+      padding-left:18px;
+      color:var(--muted);
+      line-height:1.8;
+    }
+
+    .summary-list strong{
+      color:var(--text);
+    }
+
+    .result-card{
+      padding:24px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.95), rgba(244,228,239,0.85));
+      position:relative;
+      overflow:hidden;
+    }
+
+    .result-card::after{
+      content:"";
+      position:absolute;
+      inset:auto -30px -40px auto;
+      width:180px;
+      height:180px;
+      background:radial-gradient(circle, rgba(217,140,179,.25), transparent 65%);
+      pointer-events:none;
+    }
+
+    .result-badge{
+      display:inline-block;
+      padding:7px 12px;
+      border-radius:999px;
+      background:#f7edf4;
+      color:var(--brand-dark);
+      border:1px solid var(--border);
+      font-size:.85rem;
+      font-weight:700;
+      margin-bottom:14px;
+    }
+
+    .result-score{
+      font-size:3.3rem;
+      line-height:1;
+      font-weight:800;
+      letter-spacing:-0.06em;
+      margin:0 0 10px;
+      color:var(--brand-dark);
+    }
+
+    .result-copy{
+      color:var(--muted);
+      line-height:1.7;
+      margin:0;
+      max-width:42ch;
+    }
+
+    .section{
+      margin:24px 0 0;
+    }
+
+    .section-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:16px;
+      margin-bottom:16px;
+    }
+
+    .section-head h2{
+      margin:0;
+      font-size:1.7rem;
+      letter-spacing:-0.03em;
+    }
+
+    .section-head p{
+      margin:0;
+      color:var(--muted);
+      max-width:56ch;
+      line-height:1.7;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:18px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:18px;
+    }
+
+    .card{
+      padding:24px;
+      background:rgba(255,255,255,0.78);
+      border:1px solid var(--border);
+      border-radius:24px;
+      box-shadow:var(--shadow-soft);
+    }
+
+    .card h3{
+      margin:0 0 12px;
+      font-size:1.25rem;
+      letter-spacing:-0.02em;
+    }
+
+    .card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.75;
+    }
+
+    .card ul{
+      margin:0;
+      padding-left:18px;
+      color:var(--muted);
+      line-height:1.75;
+    }
+
+    .callout{
+      margin-top:18px;
+      padding:18px 20px;
+      border-radius:20px;
+      background:linear-gradient(135deg, #fff, #f7eef5);
+      border:1px solid var(--border);
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .feature-band{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:18px;
+      margin-top:18px;
+    }
+
+    .mini-stat-stack{
+      display:grid;
+      gap:12px;
+    }
+
+    .mini-stat{
+      padding:16px 18px;
+      border-radius:18px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,0.8);
+      box-shadow:var(--shadow-soft);
+    }
+
+    .mini-stat .top{
+      font-size:.8rem;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted);
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    .mini-stat .big{
+      font-size:1.45rem;
+      font-weight:800;
+      color:var(--brand-dark);
+    }
+
+    .process{
+      display:grid;
+      gap:14px;
+      margin-top:6px;
+    }
+
+    .step{
+      display:flex;
+      gap:14px;
+      align-items:flex-start;
+      padding:16px 0;
+      border-bottom:1px solid rgba(138, 92, 125, 0.10);
+    }
+
+    .step:last-child{ border-bottom:none; padding-bottom:0; }
+
+    .step-num{
+      width:36px;
+      height:36px;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      flex:0 0 36px;
+      font-weight:800;
+      color:var(--brand-dark);
+      background:linear-gradient(135deg, #f6e7f1, #efe2fa);
+      border:1px solid var(--border);
+    }
+
+    .step h4{
+      margin:0 0 5px;
+      font-size:1.02rem;
+    }
+
+    .step p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.65;
+    }
+
+    .lab{
+      margin-top:18px;
+      padding:26px;
+      border-radius:28px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,238,245,0.9));
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+    }
+
+    .lab-top{
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+
+    .lab-top h3{
+      margin:0 0 8px;
+      font-size:1.35rem;
+    }
+
+    .lab-top p{
+      margin:0;
+      max-width:62ch;
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .lab-note{
+      padding:12px 14px;
+      border-radius:16px;
+      background:#fff;
+      border:1px solid var(--border);
+      color:var(--brand-dark);
+      font-weight:600;
+      box-shadow:var(--shadow-soft);
+    }
+
+    .controls{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:14px 18px;
+      margin-top:18px;
+    }
+
+    .control{
+      padding:16px;
+      border-radius:18px;
+      background:rgba(255,255,255,0.84);
+      border:1px solid var(--border);
+    }
+
+    .control label{
+      display:block;
+      font-weight:700;
+      margin-bottom:10px;
+      color:var(--brand-dark);
+    }
+
+    .control small{
+      display:block;
+      color:var(--muted);
+      line-height:1.55;
+      margin-top:8px;
+    }
+
+    input[type="range"]{
+      width:100%;
+      accent-color: var(--brand);
+    }
+
+    .viz{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:18px;
+      margin-top:20px;
+      align-items:center;
+    }
+
+    .viz-card{
+      padding:18px;
+      border-radius:20px;
+      background:#fff;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow-soft);
+    }
+
+    .barwrap{
+      position:relative;
+      height:22px;
+      border-radius:999px;
+      overflow:hidden;
+      border:1px solid var(--border);
+      background:linear-gradient(90deg, #f8edf4, #f4eef8);
+      margin-bottom:12px;
+    }
+
+    .dist{
+      position:absolute;
+      top:0;
+      bottom:0;
+      border-radius:999px;
+    }
+
+    .scale{
+      display:flex;
+      justify-content:space-between;
+      color:var(--muted);
+      font-size:.82rem;
+    }
+
+    .stats-readout{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:12px;
+      margin-top:16px;
+    }
+
+    .readout{
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:14px;
+      background:#fff;
+    }
+
+    .readout .k{
+      color:var(--muted);
+      font-size:.82rem;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    .readout .v{
+      font-size:1.45rem;
+      font-weight:800;
+      color:var(--brand-dark);
+    }
+
+    .dial-wrap{
+      text-align:center;
+    }
+
+    .dial{
+      width:170px;
+      height:170px;
+      border-radius:50%;
+      margin:0 auto 14px;
+      border:10px solid rgba(255,255,255,0.9);
+      box-shadow: inset 0 0 0 1px var(--border), var(--shadow-soft);
+      position:relative;
+    }
+
+    .dial::after{
+      content:"";
+      position:absolute;
+      inset:28px;
+      background:#fff;
+      border-radius:50%;
+      box-shadow: inset 0 0 0 1px rgba(138, 92, 125, 0.08);
+    }
+
+    .dial-center{
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+      z-index:2;
+      font-weight:800;
+      color:var(--brand-dark);
+      font-size:1.5rem;
+    }
+
+    .dial-caption{
+      color:var(--muted);
+      line-height:1.65;
+      max-width:28ch;
+      margin:0 auto;
+    }
+
+    footer{
+      padding:34px 0 48px;
+      color:var(--muted);
+      text-align:center;
+      font-size:.96rem;
+    }
+
+    @media (max-width: 980px){
+      .hero,
+      .feature-band,
+      .viz{
+        grid-template-columns:1fr;
+      }
+
+      .hero-metrics,
+      .grid-3,
+      .controls{
+        grid-template-columns:1fr;
+      }
+
+      .grid-2{
+        grid-template-columns:1fr;
+      }
+
+      h1{
+        max-width:none;
+      }
+    }
+
+    @media (max-width: 640px){
+      .wrap{
+        width:min(var(--maxw), calc(100% - 20px));
+      }
+
+      .hero-left,
+      .panel.pad,
+      .result-card,
+      .card,
+      .lab{
+        padding:20px;
+      }
+
+      .nav{
+        padding:14px 0;
+      }
+
+      .stats-readout{
+        grid-template-columns:1fr;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
     <div class="wrap nav">
       <a class="btn" href="../index.html">← Back</a>
-      <span class="btn" id="copyLink">🔗 Copy link</span>
+      <div class="nav-actions">
+        <button class="btn" id="copyLink" type="button">🔗 Copy link</button>
+      </div>
     </div>
   </header>
 
   <main class="wrap">
     <section class="hero">
-      <div>
-        <span class="badge">Context‑Aware MFA • IP Spoofing Defense</span>
-        <h2>Deterministic Trust Scoring to Expose IP‑Spoofed Sessions</h2>
-        <p class="lead">This project focuses on blending deterministic trust patterns with contextual MFA features to expose spoofed sessions. By constraining attacker trust and allowing normal users to build credibility, the model achieves strong separation with minimal overlap.</p>
+      <div class="hero-left">
+        <div class="eyebrow">Cybersecurity Research • Context-Aware MFA</div>
+        <h1>Deterministic MFA Trust Score Generation</h1>
+        <p class="hero-text">
+          This project redesigns MFA trust-score generation to be more realistic, explainable,
+          and security-driven. Instead of relying on excessive randomness, the system follows
+          deterministic rules: every user begins with low trust, legitimate users can build trust
+          over time, and attacker sessions are intentionally constrained to low-trust behavior.
+        </p>
+
+        <div class="hero-metrics">
+          <div class="metric">
+            <div class="label">SVM AUC</div>
+            <div class="value">0.93</div>
+          </div>
+          <div class="metric">
+            <div class="label">Overlap Goal</div>
+            <div class="value">&lt; 0.05</div>
+          </div>
+          <div class="metric">
+            <div class="label">Overseas Cap</div>
+            <div class="value">0.20</div>
+          </div>
+        </div>
       </div>
-      <div class="glass card">
-        <h3 style="margin-top:0">At a Glance</h3>
-        <ul>
-          <li>AUC ≈ 0.93</li>
-          <li>Trust overlap < 0.05</li>
-          <li>Overseas logins capped at trust ≤ 0.20</li>
-          <li>All users start with low trust</li>
-        </ul>
+
+      <div class="hero-right">
+        <div class="panel result-card">
+          <div class="result-badge">Key Result</div>
+          <h2 class="result-score">AUC 0.93</h2>
+          <p class="result-copy">
+            With the deterministic generator and overseas feature enabled, the SVM classifier
+            exceeded the project target of AUC &gt; 0.90, showing strong separation between
+            legitimate and adversarial sessions.
+          </p>
+        </div>
+
+        <div class="panel pad">
+          <h3 class="panel-title">At a Glance</h3>
+          <ul class="summary-list">
+            <li><strong>All users start with low trust</strong></li>
+            <li><strong>Legitimate users build trust</strong> across consistent sessions</li>
+            <li><strong>Attackers remain biased low</strong>, often below 0.5 and many below 0.1</li>
+            <li><strong>~5% overlap band</strong> models ambiguous edge cases</li>
+            <li><strong>Out-of-region sessions</strong> are capped at trust ≤ 0.20</li>
+          </ul>
+        </div>
       </div>
     </section>
 
-    <section class="grid" id="explain">
-  <!-- Top-left -->
-  <div class="glass card">
-    <h3 style="margin-top:0">About the Project</h3>
-    <p class="muted">This <strong>NSA-funded research</strong> explores context-aware multifactor authentication with a focus on <strong>IP spoofing defense</strong>. We communicate high-level concepts only; no sensitive code, thresholds, or parameters are disclosed.</p>
-  </div>
-
-  <!-- Top-right -->
-  <div class="glass card">
-    <h3 style="margin-top:0">Key Objectives</h3>
-    <ul class="muted">
-      <li><strong>AUC &gt; 0.90</strong> (currently ≈ 0.93)</li>
-      <li><strong>Trust overlap &lt; 0.05</strong> between normal and attacker distributions</li>
-      <li>New users start low trust; normal behavior allows trust to grow</li>
-    </ul>
-  </div>
-
-  <!-- Bottom-left -->
-  <div class="glass card">
-    <h3 style="margin-top:0">What I’m Building</h3>
-    <ul class="muted">
-      <li><strong>Deterministic, pattern-driven</strong> trust progression for normal users over time.</li>
-      <li>Attackers remain in a <strong>persistently low-trust</strong> region to preserve a decision margin.</li>
-      <li>A tiny <strong>overlap band</strong> (&lt; 5%) to reflect edge cases without losing separability.</li>
-      <li><strong>Region awareness</strong> constrains unexpected/overseas logins to low trust.</li>
-    </ul>
-  </div>
-
-  <!-- Bottom-right -->
-  <div class="glass card">
-    <h3 style="margin-top:0">Overseas Risk &amp; Determinism</h3>
-    <p class="muted"><strong>Overseas/Unexpected regions:</strong> Sessions outside expected home regions are constrained to low trust. We also simulate occasional travel so the system observes realistic foreign logins. Exact regions and caps are intentionally omitted on this public page.</p>
-    <p class="muted"><strong>Why determinism matters:</strong> Lower randomness yields better <em>auditability</em> and <em>predictability</em>. Clear patterns make guard-bands easier to reason about, keep overlap under control, and support explainability for stakeholders.</p>
-  </div>
-</section>
-
-
-    <section class="glass card">
-      <h3>Interactive Lab</h3>
-      <p class="muted">
-  Use the sliders to explore how trust separation behaves. 
-  The bar shows distributions; text shows overlap &amp; AUC; 
-  the wheel shows overseas risk.<br><br>
-  The amount the spans overlap shows how hard it is to tell them apart:
-</p>
-<ul class="muted">
-  <li>If the spans are far apart, overlap is tiny → good separation.</li>
-  <li>If they slide close together, overlap grows → harder to separate.</li>
-</ul>
-      <div style="margin:16px 0">
-        <label>Normal center: moves where the average normal user trust score sits <input type="range" min="20" max="70" value="60" id="aRange"></label><br>
-        <label>Attacker center:moves where the average attacker trust score sits  <input type="range" min="5" max="40" value="25" id="bRange"></label><br>
-        <label>Overseas mix (%): increases the percentage of logins that look like they’re coming from abroad <input type="range" min="0" max="30" value="5" id="mixRange"></label><br>
-        <label>Noise level: adds uncertainty <input type="range" min="0" max="20" value="5" id="noiseRange"></label>
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Project Overview</h2>
+          <p>
+            The goal of this work is to make synthetic MFA trust data more realistic and more
+            useful for attacker detection by replacing arbitrary randomness with repeatable,
+            security-motivated rules.
+          </p>
+        </div>
       </div>
-      <div style="margin:20px 0">
-        <div id="barwrap" style="position:relative;height:18px;background:rgba(0,0,0,0.06);border:1px solid var(--card-bd);border-radius:999px;overflow:hidden;margin-bottom:12px"> 
-          <div id="distA" style="position:absolute;top:0;bottom:0"></div>
-          <div id="distB" style="position:absolute;top:0;bottom:0"></div>
+
+      <div class="grid-2">
+        <article class="card">
+          <h3>What This Research Focuses On</h3>
+          <p>
+            This project explores deterministic trust-score generation for multi-factor
+            authentication. The generator was redesigned so trust progression follows
+            understandable rules, improving interpretability while still preserving a small set
+            of difficult cases that simulate ambiguous or malicious behavior.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Why the Redesign Matters</h3>
+          <p>
+            Overly random synthetic data can create patterns that do not reflect realistic user
+            behavior. A deterministic approach makes the data easier to reason about, easier to
+            audit, and better aligned with the kinds of trust signals an MFA system would
+            actually use.
+          </p>
+        </article>
+      </div>
+
+      <div class="callout">
+        Trust scores range from <strong>0.0 to 1.0</strong>. Legitimate users are allowed to
+        gain trust over time, while attacker sessions are kept in a low-trust region with only a
+        narrow overlap band to reflect edge cases without losing separability.
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Core Design Decisions</h2>
+          <p>
+            These are the main rule changes that shape the current generator and make the model
+            behavior easier to explain.
+          </p>
         </div>
-        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:4px">
-          <span>0</span><span>0.5</span><span>1</span>
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:center;margin-top:16px">
-          <div style="flex:1;min-width:220px;text-align:center">
-            <p id="ovlText">Estimated overlap: 0.04</p>
-            <p>AUC (est.): <span id="aucVal">0.93</span></p>
+      </div>
+
+      <div class="grid-3">
+        <article class="card">
+          <h3>Low Initial Trust</h3>
+          <p>
+            Every user begins with low trust. This creates a cautious starting point and allows
+            trust to be earned through consistent, expected behavior rather than assumed by
+            default.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Legitimate Trust Growth</h3>
+          <p>
+            Normal users can build trust across sessions when their behavior remains stable.
+            That growth models credibility accumulation instead of assigning strong trust
+            randomly.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Constrained Attacker Band</h3>
+          <p>
+            Attacker sessions are biased toward low trust, with occasional higher-trust samples
+            injected only to represent realistic edge cases. This preserves a clear decision
+            margin for classification.
+          </p>
+        </article>
+      </div>
+
+      <div class="feature-band">
+        <article class="card">
+          <h3>Risk Signals That Lower Trust</h3>
+          <div class="process">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div>
+                <h4>Unexpected location</h4>
+                <p>Sessions outside expected regions are treated as higher risk.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div>
+                <h4>Unexpected device or OS</h4>
+                <p>Trust drops when session context no longer matches the user’s normal profile.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div>
+                <h4>Unexpected IP / unusual timing</h4>
+                <p>Weekend activity, unfamiliar IPs, and failed logins all contribute to lower trust.</p>
+              </div>
+            </div>
           </div>
-          <div style="flex:1;min-width:220px;text-align:center">
-            <div id="dial" style="width:140px;height:140px;border-radius:70px;margin:0 auto 8px;border:1px solid var(--card-bd);"></div>
-            <div id="dialText" class="muted">Overseas: 5%</div>
+        </article>
+
+        <div class="mini-stat-stack">
+          <div class="mini-stat">
+            <div class="top">Overlap Injection</div>
+            <div class="big">~5%</div>
+          </div>
+          <div class="mini-stat">
+            <div class="top">Overlap Band</div>
+            <div class="big">0.65–0.70</div>
+          </div>
+          <div class="mini-stat">
+            <div class="top">Intended Distribution Overlap</div>
+            <div class="big">&lt; 0.05</div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Location-Based Overseas Feature</h2>
+          <p>
+            A major addition in this version is the geographic rule that automatically lowers
+            trust for sessions that fall outside expected U.S. regions.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <article class="card">
+          <h3>How It Works</h3>
+          <p>
+            The generator defines expected U.S. geographic regions using latitude and longitude
+            bounds. If a generated session falls outside those regions, the trust score is capped
+            at <strong>0.20</strong>, reflecting a conservative security policy for out-of-region access.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Travel Injection</h3>
+          <p>
+            To keep the dataset realistic, a small portion of sessions simulate occasional travel.
+            Around <strong>5%</strong> of sessions are moved away from the user’s home location so the
+            model sees some variation without letting travel dominate the dataset.
+          </p>
+        </article>
+      </div>
+
+      <div class="callout">
+        The overseas feature is intentionally simple. It adds a meaningful policy signal, but it is
+        not meant to represent a full geolocation or travel-history model.
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Model Evaluation</h2>
+          <p>
+            The generated dataset is used to train and evaluate an SVM classifier that separates
+            legitimate and malicious sessions.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <article class="card">
+          <h3>Classifier</h3>
+          <p>
+            A Support Vector Machine is trained on the resulting trust-aware dataset to learn a
+            boundary between legitimate users and attackers.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Performance</h3>
+          <p>
+            Performance is measured with Area Under the ROC Curve. In the current setup, the
+            model reaches <strong>0.93 AUC</strong>, which surpasses the project target of <strong>0.90</strong>.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="lab">
+      <div class="lab-top">
+        <div>
+          <h3>Interactive Trust Separation Demo</h3>
+          <p>
+            This mini demo helps visualize the high-level idea behind the project. Adjust the
+            average trust of legitimate users, the average trust of attacker sessions, overseas
+            activity, and noise to see how separation changes.
+          </p>
+        </div>
+        <div class="lab-note">Conceptual only • public-facing explanation</div>
+      </div>
+
+      <div class="controls">
+        <div class="control">
+          <label for="aRange">Normal user center</label>
+          <input type="range" min="20" max="80" value="66" id="aRange">
+          <small>Moves where the average legitimate user trust score sits.</small>
+        </div>
+
+        <div class="control">
+          <label for="bRange">Attacker center</label>
+          <input type="range" min="2" max="45" value="18" id="bRange">
+          <small>Moves where the average attacker trust score sits.</small>
+        </div>
+
+        <div class="control">
+          <label for="mixRange">Travel / overseas mix</label>
+          <input type="range" min="0" max="30" value="5" id="mixRange">
+          <small>Raises the percentage of logins that look out-of-region.</small>
+        </div>
+
+        <div class="control">
+          <label for="noiseRange">Noise level</label>
+          <input type="range" min="0" max="20" value="4" id="noiseRange">
+          <small>Adds uncertainty and makes the two groups harder to separate.</small>
+        </div>
+      </div>
+
+      <div class="viz">
+        <div class="viz-card">
+          <div class="barwrap">
+            <div class="dist" id="distA"></div>
+            <div class="dist" id="distB"></div>
+          </div>
+          <div class="scale">
+            <span>0.0</span>
+            <span>0.5</span>
+            <span>1.0</span>
+          </div>
+
+          <div class="stats-readout">
+            <div class="readout">
+              <div class="k">Estimated overlap</div>
+              <div class="v" id="ovlText">0.04</div>
+            </div>
+            <div class="readout">
+              <div class="k">Estimated AUC</div>
+              <div class="v" id="aucVal">0.93</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="viz-card dial-wrap">
+          <div class="dial" id="dial">
+            <div class="dial-center" id="dialCenter">5%</div>
+          </div>
+          <p class="dial-caption" id="dialText">
+            Overseas and travel-like sessions remain a small slice of behavior in this example.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Next Steps</h2>
+          <p>
+            The current generator improves realism and interpretability, but there is still more
+            room to expand evaluation and stress-testing.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <article class="card">
+          <h3>Add EER Reporting</h3>
+          <p>
+            Future evaluation will include Equal Error Rate to better understand the false
+            positive / false negative tradeoff.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Larger-Scale Testing</h3>
+          <p>
+            Running broader experiments on a GPU environment will make it easier to compare
+            parameter settings and alternative models.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>External Dataset Comparison</h3>
+          <p>
+            A future direction is evaluating against external risk-based authentication datasets to
+            better assess realism and generalization.
+          </p>
+        </article>
       </div>
     </section>
 
     <footer>
-      © <span id="yr"></span> Madeleine McBride • Context‑Aware MFA Research
+      © <span id="yr"></span> Madeleine McBride • Deterministic MFA Trust Score Generation
     </footer>
   </main>
 
   <script>
-    // Copy link
-    (function(){const cp=document.getElementById('copyLink');if(cp)cp.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.href);}catch{}const txt=cp.innerHTML;cp.innerHTML='✅ Copied';setTimeout(()=>cp.innerHTML=txt,1200);});})();
-    // Year
-    document.getElementById('yr').textContent=new Date().getFullYear();
-    // Interactive Lab
-    (function(){
-      const aRange=document.getElementById('aRange');
-      const bRange=document.getElementById('bRange');
-      const mixRange=document.getElementById('mixRange');
-      const noiseRange=document.getElementById('noiseRange');
-      const ovlText=document.getElementById('ovlText');
-      const aucVal=document.getElementById('aucVal');
-      const dial=document.getElementById('dial');
-      const dialText=document.getElementById('dialText');
-      const distA=document.getElementById('distA');
-      const distB=document.getElementById('distB');
-      function render(){
-        if(!aRange||!bRange) return;
-        const aCenter=+aRange.value;const bCenter=+bRange.value;const width=24;
-        const d=Math.abs(aCenter-bCenter);
-        const noise=+noiseRange.value/100;const overseas=+mixRange.value/100;
-        const baseOvl=Math.max(0,(width-d)/width);
-        const ovlShown=Math.min(1,baseOvl+noise*0.5+overseas*0.2);
-        if(ovlText){
-          ovlText.textContent=`Estimated overlap: ${ovlShown.toFixed(2)}`;
-          ovlText.style.color=ovlShown<=0.05?'var(--ok)':(ovlShown<0.15?'var(--warn)':'var(--bad)');
-        }
-        const auc=Math.max(.70,Math.min(.99,0.75+(d/40)-noise*0.2-overseas*0.15));
-        if(aucVal) aucVal.textContent=auc.toFixed(2);
-        const deg=Math.min(270,90+overseas*270);
-        if(dial) dial.style.background=`conic-gradient(var(--brand) 0 ${deg}deg, rgba(255,255,255,.08) ${deg}deg 360deg)`;
-        if(dialText) dialText.textContent=`Overseas: ${Math.round(overseas*100)}%`;
-        // update bars
-        const aL=Math.max(0,aCenter-width/2);
-        const bL=Math.max(0,bCenter-width/2);
-        if(distA){
-          distA.style.left=aL+'%';
-          distA.style.width=width+'%';
-          distA.style.background='linear-gradient(90deg, rgba(6,182,212,.5), rgba(6,182,212,.15))';
-        }
-        if(distB){
-          distB.style.left=bL+'%';
-          distB.style.width=width+'%';
-          distB.style.background='linear-gradient(90deg, rgba(167,139,250,.6), rgba(244,182,244,.2))';
-        }
+    (function () {
+      const cp = document.getElementById("copyLink");
+      if (cp) {
+        cp.addEventListener("click", async () => {
+          const original = cp.textContent;
+          try {
+            await navigator.clipboard.writeText(location.href);
+            cp.textContent = "✅ Copied";
+          } catch (e) {
+            cp.textContent = "Unable to copy";
+          }
+          setTimeout(() => {
+            cp.textContent = original;
+          }, 1200);
+        });
       }
-      [aRange,bRange,mixRange,noiseRange].forEach(el=>el&&el.addEventListener('input',render));
+    })();
+
+    document.getElementById("yr").textContent = new Date().getFullYear();
+
+    (function () {
+      const aRange = document.getElementById("aRange");
+      const bRange = document.getElementById("bRange");
+      const mixRange = document.getElementById("mixRange");
+      const noiseRange = document.getElementById("noiseRange");
+
+      const ovlText = document.getElementById("ovlText");
+      const aucVal = document.getElementById("aucVal");
+      const dial = document.getElementById("dial");
+      const dialCenter = document.getElementById("dialCenter");
+      const dialText = document.getElementById("dialText");
+      const distA = document.getElementById("distA");
+      const distB = document.getElementById("distB");
+
+      function render() {
+        const aCenter = +aRange.value;
+        const bCenter = +bRange.value;
+        const overseas = +mixRange.value / 100;
+        const noise = +noiseRange.value / 100;
+
+        const widthA = 22 + noise * 40;
+        const widthB = 20 + noise * 45;
+        const aLeft = Math.max(0, Math.min(100 - widthA, aCenter - widthA / 2));
+        const bLeft = Math.max(0, Math.min(100 - widthB, bCenter - widthB / 2));
+
+        const gap = Math.abs((aLeft + widthA / 2) - (bLeft + widthB / 2));
+        const spanAvg = (widthA + widthB) / 2;
+        const baseOverlap = Math.max(0, (spanAvg - gap) / spanAvg);
+        const overlap = Math.min(0.99, baseOverlap * 0.55 + overseas * 0.22 + noise * 0.45);
+        const auc = Math.max(0.70, Math.min(0.99, 0.76 + (gap / 100) * 0.34 - overseas * 0.16 - noise * 0.22));
+
+        distA.style.left = aLeft + "%";
+        distA.style.width = widthA + "%";
+        distA.style.background = "linear-gradient(90deg, rgba(107, 208, 169, 0.75), rgba(107, 208, 169, 0.30))";
+
+        distB.style.left = bLeft + "%";
+        distB.style.width = widthB + "%";
+        distB.style.background = "linear-gradient(90deg, rgba(180, 139, 214, 0.82), rgba(217, 140, 179, 0.35))";
+
+        ovlText.textContent = overlap.toFixed(2);
+        if (overlap <= 0.05) {
+          ovlText.style.color = "var(--success)";
+        } else if (overlap < 0.15) {
+          ovlText.style.color = "var(--warning)";
+        } else {
+          ovlText.style.color = "var(--danger)";
+        }
+
+        aucVal.textContent = auc.toFixed(2);
+
+        const deg = 90 + overseas * 270;
+        dial.style.background =
+          `conic-gradient(var(--brand) 0deg ${deg}deg, #f2e8ef ${deg}deg 360deg)`;
+        dialCenter.textContent = Math.round(overseas * 100) + "%";
+        dialText.textContent =
+          Math.round(overseas * 100) +
+          "% of sessions in this example are travel-like or out-of-region, increasing risk pressure on trust.";
+      }
+
+      [aRange, bRange, mixRange, noiseRange].forEach((el) => {
+        el.addEventListener("input", render);
+      });
+
       render();
     })();
   </script>
